@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>TalkDNA™ — Tes Karakter Komunikasi Lo | Stanley Academy</title>
+<meta name="description" content="Temukan tipe komunikator lo dalam 2 menit. Quiz gratis dari Stanley Academy." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;700;800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+<style>
+/* ===================== RESET & BASE ===================== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Instrument Sans', sans-serif;
+  background: #f7f5f0;
+  color: #1a1814;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ===================== TOKENS ===================== */
+:root {
+  --ink: #1a1814;
+  --ink-soft: #4a4740;
+  --ink-muted: #8a8680;
+  --paper: #f7f5f0;
+  --paper-2: #eeebe4;
+  --paper-3: #e4e0d8;
+  --accent: #c8552a;
+  --accent-light: #f5e8e2;
+  --accent-2: #2a6cc8;
+  --accent-2-light: #e2ecf5;
+  --green: #2a8c5a;
+  --green-light: #e2f5ec;
+  --border: rgba(26,24,20,0.12);
+  --border-strong: rgba(26,24,20,0.25);
+  --radius: 14px;
+  --radius-sm: 8px;
+  --shadow: 0 2px 12px rgba(26,24,20,0.08);
+  --shadow-md: 0 4px 24px rgba(26,24,20,0.12);
+}
+
+/* ===================== LAYOUT ===================== */
+.page { max-width: 680px; margin: 0 auto; padding: 0 24px 80px; }
+
+/* ===================== HEADER ===================== */
+.site-header {
+  padding: 28px 0 0;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.brand {
+  font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700;
+  letter-spacing: 0.08em; color: var(--ink-muted); text-decoration: none;
+  text-transform: uppercase;
+}
+.brand span { color: var(--accent); }
+
+/* ===================== HERO ===================== */
+.hero { padding: 56px 0 40px; }
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+  letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent);
+  background: var(--accent-light); border-radius: 40px;
+  padding: 6px 14px; margin-bottom: 24px;
+}
+.hero-tag::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent); flex-shrink: 0;
+  animation: pulse 2s ease infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(0.8)} }
+
+.hero h1 {
+  font-family: 'Syne', sans-serif; font-size: clamp(2.8rem, 8vw, 4.2rem);
+  font-weight: 800; line-height: 0.95; letter-spacing: -0.02em;
+  color: var(--ink); margin-bottom: 20px;
+}
+.hero h1 em { font-style: italic; color: var(--accent); }
+.hero p {
+  font-size: 17px; line-height: 1.65; color: var(--ink-soft);
+  max-width: 520px; margin-bottom: 32px;
+}
+.hero-meta {
+  display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+}
+.hero-meta-item {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 13px; color: var(--ink-muted);
+}
+.hero-meta-item svg { opacity: 0.5; }
+
+/* ===================== DIVIDER ===================== */
+.divider {
+  height: 1px; background: var(--border); margin: 32px 0;
+}
+
+/* ===================== FORM ===================== */
+.section-eyebrow {
+  font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+  letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent);
+  margin-bottom: 10px;
+}
+.section-title {
+  font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 700;
+  color: var(--ink); line-height: 1.3; margin-bottom: 24px;
+}
+.field { margin-bottom: 16px; }
+.field label {
+  display: block; font-size: 12px; font-weight: 600; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--ink-muted); margin-bottom: 7px;
+}
+.field input, .field select {
+  width: 100%; padding: 13px 16px;
+  background: #fff; border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm); color: var(--ink);
+  font-family: 'Instrument Sans', sans-serif; font-size: 15px;
+  transition: border-color .2s, box-shadow .2s; outline: none;
+  -webkit-appearance: none; appearance: none;
+}
+.field input:focus, .field select:focus {
+  border-color: var(--accent); box-shadow: 0 0 0 3px rgba(200,85,42,0.12);
+}
+.field input::placeholder { color: #bbb; }
+.field select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238a8680' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; cursor: pointer; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 480px) { .field-row { grid-template-columns: 1fr; } }
+
+/* ===================== PROGRESS ===================== */
+.quiz-header { margin-bottom: 28px; }
+.quiz-meta {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 10px;
+}
+.quiz-counter {
+  font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-muted);
+}
+.quiz-pct { font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700; color: var(--accent); }
+.progress-track {
+  height: 3px; background: var(--paper-3); border-radius: 2px; overflow: hidden;
+}
+.progress-fill {
+  height: 100%; background: var(--accent); border-radius: 2px;
+  transition: width .5s cubic-bezier(.4,0,.2,1);
+}
+.quiz-q {
+  font-family: 'Syne', sans-serif; font-size: clamp(1.05rem, 2.5vw, 1.25rem);
+  font-weight: 700; line-height: 1.45; color: var(--ink);
+  margin-bottom: 20px;
+}
+
+/* ===================== OPTIONS ===================== */
+.options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+.opt {
+  display: flex; align-items: flex-start; gap: 14px;
+  background: #fff; border: 1.5px solid var(--border);
+  border-radius: var(--radius); padding: 15px 18px;
+  cursor: pointer; transition: all .2s; text-align: left;
+  font-family: 'Instrument Sans', sans-serif; font-size: 15px;
+  line-height: 1.55; color: var(--ink-soft); width: 100%;
+}
+.opt:hover { border-color: var(--accent); background: var(--accent-light); color: var(--ink); }
+.opt.selected { border-color: var(--accent); background: var(--accent-light); color: var(--ink); }
+.opt.selected .opt-key { background: var(--accent); color: #fff; }
+.opt-key {
+  font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+  background: var(--paper-2); color: var(--ink-muted);
+  border-radius: 6px; padding: 3px 9px; flex-shrink: 0; margin-top: 1px;
+  transition: all .2s;
+}
+
+/* ===================== BUTTON ===================== */
+.btn {
+  width: 100%; padding: 16px 24px; border-radius: var(--radius); border: none;
+  cursor: pointer; font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700;
+  letter-spacing: 0.05em; transition: all .2s;
+}
+.btn-primary {
+  background: var(--ink); color: #fff;
+}
+.btn-primary:hover:not(:disabled) { background: #2d2a26; transform: translateY(-1px); box-shadow: var(--shadow-md); }
+.btn-primary:active:not(:disabled) { transform: translateY(0); }
+.btn-primary:disabled { opacity: 0.3; cursor: not-allowed; transform: none; box-shadow: none; }
+.btn-cta {
+  background: var(--accent); color: #fff; display: block; text-align: center;
+  text-decoration: none; margin-top: 8px;
+}
+.btn-cta:hover { background: #b04a25; transform: translateY(-1px); box-shadow: var(--shadow-md); }
+
+/* ===================== RESULT ===================== */
+.result-hero {
+  padding: 36px 0 8px;
+}
+.result-type-label {
+  font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+  letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-muted);
+  margin-bottom: 6px;
+}
+.result-type-name {
+  font-family: 'Syne', sans-serif; font-size: clamp(2rem, 6vw, 3rem);
+  font-weight: 800; line-height: 1.05; letter-spacing: -0.02em;
+  margin-bottom: 16px;
+}
+.result-tagline {
+  font-size: 16px; font-weight: 500; color: var(--ink-soft);
+  font-style: italic; margin-bottom: 20px; line-height: 1.5;
+}
+.result-desc {
+  font-size: 16px; line-height: 1.75; color: var(--ink-soft); margin-bottom: 28px;
+}
+
+/* SCORE BAR */
+.score-section { margin-bottom: 28px; }
+.score-item { margin-bottom: 14px; }
+.score-label-row {
+  display: flex; justify-content: space-between;
+  font-size: 13px; margin-bottom: 6px;
+}
+.score-label { font-weight: 600; color: var(--ink); }
+.score-val { color: var(--ink-muted); font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700; }
+.score-track { height: 6px; background: var(--paper-3); border-radius: 3px; overflow: hidden; }
+.score-bar { height: 100%; border-radius: 3px; transition: width 1s cubic-bezier(.4,0,.2,1); }
+
+/* TAGS */
+.tags-section { margin-bottom: 28px; }
+.tags-heading {
+  font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink-muted); margin-bottom: 10px;
+}
+.tags-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.tag {
+  font-size: 13px; font-weight: 500; padding: 5px 14px; border-radius: 40px;
+  border: 1.5px solid;
+}
+.tag-s { background: var(--green-light); border-color: rgba(42,140,90,0.3); color: var(--green); }
+.tag-w { background: #fef2ec; border-color: rgba(200,85,42,0.25); color: var(--accent); }
+
+/* INSIGHT CARDS */
+.insight-cards { display: grid; gap: 12px; margin-bottom: 28px; }
+.insight-card {
+  background: #fff; border: 1.5px solid var(--border);
+  border-radius: var(--radius); padding: 18px 20px;
+}
+.insight-card-head {
+  font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-muted);
+  margin-bottom: 8px; display: flex; align-items: center; gap: 8px;
+}
+.insight-card-head span {
+  width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center;
+  justify-content: center; font-size: 11px; flex-shrink: 0;
+}
+.ic-warning .insight-card-head span { background: #fef2ec; color: var(--accent); }
+.ic-tip .insight-card-head span { background: var(--accent-2-light); color: var(--accent-2); }
+.insight-card p { font-size: 14px; line-height: 1.7; color: var(--ink-soft); }
+.insight-card strong { color: var(--ink); }
+
+/* RECOM BOX */
+.recom-box {
+  background: var(--paper-2); border: 1.5px solid var(--border);
+  border-radius: var(--radius); padding: 22px 24px; margin-bottom: 24px;
+}
+.recom-box-head {
+  font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+  letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent);
+  margin-bottom: 10px;
+}
+.recom-box h3 {
+  font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700;
+  color: var(--ink); margin-bottom: 10px; line-height: 1.3;
+}
+.recom-box p { font-size: 14px; line-height: 1.75; color: var(--ink-soft); margin-bottom: 10px; }
+.recom-modules { display: flex; flex-direction: column; gap: 8px; margin-top: 14px; }
+.recom-module {
+  display: flex; align-items: flex-start; gap: 10px;
+  background: #fff; border-radius: var(--radius-sm); padding: 11px 14px;
+  border: 1.5px solid var(--border);
+}
+.module-num {
+  font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+  background: var(--ink); color: #fff; border-radius: 4px;
+  padding: 2px 7px; flex-shrink: 0; margin-top: 1px;
+}
+.module-text { font-size: 13px; line-height: 1.5; color: var(--ink-soft); }
+.module-text strong { color: var(--ink); }
+
+/* PROMO */
+.promo-box {
+  background: var(--ink); border-radius: var(--radius);
+  padding: 24px; margin-bottom: 16px; text-align: center;
+}
+.promo-label { font-size: 12px; color: rgba(255,255,255,0.5); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
+.promo-code {
+  font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800;
+  letter-spacing: 0.08em; color: #fff; display: block; margin-bottom: 8px;
+}
+.promo-price { font-size: 15px; color: rgba(255,255,255,0.6); }
+.promo-price strong { color: #fff; font-size: 18px; }
+.promo-price s { opacity: 0.4; }
+
+.disclaimer { font-size: 12px; text-align: center; color: var(--ink-muted); margin-top: 14px; }
+
+/* ===================== LOADING / SUCCESS ===================== */
+.loading-screen {
+  text-align: center; padding: 60px 0;
+}
+.loading-spinner {
+  width: 40px; height: 40px; border: 3px solid var(--paper-3);
+  border-top-color: var(--accent); border-radius: 50%;
+  animation: spin .8s linear infinite; margin: 0 auto 20px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-screen p { color: var(--ink-muted); font-size: 15px; }
+
+/* ===================== FADE ANIM ===================== */
+.fade-in { animation: fadeIn .45s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ===================== FOOTER ===================== */
+.footer {
+  margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--border);
+  text-align: center; font-size: 12px; color: var(--ink-muted);
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+  <header class="site-header">
+    <a href="https://stanleyacademic.com" class="brand">Stanley <span>Academy</span></a>
+    <span style="font-size:12px;color:var(--ink-muted);">TalkDNA™</span>
+  </header>
+
+  <div id="app"></div>
+
+  <footer class="footer">
+    © Stanley Academy · <a href="https://stanleyacademic.com" style="color:var(--accent);text-decoration:none;">stanleyacademic.com</a>
+  </footer>
+</div>
+
+<script>
+/* ============================================================
+   GOOGLE SHEETS INTEGRATION
+   Ganti SHEET_URL di bawah dengan URL dari Google Apps Script lo
+   Cara setup ada di README.md
+   ============================================================ */
+const SHEET_URL = "https://script.google.com/macros/s/AKfycbwWxBdxJyziCjYLVpJE_Kvm9hY4Bzuevig2q0HqWQFG_f2_QBXbfZ_FmIzXDOfXExau/exec";
+
+async function saveToSheet(data) {
+  try {
+    await fetch(SHEET_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+  } catch (e) {
+    console.error("Sheet error:", e);
+  }
+}
+
+/* ============================================================
+   DATA: TIPE KOMUNIKATOR
+   ============================================================ */
+const TYPES = {
+  overthinker: {
+    name: "The Overthinker",
+    tagline: "Otaknya jalan, mulutnya ngerem.",
+    color: "#7c5cbf",
+    colorLight: "#f0ebfa",
+    desc: `Lo adalah orang yang paling banyak mikir di ruangan — tapi ironisnya, justru itu yang bikin lo paling jarang didengar. Sebelum ngomong, lo udah simulate semua kemungkinan salah, semua reaksi negatif, semua cara orang bisa salah paham. Hasilnya? Lo kehilangan momen, atau akhirnya ngomong dengan cara yang terlalu hati-hati sampai kehilangan impact-nya.
+
+Di balik ini semua ada kecerdasan yang luar biasa dan standar tinggi. Lo cuma butuh sistem yang ngasih lo izin untuk berbicara — bahkan sebelum lo "siap".`,
+    scores: { clarity: 40, confidence: 25, listening: 85, influence: 45, empathy: 80 },
+    strengths: ["Analitis & mendalam", "Pendengar aktif", "Tidak asal ngomong", "Empatik terhadap orang lain"],
+    weaknesses: ["Sering kehilangan momen", "Ragu sebelum bicara", "Overthinking melemahkan impact", "Sulit ekspresikan pendapat tegas"],
+    blindspot: {
+      title: "Blind spot lo",
+      text: "Lo nganggep kalau lo ngomong dengan sempurna, orang akan lebih respect. Faktanya, orang lebih respect sama yang mau speak up — bukan yang sempurna. <strong>Keraguan lo terlihat sebagai kurangnya kepercayaan diri, bukan kehati-hatian.</strong>"
+    },
+    tip: {
+      title: "Satu perubahan yang bisa langsung lo coba",
+      text: "Terapkan aturan <strong>3 detik</strong>: setelah orang lain selesai bicara, hitung 3 detik, lalu langsung respons. Jangan filter. Latih otak lo untuk tahu bahwa kata-kata pertama lo sudah cukup baik."
+    },
+    modules: [
+      { name: "Solusi Ampuh Gugup", desc: "Teknik spesifik untuk mematikan overthinking saat momen penting tiba" },
+      { name: "Bulletproof Error-Stopper", desc: "5 kesalahan fatal yang bikin lo overthink — dan cara eliminasinya" },
+      { name: "Formula 3-Step Structure", desc: "Template ngomong yang bikin lo tidak perlu mikir panjang lagi sebelum bicara" },
+      { name: "Pembicara yang Efektif", desc: "Cara mengubah pikiran yang kompleks menjadi ucapan yang simpel dan kuat" },
+    ]
+  },
+  ghost: {
+    name: "The Silent Ghost",
+    tagline: "Ada, tapi kayak tidak ada.",
+    color: "#2a6cc8",
+    colorLight: "#e2ecf5",
+    desc: `Lo bukan pemalu dalam arti yang orang bayangkan. Lo justru observer yang tajam — lo perhatiin detail yang orang lain lewatin, lo ngerti dinamika grup, dan lo sering punya insight terbaik di ruangan. Tapi hampir tidak ada yang tau, karena lo jarang bicara.
+
+Akar masalahnya biasanya bukan kemampuan — tapi rasa aman. Entah dari pengalaman masa lalu yang bikin lo ngerasa suara lo tidak penting, atau lingkungan yang tidak pernah ngasih lo ruang. Hasilnya, lo jadi invisible — padahal lo seharusnya jadi salah satu yang paling didengar.`,
+    scores: { clarity: 55, confidence: 20, listening: 95, influence: 30, empathy: 90 },
+    strengths: ["Observer yang tajam", "Pendengar terbaik", "Sangat empatik", "Tidak konfrontatif"],
+    weaknesses: ["Hampir tidak pernah inisiasi percakapan", "Menghindari konflik bahkan yang sehat", "Kurang assertif dalam menyampaikan kebutuhan", "Sering diabaikan dalam group setting"],
+    blindspot: {
+      title: "Blind spot lo",
+      text: "Lo pikir diam adalah sopan atau rendah hati. Tapi dari perspektif orang lain — terutama di konteks profesional — diam sering dibaca sebagai <strong>tidak peduli, tidak kompeten, atau tidak punya kontribusi</strong>. Lo sedang merugikan diri sendiri."
+    },
+    tip: {
+      title: "Satu perubahan yang bisa langsung lo coba",
+      text: "Di setiap meeting atau percakapan, buat komitmen untuk bicara <strong>minimal satu kali</strong> — tidak peduli sekecil apapun. Cukup validasi seseorang, tambahkan satu fakta, atau tanya satu pertanyaan. Konsistensi ini yang akan membangun keberanian lo."
+    },
+    modules: [
+      { name: "Unlock Mindset & Psikologi Komunikasi", desc: "Pahami kenapa otak lo 'melarang' bicara — dan cara mereset belief itu" },
+      { name: "First Impression", desc: "Cara hadir dan diingat orang bahkan tanpa banyak bicara" },
+      { name: "Power & Influence Mastery", desc: "Teknik membangun otoritas diam-diam yang membuat suara lo didengar saat bicara" },
+      { name: "Assertive Communication", desc: "Cara menyampaikan kebutuhan dan pendapat tanpa merasa bersalah" },
+    ]
+  },
+  talker: {
+    name: "The Loud Talker",
+    tagline: "Semua diisi, tapi yang nyangkut berapa?",
+    color: "#c8842a",
+    colorLight: "#fef5e7",
+    desc: `Energi lo tinggi, antusiasme lo menular, dan lo adalah orang yang bikin suasana hidup. Di permukaan, lo kelihatan seperti komunikator yang ideal. Tapi kalau lo jujur sama diri sendiri, lo sering bertanya-tanya — "kenapa orang tidak follow through setelah gw ngomong panjang lebar?"
+
+Jawabannya: komunikasi bukan tentang seberapa banyak yang lo keluarkan, tapi seberapa banyak yang masuk ke kepala orang lain. Lo sudah punya energi dan presence — sekarang lo butuh struktur dan seni mendengarkan yang akan mengubah percakapan lo dari entertaining jadi benar-benar influential.`,
+    scores: { clarity: 60, confidence: 90, listening: 30, influence: 65, empathy: 55 },
+    strengths: ["Percaya diri & ekspresif", "Energi tinggi yang menular", "Mudah memulai percakapan", "Karisma natural"],
+    weaknesses: ["Lebih banyak bicara daripada mendengar", "Kurang struktur dalam penyampaian", "Sering mendominasi percakapan", "Pesan utama tenggelam dalam volume kata-kata"],
+    blindspot: {
+      title: "Blind spot lo",
+      text: "Lo mengukur kualitas komunikasi dari seberapa seru percakapannya — bukan dari seberapa besar impact-nya. Orang mungkin menikmati ngobrol sama lo, tapi <strong>tidak ingat apa yang lo minta atau sampaikan</strong>. Entertaining ≠ influential."
+    },
+    tip: {
+      title: "Satu perubahan yang bisa langsung lo coba",
+      text: "Sebelum mulai berbicara tentang topik apapun, tentukan dulu <strong>satu kalimat inti</strong> yang lo mau orang ingat. Semua yang lo katakan harus mengarah ke sana. Ini akan memotong 60% kata-kata lo — tapi menggandakan impact-nya."
+    },
+    modules: [
+      { name: "Manusia & Mendengarkan", desc: "Kenapa mendengarkan adalah senjata komunikasi paling under-rated — dan cara menguasainya" },
+      { name: "Formula 3-Step Structure", desc: "Cara mengemas ide lo agar orang ingat, setuju, dan bertindak" },
+      { name: "Penggunaan Ethos, Pathos, Logos", desc: "Cara menyeimbangkan energi emosional lo dengan logika yang meyakinkan" },
+      { name: "Mempertajam Argumen", desc: "Teknik memfilter kata-kata agar yang tersisa adalah yang paling powerful" },
+    ]
+  },
+  dominator: {
+    name: "The Dominator",
+    tagline: "Didengar — tapi apakah benar-benar dipilih?",
+    color: "#b03a2e",
+    colorLight: "#fdf0ee",
+    desc: `Lo tegas, efisien, dan tidak suka basa-basi. Ketika lo bicara, orang mendengarkan — setidaknya di permukaan. Lo punya presence yang kuat dan natural leadership yang banyak orang tidak punya.
+
+Tapi ada harga yang lo bayar: orang sering comply bukan karena mereka genuinely setuju, tapi karena mereka tidak nyaman berargumen sama lo. Itu bukan influence — itu compliance karena tekanan. Bedanya besar: yang pertama membangun loyalitas, yang kedua membangun jarak. Lo sudah punya otoritas — sekarang lo butuh belajar cara mengajak, bukan sekadar mendorong.`,
+    scores: { clarity: 85, confidence: 95, listening: 35, influence: 75, empathy: 30 },
+    strengths: ["Direct & tanpa basa-basi", "Confidence yang tinggi", "Natural leadership presence", "Sangat jelas dalam penyampaian"],
+    weaknesses: ["Terkesan intimidatif atau agresif", "Kurang empati dalam penyampaian", "Orang comply karena tekanan, bukan keyakinan", "Sulit membangun trust jangka panjang"],
+    blindspot: {
+      title: "Blind spot lo",
+      text: "Lo sering mengira silence berarti agreement. Padahal orang diam karena mereka tidak merasa aman untuk menolak. <strong>Influence yang sesungguhnya adalah ketika orang setuju bahkan saat lo tidak ada di ruangan.</strong>"
+    },
+    tip: {
+      title: "Satu perubahan yang bisa langsung lo coba",
+      text: "Di setiap percakapan penting, tanyakan <strong>satu pertanyaan terbuka</strong> sebelum menyimpulkan — misalnya: 'Menurut lo ada yang perlu dipertimbangkan?' Ini bukan kelemahan. Ini yang bikin orang merasa dihargai dan jauh lebih likely untuk follow through."
+    },
+    modules: [
+      { name: "Etika Dalam Komunikasi", desc: "Cara mempertahankan otoritas tanpa kehilangan respect dan trust orang lain" },
+      { name: "Persuasive Communication", desc: "Perbedaan antara menekan dan meyakinkan — dan teknik mengubah resistensi jadi dukungan" },
+      { name: "Pendengar yang Baik", desc: "Kenapa leaders terbaik dunia mendengarkan lebih banyak dari yang mereka bicara" },
+      { name: "The Secret of Influence Communication", desc: "Cara membangun pengaruh yang bertahan lama — bukan sekadar kepatuhan sementara" },
+    ]
+  },
+  connector: {
+    name: "The Connector",
+    tagline: "Fondasi bagus — sekarang saatnya naik level.",
+    color: "#2a8c5a",
+    colorLight: "#e2f5ec",
+    desc: `Lo adalah tipe komunikator yang membuat orang merasa nyaman. Lo bisa baca situasi, tahu kapan harus bicara dan kapan harus dengerin, dan orang sering merasa genuinely didengar setelah ngobrol sama lo. Itu gift yang tidak semua orang punya.
+
+Lo sudah melewati stage yang paling banyak orang stuck — rasa takut dan canggung. Tapi ada ceiling yang mungkin lo rasakan: lo sudah disukai, tapi apakah lo juga dipercaya sebagai orang yang punya vision? Apakah lo bisa influence keputusan besar? Apakah pesan lo di digital media sekuat di tatap muka? Inilah frontier berikutnya.`,
+    scores: { clarity: 78, confidence: 72, listening: 88, influence: 65, empathy: 90 },
+    strengths: ["Adaptif di berbagai situasi", "Membuat orang merasa didengar", "Empati yang tinggi", "Komunikasi dua arah yang sehat"],
+    weaknesses: ["Belum maksimal di komunikasi digital", "Influence bisa diperkuat lebih jauh", "Kadang terlalu akomodatif, kurang tegas", "Storytelling bisa lebih tajam"],
+    blindspot: {
+      title: "Blind spot lo",
+      text: "Lo bisa sangat baik di percakapan 1-on-1 tapi kehilangan kekuatan itu di skala yang lebih besar — di depan banyak orang, di tulisan, atau di video. <strong>Skill lo saat ini butuh di-scale ke medium yang berbeda.</strong>"
+    },
+    tip: {
+      title: "Satu perubahan yang bisa langsung lo coba",
+      text: "Mulai dokumentasikan insight lo — di caption Instagram, thread, atau short video. Komunikasi lo yang natural itu perlu dilatih untuk format yang lebih brief dan deliberate. <strong>30 hari konsisten posting = lompatan besar dalam influence digital lo.</strong>"
+    },
+    modules: [
+      { name: "Digital Communication Hacks", desc: "Cara transfer kekuatan komunikasi lo ke Zoom, email, Instagram, dan WhatsApp" },
+      { name: "The Secret of Influence Communication", desc: "Cara naik dari 'orang yang disukai' ke 'orang yang diikuti'" },
+      { name: "Introduction to French & Raven Power Concept", desc: "Framework akademis untuk memahami dan membangun berbagai jenis influence" },
+      { name: "Storytelling untuk Impact", desc: "Cara mengemas pesan lo agar diingat, di-share, dan menginspirasi tindakan" },
+    ]
+  }
+};
+
+/* ============================================================
+   PERTANYAAN
+   ============================================================ */
+const QUESTIONS = [
+  {
+    q: "Lo diundang meeting penting dan punya ide yang bagus. Yang paling sering terjadi?",
+    opts: [
+      { text: "Gw mikirin panjang-panjang dulu, tapi sering kelamaan sampai momennya lewat", type: "overthinker" },
+      { text: "Gw nunggu ada yang nanya atau ada opening yang jelas — jarang langsung angkat tangan", type: "ghost" },
+      { text: "Gw langsung ngomong, kadang bahkan sebelum orang lain selesai bicara", type: "talker" },
+      { text: "Gw langsung sampaikan to-the-point, kadang orang ngerasa gw kurang sabar", type: "dominator" },
+    ]
+  },
+  {
+    q: "Ada konflik sama rekan kerja atau teman soal keputusan penting. Lo biasanya...",
+    opts: [
+      { text: "Mau ngomong tapi takut pilih kata yang salah, akhirnya nahan diri", type: "overthinker" },
+      { text: "Menghindari konfrontasi — gw lebih milih damai meski gw tidak setuju", type: "ghost" },
+      { text: "Langsung ekspresikan semua, kadang malah melebar ke hal lain", type: "talker" },
+      { text: "Langsung konfrontasi dan tegasin posisi gw — gw gak suka hal yang menggantung", type: "dominator" },
+    ]
+  },
+  {
+    q: "Saat ketemu orang baru di acara profesional atau sosial, lo...",
+    opts: [
+      { text: "Kepikiran mau ngomong apa terus — sering jadi awkward sendiri padahal orang lain fine-fine aja", type: "overthinker" },
+      { text: "Nunggu orang lain yang duluan ajak ngobrol, lebih nyaman jadi pendengar", type: "ghost" },
+      { text: "Langsung nyambung, bisa ngobrol sama siapa aja hampir tanpa usaha", type: "talker" },
+      { text: "Gw pilih ngobrol sama orang yang keliatan punya value buat diajak diskusi", type: "dominator" },
+    ]
+  },
+  {
+    q: "Feedback jujur dari orang terdekat soal cara lo berkomunikasi...",
+    opts: [
+      { text: "\"Lo kayak selalu ragu-ragu, kenapa gak langsung aja ngomong?\"", type: "overthinker" },
+      { text: "\"Gw sering gak tau lo lagi mikirin apa atau ngerasa apa\"", type: "ghost" },
+      { text: "\"Lo seru tapi kadang gw ngerasa gak kebagian ngomong\"", type: "talker" },
+      { text: "\"Lo direct banget, kadang terasa kurang empati atau terlalu blunt\"", type: "dominator" },
+    ]
+  },
+  {
+    q: "Kalau harus presentasi atau bicara di depan banyak orang, lo ngerasa...",
+    opts: [
+      { text: "Udah prepare sangat lama tapi tetap nervous — takut salah ngomong di depan semua orang", type: "overthinker" },
+      { text: "Hindarin kalau bisa. Ini salah satu situasi yang paling gw takutin", type: "ghost" },
+      { text: "Enjoy banget — justru gw lebih hidup kalau ada audience-nya", type: "talker" },
+      { text: "Oke-oke aja, gw lebih prefer diskusi langsung yang bisa gw control arahnya", type: "dominator" },
+    ]
+  },
+  {
+    q: "Waktu lo punya opini yang berbeda dari mayoritas di sebuah diskusi...",
+    opts: [
+      { text: "Gw mikir panjang soal cara nyampeinnya sampai sering gak jadi ngomong", type: "overthinker" },
+      { text: "Gw diam dan ikutin aja — tidak worth it untuk berdebat", type: "ghost" },
+      { text: "Gw langsung sampaikan, kadang jadi debat panjang yang melebar", type: "talker" },
+      { text: "Gw sampaikan dengan tegas dan langsung — gw gak takut berbeda pendapat", type: "dominator" },
+    ]
+  },
+  {
+    q: "Kalau lo kirim pesan penting lewat chat atau email, yang paling sering terjadi...",
+    opts: [
+      { text: "Gw nulis ulang berkali-kali sampai ngerasa sempurna baru dikirim — kadang lama banget", type: "overthinker" },
+      { text: "Gw nulis singkat aja atau malah menunda karena gak tau harus mulai dari mana", type: "ghost" },
+      { text: "Gw langsung tulis dan kirim — tapi kadang pesannya panjang dan orang bingung intinya apa", type: "talker" },
+      { text: "Gw tulis super singkat dan to-the-point — kadang orang ngerasa gw judes lewat teks", type: "dominator" },
+    ]
+  },
+  {
+    q: "Lo lagi negosiasi sesuatu — entah gaji, project, atau hal personal. Gaya lo...",
+    opts: [
+      { text: "Gw sering underprepare karena terlalu lama mikir 'right moment' yang tidak pernah datang", type: "overthinker" },
+      { text: "Gw susah banget negotiate — lebih milih terima apa adanya daripada rasa awkward", type: "ghost" },
+      { text: "Gw bisa ngomong banyak tapi kadang gak tau kapan harus stop atau kapan sudah cukup", type: "talker" },
+      { text: "Gw agresif dalam negosiasi — kadang orang merasa tertekan dan jadi defensive", type: "dominator" },
+    ]
+  },
+];
+
+/* ============================================================
+   STATE & LOGIC
+   ============================================================ */
+let state = {
+  screen: "hero",
+  form: { name: "", phone: "", email: "", source: "" },
+  answers: [],
+  qIndex: 0,
+  selectedType: null,
+  resultType: null,
+};
+
+function calcResult(answers) {
+  const scores = { overthinker: 0, ghost: 0, talker: 0, dominator: 0 };
+  answers.forEach(a => { if (a in scores) scores[a]++; });
+  const max = Math.max(...Object.values(scores));
+  if (max <= 2) return "connector";
+  return Object.keys(scores).find(k => scores[k] === max) || "connector";
+}
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+const app = document.getElementById("app");
+
+function render() {
+  app.innerHTML = "";
+  if (state.screen === "hero") renderHero();
+  else if (state.screen === "form") renderForm();
+  else if (state.screen === "quiz") renderQuiz();
+  else if (state.screen === "loading") renderLoading();
+  else if (state.screen === "result") renderResult();
+}
+
+/* HERO */
+function renderHero() {
+  app.innerHTML = `
+  <div class="hero fade-in">
+    <div class="hero-tag">Quiz Gratis • 2 Menit</div>
+    <h1>Cari tahu<br><em>tipe</em> komunikator<br>lo sekarang.</h1>
+    <p>8 pertanyaan yang dirancang oleh Communication Coach bersertifikat BNSP untuk mengidentifikasi pola komunikasi lo — dan apa yang perlu diperbaiki.</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        1.300+ peserta
+      </div>
+      <div class="hero-meta-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        ~2 menit
+      </div>
+      <div class="hero-meta-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        Gratis 100%
+      </div>
+    </div>
+    <div class="divider"></div>
+    <button class="btn btn-primary" onclick="goForm()">Mulai Tes Sekarang →</button>
+  </div>`;
+}
+
+function goForm() {
+  state.screen = "form";
+  render();
+}
+
+/* FORM */
+function renderForm() {
+  app.innerHTML = `
+  <div class="fade-in" style="padding-top:40px">
+    <div class="section-eyebrow">Langkah 1 dari 2</div>
+    <div class="section-title">Siapa lo?</div>
+    <div class="field-row">
+      <div class="field">
+        <label>Nama Lengkap</label>
+        <input type="text" id="f-name" placeholder="Nama lo" value="${state.form.name}" oninput="updateForm('name',this.value)" />
+      </div>
+      <div class="field">
+        <label>Nomor WhatsApp</label>
+        <input type="tel" id="f-phone" placeholder="08xxxxxxxxxx" value="${state.form.phone}" oninput="updateForm('phone',this.value)" />
+      </div>
+    </div>
+    <div class="field">
+      <label>Email Aktif</label>
+      <input type="email" id="f-email" placeholder="email@kamu.com" value="${state.form.email}" oninput="updateForm('email',this.value)" />
+    </div>
+    <div class="field">
+      <label>Lo tau TalkDNA™ dari mana?</label>
+      <select id="f-source" onchange="updateForm('source',this.value)">
+        <option value="">-- Pilih salah satu --</option>
+        <option value="YouTube Jason Stanley" ${state.form.source==="YouTube Jason Stanley"?"selected":""}>YouTube Jason Stanley</option>
+        <option value="Instagram Jason Stanley" ${state.form.source==="Instagram Jason Stanley"?"selected":""}>Instagram Jason Stanley</option>
+        <option value="TikTok Jason Stanley" ${state.form.source==="TikTok Jason Stanley"?"selected":""}>TikTok Jason Stanley</option>
+        <option value="Rekomendasi teman" ${state.form.source==="Rekomendasi teman"?"selected":""}>Rekomendasi teman</option>
+        <option value="Lainnya" ${state.form.source==="Lainnya"?"selected":""}>Lainnya</option>
+      </select>
+    </div>
+    <button class="btn btn-primary" id="btn-start" onclick="startQuiz()" ${isFormValid()?"":"disabled"}>Lanjut ke Kuis →</button>
+  </div>`;
+}
+
+function updateForm(key, val) {
+  state.form[key] = val;
+  const btn = document.getElementById("btn-start");
+  if (btn) btn.disabled = !isFormValid();
+}
+
+function isFormValid() {
+  const f = state.form;
+  return f.name.trim() && f.phone.trim() && f.email.trim() && f.source;
+}
+
+function startQuiz() {
+  if (!isFormValid()) return;
+  state.screen = "quiz";
+  state.qIndex = 0;
+  state.answers = [];
+  state.selectedType = null;
+  render();
+}
+
+/* QUIZ */
+function renderQuiz() {
+  const q = QUESTIONS[state.qIndex];
+  const pct = Math.round((state.qIndex / QUESTIONS.length) * 100);
+  app.innerHTML = `
+  <div class="fade-in" style="padding-top:32px">
+    <div class="quiz-header">
+      <div class="quiz-meta">
+        <span class="quiz-counter">TalkDNA™ · Pertanyaan ${state.qIndex + 1} / ${QUESTIONS.length}</span>
+        <span class="quiz-pct">${pct}%</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
+    </div>
+    <div class="quiz-q">${q.q}</div>
+    <div class="options">
+      ${q.opts.map((o, i) => `
+        <button class="opt${state.selectedType===o.type?' selected':''}" onclick="selectOpt('${o.type}',${i})">
+          <span class="opt-key">${String.fromCharCode(65+i)}</span>
+          <span>${o.text}</span>
+        </button>`).join("")}
+    </div>
+    <button class="btn btn-primary" id="btn-next" onclick="nextQuestion()" ${state.selectedType?"":"disabled"}>
+      ${state.qIndex < QUESTIONS.length-1 ? "Pertanyaan Berikutnya →" : "Lihat Hasil Gw →"}
+    </button>
+  </div>`;
+}
+
+function selectOpt(type) {
+  state.selectedType = type;
+  renderQuiz();
+}
+
+function nextQuestion() {
+  if (!state.selectedType) return;
+  state.answers.push(state.selectedType);
+  state.selectedType = null;
+  if (state.qIndex < QUESTIONS.length - 1) {
+    state.qIndex++;
+    render();
+  } else {
+    state.resultType = calcResult(state.answers);
+    state.screen = "loading";
+    render();
+    submitData();
+  }
+}
+
+/* LOADING */
+function renderLoading() {
+  app.innerHTML = `
+  <div class="loading-screen fade-in">
+    <div class="loading-spinner"></div>
+    <p>Menganalisis pola komunikasi lo...</p>
+  </div>`;
+  setTimeout(() => {
+    state.screen = "result";
+    render();
+  }, 2200);
+}
+
+/* SUBMIT TO SHEETS */
+async function submitData() {
+  const t = TYPES[state.resultType];
+  await saveToSheet({
+    timestamp: new Date().toISOString(),
+    name: state.form.name,
+    phone: state.form.phone,
+    email: state.form.email,
+    source: state.form.source,
+    result_type: t.name,
+    answers: state.answers.join(", "),
+  });
+}
+
+/* RESULT */
+function renderResult() {
+  const t = TYPES[state.resultType];
+  const sc = t.scores;
+  const bars = [
+    { label: "Kejelasan bicara", key: "clarity" },
+    { label: "Kepercayaan diri", key: "confidence" },
+    { label: "Kemampuan mendengar", key: "listening" },
+    { label: "Pengaruh & influence", key: "influence" },
+    { label: "Empati komunikatif", key: "empathy" },
+  ];
+  app.innerHTML = `
+  <div class="fade-in">
+    <div class="result-hero">
+      <div class="result-type-label">Tipe komunikator lo adalah</div>
+      <div class="result-type-name" style="color:${t.color}">${t.name}</div>
+      <div class="result-tagline">"${t.tagline}"</div>
+      <div class="result-desc">${t.desc.replace(/\n\n/g,'</p><p class="result-desc" style="margin-top:-10px">')}</div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="score-section">
+      <div class="section-eyebrow" style="margin-bottom:16px">Profil komunikasi lo</div>
+      ${bars.map(b => `
+      <div class="score-item">
+        <div class="score-label-row">
+          <span class="score-label">${b.label}</span>
+          <span class="score-val">${sc[b.key]}%</span>
+        </div>
+        <div class="score-track">
+          <div class="score-bar" style="width:0%;background:${t.color}" data-w="${sc[b.key]}"></div>
+        </div>
+      </div>`).join("")}
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="tags-section">
+      <div class="tags-heading">Kekuatan lo</div>
+      <div class="tags-row">${t.strengths.map(s=>`<span class="tag tag-s">✓ ${s}</span>`).join("")}</div>
+    </div>
+    <div class="tags-section">
+      <div class="tags-heading">Area pengembangan</div>
+      <div class="tags-row">${t.weaknesses.map(w=>`<span class="tag tag-w">↗ ${w}</span>`).join("")}</div>
+    </div>
+
+    <div class="insight-cards">
+      <div class="insight-card ic-warning">
+        <div class="insight-card-head"><span>!</span>${t.blindspot.title}</div>
+        <p>${t.blindspot.text}</p>
+      </div>
+      <div class="insight-card ic-tip">
+        <div class="insight-card-head"><span>→</span>${t.tip.title}</div>
+        <p>${t.tip.text}</p>
+      </div>
+    </div>
+
+    <div class="recom-box">
+      <div class="recom-box-head">Rekomendasi untuk lo</div>
+      <h3>Ini yang perlu lo pelajari di Communication Mastery</h3>
+      <p>Semua kelemahan yang teridentifikasi di atas punya solusinya di dalam kelas Communication Mastery — program yang sudah dipercaya <strong>1.300+ murid</strong> dari seluruh Indonesia, dipandu langsung oleh Jason Stanley, Communication Coach bersertifikat BNSP.</p>
+      <div class="recom-modules">
+        ${t.modules.map((m,i)=>`
+        <div class="recom-module">
+          <span class="module-num">0${i+1}</span>
+          <div class="module-text"><strong>${m.name}</strong><br>${m.desc}</div>
+        </div>`).join("")}
+      </div>
+    </div>
+
+    <div class="promo-box">
+      <div class="promo-label">Kode diskon eksklusif untukmu</div>
+      <span class="promo-code">SEMANGATKOMUNIKASI</span>
+      <div class="promo-price"><s>Rp 749.000</s> &nbsp;→&nbsp; <strong>Rp 674.000</strong> / tahun</div>
+    </div>
+
+    <a href="https://stanleyacademic.com/courses/communication-mastery/" class="btn btn-cta" target="_blank">
+      Upgrade Komunikasi Gw Sekarang →
+    </a>
+    <p class="disclaimer">Masukkan kode saat checkout · Hemat Rp 75.000</p>
+  </div>`;
+
+  setTimeout(() => {
+    document.querySelectorAll(".score-bar").forEach(el => {
+      el.style.transition = "width 1s cubic-bezier(.4,0,.2,1)";
+      el.style.width = el.dataset.w + "%";
+    });
+  }, 100);
+}
+
+render();
+</script>
+</body>
+</html>
