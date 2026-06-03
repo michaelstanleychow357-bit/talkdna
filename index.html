@@ -4,7 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>TalkDNA™ — Tes Karakter Komunikasi Lo | Stanley Academy</title>
-<meta name="description" content="Temukan tipe komunikator lo dalam 2 menit. Quiz gratis dari Stanley Academy."/>
+<meta name="description" content="Temukan tipe komunikator lo dalam 5 menit. Assessment gratis dari Stanley Academy."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet"/>
 <style>
@@ -151,27 +151,34 @@ body{
   line-height:1.5;color:var(--ink);margin-bottom:18px;
   letter-spacing:-0.01em;
 }
+.dim-label{
+  display:inline-block;font-size:10px;font-weight:800;letter-spacing:0.08em;
+  text-transform:uppercase;padding:3px 10px;border-radius:20px;
+  margin-bottom:12px;
+}
+.dim-assertiveness{background:#ede9fe;color:#5b21b6}
+.dim-expressiveness{background:#fef3c7;color:#92400e}
+.dim-empathy{background:#dcfce7;color:#166534}
+.dim-reflection{background:#dbeafe;color:#1e40af}
 
-/* OPTIONS */
-.opts{display:flex;flex-direction:column;gap:9px;margin-bottom:20px}
-.opt{
-  display:flex;align-items:flex-start;gap:12px;
+/* LIKERT OPTIONS */
+.likert{display:flex;gap:7px;margin-bottom:20px}
+.lopt{
+  flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;
   background:var(--white);border:1.5px solid var(--border);
-  border-radius:var(--r);padding:14px 16px;
-  cursor:pointer;transition:all .18s;text-align:left;
+  border-radius:var(--r-sm);padding:12px 6px;
+  cursor:pointer;transition:all .18s;
   font-family:'Plus Jakarta Sans',sans-serif;
-  font-size:clamp(13px,2.2vw,15px);font-weight:500;
-  line-height:1.55;color:var(--ink-2);width:100%;
 }
-.opt:hover{border-color:var(--blue);background:var(--blue-light);color:var(--ink)}
-.opt.sel{border-color:var(--blue);background:var(--blue-light);color:var(--ink)}
-.opt.sel .okey{background:var(--blue);color:#fff}
-.okey{
-  font-size:11px;font-weight:800;letter-spacing:0.04em;
-  background:var(--bg-2);color:var(--ink-3);
-  border-radius:6px;padding:3px 8px;flex-shrink:0;
-  margin-top:2px;transition:all .18s;
+.lopt:hover{border-color:var(--blue);background:var(--blue-light)}
+.lopt.sel{border-color:var(--blue);background:var(--blue-light)}
+.lopt-num{
+  font-size:17px;font-weight:800;color:var(--ink-3);
+  transition:color .18s;
 }
+.lopt.sel .lopt-num{color:var(--blue)}
+.lopt-txt{font-size:9px;font-weight:700;letter-spacing:0.03em;text-align:center;color:var(--ink-3);line-height:1.3}
+@media(min-width:400px){.lopt-txt{font-size:10px}}
 
 /* BUTTON */
 .btn{
@@ -347,13 +354,13 @@ async function saveToSheet(data) {
   } catch (e) { console.error("Sheet error:", e); }
 }
 
+// ─── ARCHETYPE DATA ───────────────────────────────────────────────────────────
 const TYPES = {
   overthinker: {
     name: "The Overthinker",
     tagline: "Otaknya jalan, mulutnya ngerem.",
     color: "#6941c6",
     desc: `<p>Lo adalah orang yang paling banyak mikir di ruangan — tapi ironisnya, justru itu yang bikin lo paling jarang didengar. Sebelum ngomong, lo udah simulate semua kemungkinan salah, semua reaksi negatif, semua cara orang bisa salah paham. Hasilnya? Lo kehilangan momen, atau akhirnya ngomong dengan cara yang terlalu hati-hati sampai kehilangan impact-nya.</p><p>Di balik ini semua ada kecerdasan yang luar biasa dan standar tinggi. Lo cuma butuh sistem yang ngasih lo izin untuk berbicara — bahkan sebelum lo "siap".</p>`,
-    scores: { clarity: 40, confidence: 25, listening: 85, influence: 45, empathy: 80 },
     strengths: ["Analitis & mendalam", "Pendengar aktif", "Tidak asal ngomong", "Empatik terhadap orang lain"],
     weaknesses: ["Sering kehilangan momen", "Ragu-ragu sebelum bicara", "Overthinking melemahkan impact", "Sulit ekspresikan pendapat tegas"],
     blindspot: { icon: "!", cls: "warn", title: "Blind spot lo", text: "Lo nganggep kalau lo ngomong dengan sempurna, orang akan lebih respect. Faktanya, orang lebih respect sama yang mau speak up — bukan yang sempurna. <strong>Keraguan lo terlihat sebagai kurangnya kepercayaan diri, bukan kehati-hatian.</strong>" },
@@ -370,7 +377,6 @@ const TYPES = {
     tagline: "Ada, tapi kayak tidak ada.",
     color: "#1a56db",
     desc: `<p>Lo bukan pemalu dalam arti yang orang bayangkan. Lo justru observer yang tajam — lo perhatiin detail yang orang lain lewatin, lo ngerti dinamika grup, dan lo sering punya insight terbaik di ruangan. Tapi hampir tidak ada yang tau, karena lo jarang bicara.</p><p>Akar masalahnya biasanya bukan kemampuan — tapi rasa aman. Entah dari pengalaman masa lalu yang bikin lo ngerasa suara lo tidak penting, atau lingkungan yang tidak pernah ngasih lo ruang. Hasilnya, lo jadi invisible — padahal lo seharusnya jadi salah satu yang paling didengar.</p>`,
-    scores: { clarity: 55, confidence: 20, listening: 95, influence: 30, empathy: 90 },
     strengths: ["Observer yang tajam", "Pendengar terbaik", "Sangat empatik", "Tidak konfrontatif"],
     weaknesses: ["Hampir tidak pernah inisiasi percakapan", "Menghindari konflik bahkan yang sehat", "Kurang assertif", "Sering diabaikan dalam group setting"],
     blindspot: { icon: "!", cls: "warn", title: "Blind spot lo", text: "Lo pikir diam adalah sopan atau rendah hati. Tapi dari perspektif orang lain — terutama di konteks profesional — diam sering dibaca sebagai <strong>tidak peduli, tidak kompeten, atau tidak punya kontribusi</strong>. Lo sedang merugikan diri sendiri." },
@@ -387,7 +393,6 @@ const TYPES = {
     tagline: "Semua diisi, tapi yang nyangkut berapa?",
     color: "#b45309",
     desc: `<p>Energi lo tinggi, antusiasme lo menular, dan lo adalah orang yang bikin suasana hidup. Di permukaan, lo kelihatan seperti komunikator yang ideal. Tapi kalau lo jujur sama diri sendiri, lo sering bertanya-tanya — "kenapa orang tidak follow through setelah gw ngomong panjang lebar?"</p><p>Jawabannya: komunikasi bukan tentang seberapa banyak yang lo keluarkan, tapi seberapa banyak yang masuk ke kepala orang lain. Lo sudah punya energi dan presence — sekarang lo butuh struktur dan seni mendengarkan yang akan mengubah percakapan lo dari entertaining jadi benar-benar influential.</p>`,
-    scores: { clarity: 60, confidence: 90, listening: 30, influence: 65, empathy: 55 },
     strengths: ["Percaya diri & ekspresif", "Energi tinggi yang menular", "Mudah memulai percakapan", "Karisma natural"],
     weaknesses: ["Lebih banyak bicara daripada mendengar", "Kurang struktur dalam penyampaian", "Sering mendominasi percakapan", "Pesan utama tenggelam dalam kata-kata"],
     blindspot: { icon: "!", cls: "warn", title: "Blind spot lo", text: "Lo mengukur kualitas komunikasi dari seberapa seru percakapannya — bukan dari seberapa besar impact-nya. Orang mungkin menikmati ngobrol sama lo, tapi <strong>tidak ingat apa yang lo minta atau sampaikan</strong>. Entertaining ≠ influential." },
@@ -404,7 +409,6 @@ const TYPES = {
     tagline: "Didengar — tapi apakah benar-benar dipilih?",
     color: "#be123c",
     desc: `<p>Lo tegas, efisien, dan tidak suka basa-basi. Ketika lo bicara, orang mendengarkan — setidaknya di permukaan. Lo punya presence yang kuat dan natural leadership yang banyak orang tidak punya.</p><p>Tapi ada harga yang lo bayar: orang sering comply bukan karena mereka genuinely setuju, tapi karena mereka tidak nyaman berargumen sama lo. Itu bukan influence — itu compliance karena tekanan. Lo sudah punya otoritas — sekarang lo butuh belajar cara mengajak, bukan sekadar mendorong.</p>`,
-    scores: { clarity: 85, confidence: 95, listening: 35, influence: 75, empathy: 30 },
     strengths: ["Direct & tanpa basa-basi", "Confidence yang tinggi", "Natural leadership presence", "Sangat jelas dalam penyampaian"],
     weaknesses: ["Terkesan intimidatif atau agresif", "Kurang empati dalam penyampaian", "Orang comply karena tekanan", "Sulit membangun trust jangka panjang"],
     blindspot: { icon: "!", cls: "warn", title: "Blind spot lo", text: "Lo sering mengira silence berarti agreement. Padahal orang diam karena mereka tidak merasa aman untuk menolak. <strong>Influence yang sesungguhnya adalah ketika orang setuju bahkan saat lo tidak ada di ruangan.</strong>" },
@@ -421,7 +425,6 @@ const TYPES = {
     tagline: "Fondasi bagus — sekarang saatnya naik level.",
     color: "#0d7a4e",
     desc: `<p>Lo adalah tipe komunikator yang membuat orang merasa nyaman. Lo bisa baca situasi, tahu kapan harus bicara dan kapan harus dengerin, dan orang sering merasa genuinely didengar setelah ngobrol sama lo. Itu gift yang tidak semua orang punya.</p><p>Lo sudah melewati stage yang paling banyak orang stuck — rasa takut dan canggung. Tapi ada ceiling yang mungkin lo rasakan: lo sudah disukai, tapi apakah lo juga dipercaya sebagai orang yang punya vision? Apakah lo bisa influence keputusan besar? Apakah pesan lo di digital media sekuat di tatap muka? Inilah frontier berikutnya.</p>`,
-    scores: { clarity: 78, confidence: 72, listening: 88, influence: 65, empathy: 90 },
     strengths: ["Adaptif di berbagai situasi", "Membuat orang merasa didengar", "Empati yang tinggi", "Komunikasi dua arah yang sehat"],
     weaknesses: ["Belum maksimal di komunikasi digital", "Influence bisa diperkuat lebih jauh", "Kadang terlalu akomodatif", "Storytelling bisa lebih tajam"],
     blindspot: { icon: "!", cls: "warn", title: "Blind spot lo", text: "Lo bisa sangat baik di percakapan 1-on-1 tapi kehilangan kekuatan itu di skala yang lebih besar. <strong>Skill lo saat ini butuh di-scale ke medium yang berbeda — digital, publik, dan skala besar.</strong>" },
@@ -435,90 +438,119 @@ const TYPES = {
   }
 };
 
+// ─── 32 QUESTIONS ─────────────────────────────────────────────────────────────
 const QUESTIONS = [
-  { q: "Lo diundang meeting penting dan punya ide yang bagus. Yang paling sering terjadi?", opts: [
-    { text: "Gw mikirin panjang-panjang dulu, tapi sering kelamaan sampai momennya lewat", type: "overthinker" },
-    { text: "Gw nunggu ada yang nanya atau ada opening yang jelas — jarang langsung angkat tangan", type: "ghost" },
-    { text: "Gw langsung ngomong, kadang bahkan sebelum orang lain selesai bicara", type: "talker" },
-    { text: "Gw langsung sampaikan to-the-point, kadang orang ngerasa gw kurang sabar", type: "dominator" },
-  ]},
-  { q: "Ada konflik sama rekan kerja atau teman soal keputusan penting. Lo biasanya...", opts: [
-    { text: "Mau ngomong tapi takut pilih kata yang salah, akhirnya nahan diri", type: "overthinker" },
-    { text: "Menghindari konfrontasi — gw lebih milih damai meski gw tidak setuju", type: "ghost" },
-    { text: "Langsung ekspresikan semua, kadang malah melebar ke hal lain", type: "talker" },
-    { text: "Langsung konfrontasi dan tegasin posisi gw — gw gak suka hal yang menggantung", type: "dominator" },
-  ]},
-  { q: "Saat ketemu orang baru di acara profesional atau sosial, lo...", opts: [
-    { text: "Kepikiran mau ngomong apa terus — sering jadi awkward sendiri padahal orang lain fine-fine aja", type: "overthinker" },
-    { text: "Nunggu orang lain yang duluan ajak ngobrol, lebih nyaman jadi pendengar", type: "ghost" },
-    { text: "Langsung nyambung, bisa ngobrol sama siapa aja hampir tanpa usaha", type: "talker" },
-    { text: "Gw pilih ngobrol sama orang yang keliatan punya value buat diajak diskusi", type: "dominator" },
-  ]},
-  { q: "Feedback jujur dari orang terdekat soal cara lo berkomunikasi...", opts: [
-    { text: "\"Lo kayak selalu ragu-ragu, kenapa gak langsung aja ngomong?\"", type: "overthinker" },
-    { text: "\"Gw sering gak tau lo lagi mikirin apa atau ngerasa apa\"", type: "ghost" },
-    { text: "\"Lo seru tapi kadang gw ngerasa gak kebagian ngomong\"", type: "talker" },
-    { text: "\"Lo direct banget, kadang terasa kurang empati atau terlalu blunt\"", type: "dominator" },
-  ]},
-  { q: "Kalau harus presentasi atau bicara di depan banyak orang, lo ngerasa...", opts: [
-    { text: "Udah prepare sangat lama tapi tetap nervous — takut salah ngomong di depan semua orang", type: "overthinker" },
-    { text: "Hindarin kalau bisa. Ini salah satu situasi yang paling gw takutin", type: "ghost" },
-    { text: "Enjoy banget — justru gw lebih hidup kalau ada audience-nya", type: "talker" },
-    { text: "Oke-oke aja, gw lebih prefer diskusi langsung yang bisa gw control arahnya", type: "dominator" },
-  ]},
-  { q: "Waktu lo punya opini yang berbeda dari mayoritas di sebuah diskusi...", opts: [
-    { text: "Gw mikir panjang soal cara nyampeinnya sampai sering gak jadi ngomong", type: "overthinker" },
-    { text: "Gw diam dan ikutin aja — tidak worth it untuk berdebat", type: "ghost" },
-    { text: "Gw langsung sampaikan, kadang jadi debat panjang yang melebar", type: "talker" },
-    { text: "Gw sampaikan dengan tegas dan langsung — gw gak takut berbeda pendapat", type: "dominator" },
-  ]},
-  { q: "Kalau lo kirim pesan penting lewat chat atau email, yang paling sering terjadi...", opts: [
-    { text: "Gw nulis ulang berkali-kali sampai ngerasa sempurna baru dikirim — kadang lama banget", type: "overthinker" },
-    { text: "Gw nulis singkat aja atau malah menunda karena gak tau harus mulai dari mana", type: "ghost" },
-    { text: "Gw langsung tulis dan kirim — tapi kadang pesannya panjang dan orang bingung intinya apa", type: "talker" },
-    { text: "Gw tulis super singkat dan to-the-point — kadang orang ngerasa gw judes lewat teks", type: "dominator" },
-  ]},
-  { q: "Lo lagi negosiasi sesuatu — entah gaji, project, atau hal personal. Gaya lo...", opts: [
-    { text: "Gw sering underprepare karena terlalu lama mikir 'right moment' yang tidak pernah datang", type: "overthinker" },
-    { text: "Gw susah banget negotiate — lebih milih terima apa adanya daripada rasa awkward", type: "ghost" },
-    { text: "Gw bisa ngomong banyak tapi kadang gak tau kapan harus stop atau kapan sudah cukup", type: "talker" },
-    { text: "Gw agresif dalam negosiasi — kadang orang merasa tertekan dan jadi defensive", type: "dominator" },
-  ]},
+  // ASSERTIVENESS (8)
+  { text: "Saya nyaman menyampaikan pendapat meskipun berbeda dengan mayoritas.", dimension: "assertiveness", reverse: false },
+  { text: "Saya sering menahan opini agar tidak menimbulkan konflik.", dimension: "assertiveness", reverse: true },
+  { text: "Saya berani meminta apa yang saya butuhkan.", dimension: "assertiveness", reverse: false },
+  { text: "Saya kesulitan mengatakan \"tidak\".", dimension: "assertiveness", reverse: true },
+  { text: "Saat diskusi, saya aktif menyuarakan ide.", dimension: "assertiveness", reverse: false },
+  { text: "Saya sering membiarkan orang lain memutuskan untuk saya.", dimension: "assertiveness", reverse: true },
+  { text: "Saya nyaman mengajukan pertanyaan di forum.", dimension: "assertiveness", reverse: false },
+  { text: "Saya lebih sering diam meski punya masukan.", dimension: "assertiveness", reverse: true },
+  // EXPRESSIVENESS (8)
+  { text: "Saya mudah memulai percakapan dengan orang baru.", dimension: "expressiveness", reverse: false },
+  { text: "Saya sering kesulitan menemukan topik pembicaraan.", dimension: "expressiveness", reverse: true },
+  { text: "Saya menikmati berbicara di depan kelompok.", dimension: "expressiveness", reverse: false },
+  { text: "Saya cenderung pendiam di lingkungan baru.", dimension: "expressiveness", reverse: true },
+  { text: "Saya mudah menjelaskan apa yang saya pikirkan.", dimension: "expressiveness", reverse: false },
+  { text: "Saya sering bingung bagaimana mengekspresikan ide.", dimension: "expressiveness", reverse: true },
+  { text: "Saya merasa energik saat berinteraksi dengan banyak orang.", dimension: "expressiveness", reverse: false },
+  { text: "Saya lebih nyaman hanya menjadi pengamat.", dimension: "expressiveness", reverse: true },
+  // EMPATHY (8)
+  { text: "Saya berusaha memahami sudut pandang orang lain.", dimension: "empathy", reverse: false },
+  { text: "Saya sering memotong pembicaraan orang.", dimension: "empathy", reverse: true },
+  { text: "Orang sering merasa didengar saat berbicara dengan saya.", dimension: "empathy", reverse: false },
+  { text: "Saya lebih fokus pada apa yang ingin saya katakan daripada mendengar.", dimension: "empathy", reverse: true },
+  { text: "Saya bisa membaca suasana sosial dengan cukup baik.", dimension: "empathy", reverse: false },
+  { text: "Saya sering melewatkan sinyal emosi orang lain.", dimension: "empathy", reverse: true },
+  { text: "Saya penasaran dengan alasan di balik perilaku seseorang.", dimension: "empathy", reverse: false },
+  { text: "Saya mudah memahami perasaan orang lain.", dimension: "empathy", reverse: false },
+  // REFLECTION (8)
+  { text: "Saya memikirkan kata-kata saya sebelum berbicara.", dimension: "reflection", reverse: false },
+  { text: "Saya sering berbicara spontan tanpa banyak berpikir.", dimension: "reflection", reverse: true },
+  { text: "Saya mempertimbangkan dampak ucapan saya.", dimension: "reflection", reverse: false },
+  { text: "Saya sering menyesali hal yang baru saja saya katakan.", dimension: "reflection", reverse: true },
+  { text: "Saya suka menganalisis percakapan setelah selesai.", dimension: "reflection", reverse: false },
+  { text: "Saya jarang memikirkan konsekuensi kata-kata saya.", dimension: "reflection", reverse: true },
+  { text: "Saya cenderung berhati-hati saat menyampaikan sesuatu.", dimension: "reflection", reverse: false },
+  { text: "Saya lebih mengutamakan kecepatan daripada ketepatan saat berbicara.", dimension: "reflection", reverse: true },
 ];
 
+const SCALE = [
+  { val: 1, label: "Sangat\nTidak\nSetuju" },
+  { val: 2, label: "Tidak\nSetuju" },
+  { val: 3, label: "Netral" },
+  { val: 4, label: "Setuju" },
+  { val: 5, label: "Sangat\nSetuju" },
+];
+
+const DIM_LABELS = {
+  assertiveness: "Asertivitas",
+  expressiveness: "Ekspresivitas",
+  empathy: "Empati",
+  reflection: "Refleksi",
+};
+
+// ─── SCORING ──────────────────────────────────────────────────────────────────
+function calcDimensions(answers) {
+  const raw = { assertiveness: 0, expressiveness: 0, empathy: 0, reflection: 0 };
+  answers.forEach((val, i) => {
+    const q = QUESTIONS[i];
+    const scored = q.reverse ? (6 - val) : val;
+    raw[q.dimension] += scored;
+  });
+  const pct = {};
+  Object.keys(raw).forEach(d => {
+    pct[d] = Math.round(((raw[d] - 8) / 32) * 100);
+  });
+  return pct;
+}
+
+function calcArchetype(dims) {
+  const { assertiveness: A, expressiveness: E, empathy: EMP, reflection: R } = dims;
+  const scores = {
+    overthinker: (R * 0.65) + ((100 - A) * 0.35),
+    ghost:       ((100 - A) * 0.50) + ((100 - E) * 0.50),
+    talker:      (E * 0.60) + ((100 - R) * 0.40),
+    dominator:   (A * 0.60) + ((100 - EMP) * 0.40),
+    connector:   Math.min(100, Math.max(0, 100 - (Math.abs(A - 70) + Math.abs(E - 70) + Math.abs(EMP - 80) + Math.abs(R - 70)) / 4)),
+  };
+  return Object.keys(scores).reduce((a, b) => scores[a] >= scores[b] ? a : b);
+}
+
+// ─── STATE ────────────────────────────────────────────────────────────────────
 let S = {
   screen: "hero",
   form: { name: "", phone: "", email: "", source: "" },
-  answers: [], qIndex: 0, selType: null, resultType: null,
+  answers: [],
+  qIndex: 0,
+  selVal: null,
+  dims: null,
+  resultType: null,
 };
-
-function calcResult(a) {
-  const sc = { overthinker:0, ghost:0, talker:0, dominator:0 };
-  a.forEach(x => { if (x in sc) sc[x]++; });
-  const mx = Math.max(...Object.values(sc));
-  if (mx <= 2) return "connector";
-  return Object.keys(sc).find(k => sc[k] === mx) || "connector";
-}
 
 const app = document.getElementById("app");
 function render() {
   app.innerHTML = "";
-  if (S.screen === "hero") rHero();
-  else if (S.screen === "form") rForm();
-  else if (S.screen === "quiz") rQuiz();
+  if (S.screen === "hero")    rHero();
+  else if (S.screen === "form")    rForm();
+  else if (S.screen === "quiz")    rQuiz();
   else if (S.screen === "loading") rLoading();
-  else if (S.screen === "result") rResult();
+  else if (S.screen === "result")  rResult();
 }
 
+// ─── SCREENS ──────────────────────────────────────────────────────────────────
 function rHero() {
   app.innerHTML = `
   <div class="hero fin">
-    <div class="hero-pill"><span class="hero-pill-dot"></span>Quiz Gratis · 2 Menit</div>
+    <div class="hero-pill"><span class="hero-pill-dot"></span>Assessment Gratis · ~5 Menit</div>
     <h1>Cari tahu <span>tipe</span><br>komunikator lo.</h1>
-    <p class="hero-desc">8 pertanyaan yang dirancang oleh Communication Coach bersertifikat BNSP untuk mengidentifikasi pola komunikasi lo — dan apa yang perlu diperbaiki.</p>
+    <p class="hero-desc">32 pertanyaan psikometri yang dirancang oleh Communication Coach bersertifikat BNSP untuk mengidentifikasi pola komunikasi lo secara mendalam — dan apa yang perlu diperbaiki.</p>
     <div class="hero-stats">
       <div class="hero-stat"><span class="hero-stat-icon">👥</span>1.300+ peserta</div>
-      <div class="hero-stat"><span class="hero-stat-icon">⏱</span>~2 menit</div>
+      <div class="hero-stat"><span class="hero-stat-icon">⏱</span>~5 menit</div>
       <div class="hero-stat"><span class="hero-stat-icon">✓</span>Gratis 100%</div>
     </div>
     <button class="btn btn-blue" onclick="S.screen='form';render()">Mulai Tes Sekarang →</button>
@@ -547,7 +579,7 @@ function rForm() {
         <option value="Rekomendasi teman" ${S.form.source==="Rekomendasi teman"?"selected":""}>Rekomendasi teman</option>
         <option value="Lainnya" ${S.form.source==="Lainnya"?"selected":""}>Lainnya</option>
       </select></div>
-    <button class="btn btn-blue" id="bstart" onclick="startQ()" ${fValid()?"":"disabled"}>Lanjut ke Kuis →</button>
+    <button class="btn btn-blue" id="bstart" onclick="startQ()" ${fValid()?"":"disabled"}>Lanjut ke Assessment →</button>
   </div>`;
 }
 
@@ -560,12 +592,13 @@ function fValid() { return S.form.name.trim()&&S.form.phone.trim()&&S.form.email
 
 function startQ() {
   if(!fValid()) return;
-  S.screen="quiz"; S.qIndex=0; S.answers=[]; S.selType=null; render();
+  S.screen="quiz"; S.qIndex=0; S.answers=[]; S.selVal=null; render();
 }
 
 function rQuiz() {
   const q = QUESTIONS[S.qIndex];
   const pct = Math.round((S.qIndex / QUESTIONS.length)*100);
+  const dim = q.dimension;
   app.innerHTML = `
   <div class="fin" style="padding-top:28px">
     <div class="qhdr">
@@ -575,27 +608,33 @@ function rQuiz() {
       </div>
       <div class="ptrack"><div class="pfill" style="width:${pct}%"></div></div>
     </div>
-    <div class="quiz-q">${q.q}</div>
-    <div class="opts">
-      ${q.opts.map((o,i)=>`
-      <button class="opt${S.selType===o.type?' sel':''}" onclick="selOpt('${o.type}')">
-        <span class="okey">${String.fromCharCode(65+i)}</span>
-        <span>${o.text}</span>
+    <span class="dim-label dim-${dim}">${DIM_LABELS[dim]}</span>
+    <div class="quiz-q">${q.text}</div>
+    <div class="likert">
+      ${SCALE.map(s=>`
+      <button class="lopt${S.selVal===s.val?' sel':''}" onclick="selOpt(${s.val})">
+        <span class="lopt-num">${s.val}</span>
+        <span class="lopt-txt">${s.label.replace(/\n/g,'<br>')}</span>
       </button>`).join("")}
     </div>
-    <button class="btn btn-blue" id="bnxt" onclick="nextQ()" ${S.selType?"":"disabled"}>
+    <button class="btn btn-blue" id="bnxt" onclick="nextQ()" ${S.selVal!==null?"":"disabled"}>
       ${S.qIndex<QUESTIONS.length-1?"Pertanyaan Berikutnya →":"Lihat Hasil Gw →"}
     </button>
   </div>`;
 }
 
-function selOpt(t) { S.selType=t; rQuiz(); }
+function selOpt(v) { S.selVal=v; rQuiz(); }
 
 function nextQ() {
-  if(!S.selType) return;
-  S.answers.push(S.selType); S.selType=null;
-  if(S.qIndex<QUESTIONS.length-1) { S.qIndex++; render(); }
-  else { S.resultType=calcResult(S.answers); S.screen="loading"; render(); submitD(); }
+  if(S.selVal===null) return;
+  S.answers.push(S.selVal); S.selVal=null;
+  if(S.qIndex<QUESTIONS.length-1) {
+    S.qIndex++; render();
+  } else {
+    S.dims = calcDimensions(S.answers);
+    S.resultType = calcArchetype(S.dims);
+    S.screen="loading"; render(); submitD();
+  }
 }
 
 function rLoading() {
@@ -604,24 +643,30 @@ function rLoading() {
 }
 
 async function submitD() {
-  const t=TYPES[S.resultType];
+  const t = TYPES[S.resultType];
   await saveToSheet({
     timestamp: new Date().toISOString(),
-    name: S.form.name, phone: S.form.phone,
-    email: S.form.email, source: S.form.source,
-    result_type: t.name, answers: S.answers.join(", "),
+    name: S.form.name,
+    phone: S.form.phone,
+    email: S.form.email,
+    source: S.form.source,
+    assertiveness: S.dims.assertiveness,
+    expressiveness: S.dims.expressiveness,
+    empathy: S.dims.empathy,
+    reflection: S.dims.reflection,
+    result_type: t.name,
+    answers: S.answers.join(", "),
   });
 }
 
 function rResult() {
   const t = TYPES[S.resultType];
-  const sc = t.scores;
+  const dims = S.dims;
   const bars = [
-    { l:"Kejelasan bicara", k:"clarity" },
-    { l:"Kepercayaan diri", k:"confidence" },
-    { l:"Kemampuan mendengar", k:"listening" },
-    { l:"Pengaruh & influence", k:"influence" },
-    { l:"Empati komunikatif", k:"empathy" },
+    { l: "Asertivitas",   k: "assertiveness" },
+    { l: "Ekspresivitas", k: "expressiveness" },
+    { l: "Empati",        k: "empathy" },
+    { l: "Refleksi",      k: "reflection" },
   ];
   app.innerHTML = `
   <div class="fin">
@@ -633,11 +678,11 @@ function rResult() {
     </div>
     <div class="divider"></div>
     <div class="scores">
-      <div class="eyebrow" style="margin-bottom:16px">Profil komunikasi lo</div>
+      <div class="eyebrow" style="margin-bottom:16px">Profil dimensi komunikasi lo</div>
       ${bars.map(b=>`
       <div class="score-item">
-        <div class="score-row"><span class="score-lbl">${b.l}</span><span class="score-val">${sc[b.k]}%</span></div>
-        <div class="strack"><div class="sbar" style="width:0%;background:${t.color}" data-w="${sc[b.k]}"></div></div>
+        <div class="score-row"><span class="score-lbl">${b.l}</span><span class="score-val">${dims[b.k]}%</span></div>
+        <div class="strack"><div class="sbar" style="width:0%;background:${t.color}" data-w="${dims[b.k]}"></div></div>
       </div>`).join("")}
     </div>
     <div class="divider"></div>
