@@ -2,343 +2,600 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
 <title>TalkDNA™ — Tes Karakter Komunikasi Lo | Stanley Academy</title>
 <meta name="description" content="Temukan tipe komunikator lo dalam 5 menit. Assessment gratis dari Stanley Academy."/>
+<meta name="theme-color" content="#0a0e27"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{
-  font-family:'Plus Jakarta Sans',sans-serif;
-  background:#f0f5ff;
-  color:#0f1b35;
-  min-height:100vh;
-  overflow-x:hidden;
-  line-height:1.6;
-}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+
 :root{
-  --blue:#1a56db;
-  --blue-dark:#1241b0;
-  --blue-light:#e8f0fe;
-  --blue-mid:#c7d9fc;
-  --ink:#0f1b35;
-  --ink-2:#374160;
-  --ink-3:#6b7699;
-  --bg:#f0f5ff;
-  --bg-2:#e4ecfd;
-  --white:#ffffff;
+  --ink:#0a0e27;
+  --ink-2:#1a1f3a;
+  --ink-3:#4a5170;
+  --ink-4:#8a92b0;
+  --paper:#f6f4ef;
+  --paper-2:#ecebe4;
+  --cream:#faf8f3;
+  --line:rgba(10,14,39,0.10);
+  --line-2:rgba(10,14,39,0.18);
+  --accent:#3d5afe;
+  --accent-2:#7c4dff;
+  --accent-glow:rgba(61,90,254,0.35);
+  --gold:#c9a14a;
   --green:#0d7a4e;
   --green-bg:#e6f7f0;
   --red:#c0392b;
   --red-bg:#fdecea;
-  --border:rgba(26,86,219,0.15);
-  --border-2:rgba(26,86,219,0.28);
-  --r:16px;
-  --r-sm:10px;
-  --shadow:0 2px 16px rgba(26,86,219,0.10);
-  --shadow-lg:0 6px 32px rgba(26,86,219,0.16);
+  --r:20px;
+  --r-sm:12px;
+  --r-lg:28px;
+  --serif:'Instrument Serif', 'Times New Roman', serif;
+  --sans:'Inter', system-ui, sans-serif;
+  --mono:'JetBrains Mono', monospace;
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --ease-out:cubic-bezier(.16,1,.3,1);
 }
 
-/* LAYOUT */
-.wrap{max-width:640px;margin:0 auto;padding:0 20px 80px}
-@media(min-width:480px){.wrap{padding:0 28px 80px}}
+body{
+  font-family:var(--sans);
+  background:var(--paper);
+  color:var(--ink);
+  min-height:100vh;
+  min-height:100dvh;
+  overflow-x:hidden;
+  line-height:1.55;
+  font-feature-settings:"ss01","cv11";
+  position:relative;
+}
+
+/* AMBIENT BACKGROUND */
+.ambient{
+  position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;
+}
+.ambient::before,.ambient::after{
+  content:"";position:absolute;border-radius:50%;filter:blur(80px);opacity:.45;
+  animation:float 22s ease-in-out infinite;
+}
+.ambient::before{
+  width:520px;height:520px;
+  background:radial-gradient(circle,#a8b6ff 0%,transparent 65%);
+  top:-180px;left:-120px;
+}
+.ambient::after{
+  width:600px;height:600px;
+  background:radial-gradient(circle,#d4c5ff 0%,transparent 65%);
+  bottom:-200px;right:-150px;
+  animation-delay:-11s;
+}
+@keyframes float{
+  0%,100%{transform:translate(0,0) scale(1)}
+  50%{transform:translate(40px,-30px) scale(1.08)}
+}
+.grain{
+  position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.35;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/></svg>");
+}
+
+.shell{position:relative;z-index:2;max-width:680px;margin:0 auto;padding:0 22px 90px}
+@media(min-width:520px){.shell{padding:0 32px 90px}}
 
 /* HEADER */
 .hdr{
   display:flex;align-items:center;justify-content:space-between;
-  padding:20px 0 0;
+  padding:24px 0 0;
 }
 .hdr-brand{
-  font-size:14px;font-weight:800;color:var(--blue);
+  display:inline-flex;align-items:center;gap:9px;
+  font-size:13px;font-weight:700;color:var(--ink);
   text-decoration:none;letter-spacing:-0.01em;
 }
-.hdr-badge{
-  font-size:11px;font-weight:700;letter-spacing:0.06em;
-  background:var(--blue-light);color:var(--blue);
-  border-radius:20px;padding:4px 12px;
+.hdr-brand-mark{
+  width:26px;height:26px;border-radius:8px;
+  background:var(--ink);color:var(--cream);
+  display:grid;place-items:center;font-family:var(--serif);font-size:18px;font-style:italic;
+  line-height:1;padding-bottom:2px;
 }
+.hdr-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:10px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--ink-3);
+  background:rgba(255,255,255,.6);backdrop-filter:blur(10px);
+  border:1px solid var(--line);
+  border-radius:100px;padding:6px 12px;
+}
+.hdr-badge::before{
+  content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);
+  box-shadow:0 0 0 3px var(--accent-glow);
+  animation:pulse 2s ease infinite;
+}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.3)}}
 
 /* HERO */
-.hero{padding:48px 0 36px}
-.hero-pill{
-  display:inline-flex;align-items:center;gap:7px;
-  background:var(--white);border:1.5px solid var(--border-2);
-  border-radius:40px;padding:6px 14px;margin-bottom:24px;
-  font-size:12px;font-weight:700;color:var(--blue);letter-spacing:0.04em;
+.hero{padding:72px 0 40px;animation:fadeUp .9s var(--ease-out) both}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--mono);font-size:11px;font-weight:500;
+  color:var(--ink-3);letter-spacing:0.08em;text-transform:uppercase;
+  margin-bottom:32px;
 }
-.hero-pill-dot{
-  width:7px;height:7px;border-radius:50%;background:var(--blue);flex-shrink:0;
-  animation:blink 2s ease infinite;
-}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.hero-eyebrow-line{width:32px;height:1px;background:var(--ink-3)}
 .hero h1{
-  font-size:clamp(2.2rem,7vw,3.6rem);font-weight:800;
-  line-height:1.1;letter-spacing:-0.03em;color:var(--ink);
-  margin-bottom:18px;
+  font-family:var(--serif);font-weight:400;
+  font-size:clamp(54px,11vw,86px);
+  line-height:0.95;letter-spacing:-0.025em;
+  color:var(--ink);margin-bottom:28px;
 }
-.hero h1 span{color:var(--blue)}
+.hero h1 em{
+  font-style:italic;color:var(--accent);
+  background:linear-gradient(120deg,var(--accent),var(--accent-2));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
 .hero-desc{
-  font-size:clamp(15px,2.5vw,17px);color:var(--ink-2);
-  line-height:1.7;max-width:500px;margin-bottom:28px;
+  font-size:17px;color:var(--ink-3);max-width:520px;
+  margin-bottom:36px;line-height:1.6;
 }
 .hero-stats{
-  display:flex;flex-wrap:wrap;gap:8px;margin-bottom:32px;
+  display:flex;flex-wrap:wrap;gap:8px;margin-bottom:36px;
 }
 .hero-stat{
-  display:flex;align-items:center;gap:6px;
-  background:var(--white);border:1.5px solid var(--border);
-  border-radius:40px;padding:6px 14px;
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,.7);backdrop-filter:blur(10px);
+  border:1px solid var(--line);
+  border-radius:100px;padding:9px 16px;
   font-size:13px;font-weight:600;color:var(--ink-2);
 }
-.hero-stat-icon{font-size:14px}
+.hero-stat-dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.hero-stat:nth-child(2) .hero-stat-dot{background:var(--gold)}
+.hero-stat:nth-child(3) .hero-stat-dot{background:var(--green)}
 
-/* DIVIDER */
-.divider{height:1px;background:var(--border);margin:28px 0}
-
-/* STEP LABEL */
-.eyebrow{
-  font-size:11px;font-weight:800;letter-spacing:0.1em;
-  text-transform:uppercase;color:var(--blue);margin-bottom:8px;
+/* HERO ARCHETYPE PREVIEW */
+.archetypes-preview{
+  display:flex;gap:-8px;margin-bottom:36px;align-items:center;
 }
-.step-title{
-  font-size:clamp(1.2rem,3.5vw,1.5rem);font-weight:800;
-  color:var(--ink);line-height:1.3;margin-bottom:22px;
-  letter-spacing:-0.02em;
+.archetypes-preview-row{display:flex}
+.ap-chip{
+  width:38px;height:38px;border-radius:50%;
+  border:2.5px solid var(--paper);
+  background:var(--ink);color:var(--cream);
+  display:grid;place-items:center;font-family:var(--serif);font-size:18px;font-style:italic;
+  margin-left:-10px;line-height:1;
+}
+.ap-chip:first-child{margin-left:0}
+.ap-chip:nth-child(1){background:#6941c6}
+.ap-chip:nth-child(2){background:#1a56db}
+.ap-chip:nth-child(3){background:#b45309}
+.ap-chip:nth-child(4){background:#be123c}
+.ap-chip:nth-child(5){background:#0d7a4e}
+.ap-txt{font-size:12px;color:var(--ink-3);margin-left:14px;line-height:1.4}
+.ap-txt strong{color:var(--ink);display:block;font-weight:600;font-size:13px}
+
+/* BUTTONS */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  font-family:var(--sans);font-size:15px;font-weight:600;
+  padding:18px 26px;border-radius:var(--r);
+  cursor:pointer;border:none;transition:all .3s var(--ease);
+  position:relative;overflow:hidden;
+  letter-spacing:-0.005em;
+}
+.btn-primary{
+  background:var(--ink);color:var(--cream);
+  box-shadow:0 1px 0 rgba(255,255,255,.08) inset, 0 12px 30px -8px rgba(10,14,39,.5);
+  width:100%;
+}
+.btn-primary::before{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(135deg,var(--accent) 0%,var(--accent-2) 100%);
+  opacity:0;transition:opacity .3s var(--ease);
+}
+.btn-primary > *{position:relative;z-index:1}
+.btn-primary:hover:not(:disabled)::before{opacity:1}
+.btn-primary:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 16px 40px -10px var(--accent-glow)}
+.btn-primary:active:not(:disabled){transform:translateY(0)}
+.btn-primary:disabled{opacity:.4;cursor:not-allowed}
+.btn-primary .arrow{transition:transform .3s var(--ease)}
+.btn-primary:hover:not(:disabled) .arrow{transform:translateX(4px)}
+
+.btn-ghost{
+  background:rgba(255,255,255,.7);backdrop-filter:blur(10px);
+  color:var(--ink-2);border:1px solid var(--line-2);
+  padding:16px 22px;
+}
+.btn-ghost:hover{background:var(--ink);color:var(--cream);border-color:var(--ink)}
+
+/* CARD */
+.card{
+  background:rgba(255,255,255,.78);backdrop-filter:blur(20px);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);padding:32px 24px;
+  box-shadow:0 1px 0 rgba(255,255,255,.8) inset, 0 20px 50px -25px rgba(10,14,39,.15);
+}
+@media(min-width:520px){.card{padding:40px 36px}}
+
+.fadein{animation:fadeUp .7s var(--ease-out) both}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(16px)}
+  to{opacity:1;transform:translateY(0)}
 }
 
 /* FORM */
-.field{margin-bottom:14px}
+.eyebrow{
+  font-family:var(--mono);font-size:11px;font-weight:500;
+  color:var(--ink-3);letter-spacing:0.1em;text-transform:uppercase;
+}
+.step-title{
+  font-family:var(--serif);font-weight:400;
+  font-size:38px;line-height:1.05;letter-spacing:-0.02em;
+  color:var(--ink);margin:12px 0 28px;
+}
+.field{margin-bottom:18px}
+.field-row{display:grid;grid-template-columns:1fr;gap:18px;margin-bottom:18px}
+@media(min-width:520px){.field-row{grid-template-columns:1fr 1fr}}
 .field label{
-  display:block;font-size:12px;font-weight:700;
-  letter-spacing:0.06em;text-transform:uppercase;
-  color:var(--ink-3);margin-bottom:6px;
+  display:block;font-size:12px;font-weight:600;color:var(--ink-2);
+  margin-bottom:8px;letter-spacing:-0.005em;
 }
 .field input,.field select{
-  width:100%;padding:13px 15px;
-  background:var(--white);border:1.5px solid var(--border-2);
-  border-radius:var(--r-sm);color:var(--ink);
-  font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:500;
-  transition:border-color .18s,box-shadow .18s;outline:none;
+  width:100%;padding:15px 16px;font-size:15px;font-family:var(--sans);font-weight:500;
+  background:var(--cream);color:var(--ink);
+  border:1.5px solid var(--line);border-radius:var(--r-sm);
+  transition:all .2s var(--ease);outline:none;
   -webkit-appearance:none;appearance:none;
 }
+.field input::placeholder{color:var(--ink-4);font-weight:400}
 .field input:focus,.field select:focus{
-  border-color:var(--blue);
-  box-shadow:0 0 0 3px rgba(26,86,219,0.12);
+  border-color:var(--ink);background:#fff;
+  box-shadow:0 0 0 4px rgba(10,14,39,.06);
 }
-.field input::placeholder{color:#bbc3dc}
 .field select{
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b7699' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-repeat:no-repeat;background-position:right 14px center;
-  padding-right:36px;cursor:pointer;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'><path d='M1 1L6 6L11 1' stroke='%230a0e27' stroke-width='1.5' stroke-linecap='round'/></svg>");
+  background-repeat:no-repeat;background-position:right 18px center;padding-right:42px;
 }
-.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-@media(max-width:440px){.field-row{grid-template-columns:1fr}}
 
-/* PROGRESS */
-.qhdr{margin-bottom:26px}
-.qmeta{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
-.qcount{font-size:12px;font-weight:700;color:var(--ink-3);letter-spacing:0.04em}
-.qpct{font-size:13px;font-weight:800;color:var(--blue)}
-.ptrack{height:4px;background:var(--bg-2);border-radius:2px;overflow:hidden}
-.pfill{
-  height:100%;background:var(--blue);border-radius:2px;
-  transition:width .5s cubic-bezier(.4,0,.2,1);
-}
-.quiz-q{
-  font-size:clamp(1rem,2.8vw,1.2rem);font-weight:700;
-  line-height:1.5;color:var(--ink);margin-bottom:18px;
-  letter-spacing:-0.01em;
-}
-.dim-label{
-  display:inline-block;font-size:10px;font-weight:800;letter-spacing:0.08em;
-  text-transform:uppercase;padding:3px 10px;border-radius:20px;
+/* QUIZ */
+.qhdr{margin-bottom:32px}
+.qmeta{
+  display:flex;justify-content:space-between;align-items:center;
+  font-family:var(--mono);font-size:11px;font-weight:500;
+  color:var(--ink-3);letter-spacing:0.06em;text-transform:uppercase;
   margin-bottom:12px;
 }
-.dim-assertiveness{background:#ede9fe;color:#5b21b6}
-.dim-expressiveness{background:#fef3c7;color:#92400e}
-.dim-empathy{background:#dcfce7;color:#166534}
-.dim-reflection{background:#dbeafe;color:#1e40af}
+.qpct{color:var(--ink);font-weight:600}
+.ptrack{
+  height:3px;background:var(--line);border-radius:100px;overflow:hidden;
+}
+.pfill{
+  height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-2));
+  border-radius:100px;transition:width .5s var(--ease-out);
+  box-shadow:0 0 12px var(--accent-glow);
+}
+.dim-label{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;
+  padding:6px 12px;border-radius:100px;margin-bottom:18px;
+}
+.dim-label::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.dim-assertiveness{background:rgba(190,18,60,.08);color:#be123c}
+.dim-expressiveness{background:rgba(180,83,9,.08);color:#b45309}
+.dim-empathy{background:rgba(13,122,78,.08);color:#0d7a4e}
+.dim-reflection{background:rgba(105,65,198,.08);color:#6941c6}
 
-/* LIKERT OPTIONS */
-.likert{display:flex;gap:7px;margin-bottom:20px}
+.quiz-q{
+  font-family:var(--serif);font-weight:400;
+  font-size:clamp(26px,5.5vw,34px);line-height:1.15;letter-spacing:-0.015em;
+  color:var(--ink);margin-bottom:32px;
+}
+
+.likert{
+  display:flex;flex-direction:column;gap:10px;margin-bottom:28px;
+}
 .lopt{
-  flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;
-  background:var(--white);border:1.5px solid var(--border);
-  border-radius:var(--r-sm);padding:12px 6px;
-  cursor:pointer;transition:all .18s;
-  font-family:'Plus Jakarta Sans',sans-serif;
+  display:flex;align-items:center;gap:14px;
+  width:100%;padding:16px 18px;
+  background:var(--cream);
+  border:1.5px solid var(--line);
+  border-radius:var(--r-sm);
+  font-family:var(--sans);font-size:15px;font-weight:500;color:var(--ink-2);
+  cursor:pointer;transition:all .2s var(--ease);
+  text-align:left;
 }
-.lopt:hover{border-color:var(--blue);background:var(--blue-light)}
-.lopt.sel{border-color:var(--blue);background:var(--blue-light)}
+.lopt:hover{border-color:var(--ink-3);background:#fff;transform:translateX(2px)}
+.lopt.sel{
+  background:var(--ink);color:var(--cream);border-color:var(--ink);
+  box-shadow:0 8px 20px -8px rgba(10,14,39,.4);
+}
 .lopt-num{
-  font-size:17px;font-weight:800;color:var(--ink-3);
-  transition:color .18s;
+  flex-shrink:0;width:32px;height:32px;border-radius:50%;
+  background:#fff;border:1.5px solid var(--line);
+  display:grid;place-items:center;
+  font-family:var(--mono);font-size:13px;font-weight:600;color:var(--ink-2);
+  transition:all .2s var(--ease);
 }
-.lopt.sel .lopt-num{color:var(--blue)}
-.lopt-txt{font-size:9px;font-weight:700;letter-spacing:0.03em;text-align:center;color:var(--ink-3);line-height:1.3}
-@media(min-width:400px){.lopt-txt{font-size:10px}}
+.lopt.sel .lopt-num{background:var(--cream);color:var(--ink);border-color:var(--cream)}
+.lopt-txt{line-height:1.3}
 
-/* BUTTON */
-.btn{
-  width:100%;padding:15px 24px;border-radius:var(--r);border:none;
-  cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;
-  font-size:15px;font-weight:800;letter-spacing:-0.01em;
-  transition:all .2s;
+.btn-row{display:flex;gap:10px}
+.btn-row .btn-primary{flex:1}
+
+/* LOADING */
+.loading{
+  text-align:center;padding:80px 20px;animation:fadeUp .6s var(--ease-out) both;
 }
-.btn-blue{background:var(--blue);color:#fff}
-.btn-blue:hover:not(:disabled){background:var(--blue-dark);transform:translateY(-1px);box-shadow:var(--shadow-lg)}
-.btn-blue:active:not(:disabled){transform:translateY(0)}
-.btn-blue:disabled{opacity:0.3;cursor:not-allowed;transform:none!important;box-shadow:none!important}
+.spinner-wrap{
+  display:inline-block;position:relative;width:80px;height:80px;margin-bottom:32px;
+}
+.spinner-wrap::before{
+  content:"";position:absolute;inset:0;border-radius:50%;
+  background:conic-gradient(from 0deg,transparent,var(--accent),var(--accent-2),transparent);
+  animation:spin 1.4s linear infinite;
+}
+.spinner-wrap::after{
+  content:"";position:absolute;inset:6px;border-radius:50%;background:var(--paper);
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-sub{
+  font-size:14px;color:var(--ink-3);margin-bottom:18px;
+  font-family:var(--mono);letter-spacing:0.04em;
+}
+.reveal-cycling{
+  font-family:var(--serif);font-size:36px;font-weight:400;letter-spacing:-0.02em;
+  color:var(--ink);transition:opacity .15s ease;min-height:50px;
+}
+.reveal-final{
+  background:linear-gradient(120deg,var(--accent),var(--accent-2));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  animation:pop .5s var(--ease-out);
+}
+@keyframes pop{0%{transform:scale(.85)}50%{transform:scale(1.05)}100%{transform:scale(1)}}
 
 /* RESULT */
-.result-top{padding:36px 0 4px}
+.result-hero{
+  position:relative;padding:48px 28px 40px;border-radius:var(--r-lg);
+  background:var(--ink);color:var(--cream);
+  overflow:hidden;margin-bottom:28px;
+  animation:fadeUp .9s var(--ease-out) both;
+}
+.result-hero::before{
+  content:"";position:absolute;top:-50%;right:-30%;width:600px;height:600px;
+  background:radial-gradient(circle,var(--type-color,#3d5afe) 0%,transparent 60%);
+  opacity:.35;filter:blur(60px);
+}
+.result-hero::after{
+  content:"";position:absolute;inset:0;opacity:.4;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/></svg>");
+  mix-blend-mode:overlay;
+}
+.result-hero > *{position:relative;z-index:1}
 .result-label{
-  font-size:11px;font-weight:800;letter-spacing:0.1em;
-  text-transform:uppercase;color:var(--ink-3);margin-bottom:6px;
+  font-family:var(--mono);font-size:11px;font-weight:500;
+  color:rgba(255,255,255,.6);letter-spacing:0.1em;text-transform:uppercase;
+  margin-bottom:14px;
 }
 .result-name{
-  font-size:clamp(1.9rem,6vw,2.9rem);font-weight:800;
-  line-height:1.05;letter-spacing:-0.03em;margin-bottom:12px;
+  font-family:var(--serif);font-weight:400;
+  font-size:clamp(48px,11vw,72px);line-height:0.95;letter-spacing:-0.025em;
+  margin-bottom:14px;color:var(--cream);
 }
 .result-tagline{
-  font-size:16px;font-weight:600;font-style:italic;
-  color:var(--ink-2);margin-bottom:18px;line-height:1.5;
+  font-family:var(--serif);font-style:italic;font-size:19px;
+  color:rgba(255,255,255,.75);margin-bottom:24px;
 }
-.result-desc{
-  font-size:15px;line-height:1.8;color:var(--ink-2);
-}
+.result-desc{font-size:15px;color:rgba(255,255,255,.85);line-height:1.7}
 .result-desc p{margin-bottom:14px}
+.result-desc p:last-child{margin-bottom:0}
 
-/* SCORE BARS */
-.scores{margin-bottom:28px}
-.score-item{margin-bottom:16px}
-.score-row{display:flex;justify-content:space-between;margin-bottom:7px}
-.score-lbl{font-size:13px;font-weight:700;color:var(--ink)}
-.score-val{font-size:12px;font-weight:800;color:var(--blue)}
-.strack{height:7px;background:var(--bg-2);border-radius:4px;overflow:hidden}
-.sbar{height:100%;border-radius:4px;transition:width 1.1s cubic-bezier(.4,0,.2,1)}
+.section{margin-bottom:28px;animation:fadeUp .7s var(--ease-out) both}
+.section-eyebrow{
+  font-family:var(--mono);font-size:11px;font-weight:500;
+  color:var(--ink-3);letter-spacing:0.1em;text-transform:uppercase;
+  margin-bottom:8px;
+}
+.section-title{
+  font-family:var(--serif);font-weight:400;font-size:30px;line-height:1.1;
+  letter-spacing:-0.02em;color:var(--ink);margin-bottom:6px;
+}
+.section-sub{font-size:13px;color:var(--ink-3);margin-bottom:20px}
+
+/* SCORES */
+.score-item{
+  padding:18px 20px;background:rgba(255,255,255,.65);
+  border:1px solid var(--line);border-radius:var(--r-sm);
+  margin-bottom:10px;cursor:pointer;transition:all .25s var(--ease);
+}
+.score-item:hover{background:#fff;border-color:var(--line-2)}
+.score-item.active{background:#fff;border-color:var(--ink-3)}
+.score-row{
+  display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;
+}
+.score-lbl{font-size:14px;font-weight:600;color:var(--ink)}
+.score-val{
+  font-family:var(--mono);font-size:15px;font-weight:600;color:var(--ink);
+}
+.score-chevron{font-size:11px;color:var(--ink-3);transition:transform .25s var(--ease)}
+.strack{height:6px;background:var(--paper-2);border-radius:100px;overflow:hidden}
+.sbar{
+  height:100%;border-radius:100px;
+  transition:width 1.2s var(--ease-out);
+}
+.dim-expand{max-height:0;overflow:hidden;transition:max-height .4s var(--ease)}
+.dim-expand-inner{padding-top:16px}
+.dim-level-badge{
+  display:inline-block;font-family:var(--mono);font-size:10px;font-weight:600;
+  letter-spacing:0.08em;text-transform:uppercase;
+  background:var(--ink);color:var(--cream);
+  padding:4px 10px;border-radius:100px;margin-bottom:10px;
+}
+.dim-expand-inner p{font-size:14px;color:var(--ink-2);line-height:1.65}
 
 /* TAGS */
-.tags-blk{margin-bottom:24px}
+.tags-blk{margin-bottom:20px}
 .tags-lbl{
-  font-size:11px;font-weight:800;letter-spacing:0.08em;
-  text-transform:uppercase;color:var(--ink-3);margin-bottom:10px;
+  font-size:13px;font-weight:600;color:var(--ink);margin-bottom:12px;
 }
-.tags-row{display:flex;flex-wrap:wrap;gap:7px}
+.tags-row{display:flex;flex-wrap:wrap;gap:8px}
 .tag{
-  font-size:13px;font-weight:600;padding:5px 13px;
-  border-radius:40px;border:1.5px solid;
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:13px;font-weight:500;padding:7px 13px;border-radius:100px;
 }
-.tag-g{background:var(--green-bg);border-color:rgba(13,122,78,0.25);color:var(--green)}
-.tag-r{background:var(--red-bg);border-color:rgba(192,57,43,0.2);color:var(--red)}
+.tag-g{background:var(--green-bg);color:var(--green)}
+.tag-r{background:var(--red-bg);color:var(--red)}
 
 /* INSIGHT CARDS */
-.insight-pair{display:grid;gap:10px;margin-bottom:24px}
-@media(min-width:520px){.insight-pair{grid-template-columns:1fr 1fr}}
+.insight-pair{display:grid;gap:14px;margin-bottom:28px}
 .icard{
-  background:var(--white);border:1.5px solid var(--border);
-  border-radius:var(--r);padding:16px 18px;
+  padding:22px;border-radius:var(--r-sm);
+  background:rgba(255,255,255,.7);border:1px solid var(--line);
 }
 .icard-hd{
-  display:flex;align-items:center;gap:8px;
-  font-size:11px;font-weight:800;letter-spacing:0.07em;
-  text-transform:uppercase;color:var(--ink-3);margin-bottom:8px;
+  display:flex;align-items:center;gap:10px;
+  font-size:14px;font-weight:700;color:var(--ink);margin-bottom:10px;
 }
 .icard-ico{
-  width:22px;height:22px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  font-size:12px;flex-shrink:0;
+  flex-shrink:0;width:28px;height:28px;border-radius:8px;
+  display:grid;place-items:center;font-weight:700;font-size:14px;
 }
-.icard-ico.warn{background:#fff3e0;color:#e65100}
-.icard-ico.tip{background:var(--blue-light);color:var(--blue)}
-.icard p{font-size:13px;line-height:1.7;color:var(--ink-2)}
-.icard strong{color:var(--ink)}
+.icard-ico.warn{background:#fde2e1;color:#c0392b}
+.icard-ico.tip{background:#dde7ff;color:#3d5afe}
+.icard p{font-size:14px;color:var(--ink-2);line-height:1.65}
 
 /* RECOM */
 .recom{
-  background:var(--white);border:1.5px solid var(--border);
-  border-radius:var(--r);padding:20px;margin-bottom:20px;
+  background:var(--ink);color:var(--cream);
+  border-radius:var(--r-lg);padding:32px 26px;margin-bottom:24px;position:relative;overflow:hidden;
 }
+.recom::before{
+  content:"";position:absolute;top:-100px;right:-100px;width:300px;height:300px;
+  background:radial-gradient(circle,var(--accent) 0%,transparent 60%);
+  opacity:.25;filter:blur(40px);
+}
+.recom > *{position:relative;z-index:1}
 .recom-ey{
-  font-size:11px;font-weight:800;letter-spacing:0.1em;
-  text-transform:uppercase;color:var(--blue);margin-bottom:8px;
+  font-family:var(--mono);font-size:10px;font-weight:500;
+  color:rgba(255,255,255,.6);letter-spacing:0.12em;text-transform:uppercase;
+  margin-bottom:12px;
 }
 .recom h3{
-  font-size:clamp(1rem,2.5vw,1.15rem);font-weight:800;
-  color:var(--ink);margin-bottom:10px;line-height:1.35;
-  letter-spacing:-0.01em;
+  font-family:var(--serif);font-weight:400;font-size:28px;line-height:1.15;
+  letter-spacing:-0.02em;margin-bottom:14px;color:var(--cream);
 }
-.recom p{font-size:14px;line-height:1.75;color:var(--ink-2);margin-bottom:0}
-.recom-mods{display:flex;flex-direction:column;gap:8px;margin-top:14px}
+.recom > p{font-size:14px;color:rgba(255,255,255,.78);line-height:1.7;margin-bottom:24px}
+.recom > p strong{color:var(--cream);font-weight:600}
+.recom-mods{display:flex;flex-direction:column;gap:2px}
 .rmod{
-  display:flex;align-items:flex-start;gap:10px;
-  background:var(--bg);border-radius:var(--r-sm);padding:11px 14px;
+  display:flex;gap:14px;padding:16px 0;
+  border-top:1px solid rgba(255,255,255,.12);
 }
+.rmod:last-child{border-bottom:1px solid rgba(255,255,255,.12)}
 .rmod-n{
-  font-size:10px;font-weight:800;letter-spacing:0.04em;
-  background:var(--blue);color:#fff;border-radius:5px;
-  padding:3px 7px;flex-shrink:0;margin-top:1px;
+  font-family:var(--mono);font-size:11px;font-weight:500;
+  color:rgba(255,255,255,.4);letter-spacing:0.05em;flex-shrink:0;padding-top:2px;
 }
-.rmod-t{font-size:13px;line-height:1.55;color:var(--ink-2)}
-.rmod-t strong{color:var(--ink);display:block;margin-bottom:2px}
+.rmod-t{flex:1}
+.rmod-t strong{display:block;font-size:14px;font-weight:600;color:var(--cream);margin-bottom:4px}
+.rmod-t{font-size:13px;color:rgba(255,255,255,.7);line-height:1.55}
 
 /* PROMO */
 .promo{
-  background:var(--blue);border-radius:var(--r);
-  padding:22px 20px;margin-bottom:14px;text-align:center;
+  background:linear-gradient(135deg,#fff8e7,#fdf0d1);
+  border:1px solid rgba(201,161,74,.3);
+  border-radius:var(--r-lg);padding:26px;text-align:center;margin-bottom:14px;
+  position:relative;overflow:hidden;
 }
-.promo-lbl{font-size:11px;color:rgba(255,255,255,.55);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px}
+.promo-lbl{
+  font-family:var(--mono);font-size:10px;font-weight:500;
+  color:#8b6a1e;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:14px;
+}
 .promo-code{
-  font-size:clamp(1.2rem,4vw,1.55rem);font-weight:800;
-  letter-spacing:0.06em;color:#fff;display:block;margin-bottom:6px;
+  display:inline-block;font-family:var(--mono);font-size:18px;font-weight:600;
+  background:#fff;color:var(--ink);padding:12px 22px;border-radius:var(--r-sm);
+  border:1.5px dashed var(--gold);letter-spacing:0.04em;margin-bottom:14px;
 }
-.promo-price{font-size:14px;color:rgba(255,255,255,.65)}
-.promo-price strong{color:#fff;font-size:17px}
-.promo-price s{opacity:.4}
+.promo-price{font-size:14px;color:var(--ink-2)}
+.promo-price s{color:var(--ink-4)}
+.promo-price strong{font-family:var(--serif);font-size:24px;font-weight:400;color:var(--ink);font-style:italic}
 
 .btn-cta{
-  display:block;width:100%;padding:16px 24px;
-  background:var(--blue);color:#fff;border:none;border-radius:var(--r);
-  font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:800;
-  letter-spacing:-0.01em;cursor:pointer;text-align:center;text-decoration:none;
-  transition:all .2s;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  width:100%;padding:20px 26px;border-radius:var(--r);
+  background:linear-gradient(135deg,var(--accent),var(--accent-2));
+  color:#fff;font-family:var(--sans);font-size:16px;font-weight:600;
+  text-decoration:none;letter-spacing:-0.005em;
+  box-shadow:0 12px 30px -8px var(--accent-glow);
+  transition:all .3s var(--ease);
 }
-.btn-cta:hover{background:var(--blue-dark);transform:translateY(-1px);box-shadow:var(--shadow-lg)}
-
-.note{font-size:12px;text-align:center;color:var(--ink-3);margin-top:12px}
-
-/* LOADING */
-.loading{text-align:center;padding:72px 0}
-.spinner{
-  width:40px;height:40px;margin:0 auto 20px;
-  border:3px solid var(--bg-2);border-top-color:var(--blue);
-  border-radius:50%;animation:spin .8s linear infinite;
+.btn-cta:hover{transform:translateY(-2px);box-shadow:0 18px 40px -10px var(--accent-glow)}
+.note{
+  text-align:center;font-size:12px;color:var(--ink-3);margin:12px 0 32px;
+  font-family:var(--mono);letter-spacing:0.02em;
 }
-@keyframes spin{to{transform:rotate(360deg)}}
-.loading p{font-size:15px;color:var(--ink-3);font-weight:500}
 
-/* FADE */
-.fin{animation:fi .4s ease}
-@keyframes fi{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+/* SHARE */
+.share-blk{padding:24px 22px;background:rgba(255,255,255,.65);border:1px solid var(--line);border-radius:var(--r-lg);margin-bottom:28px}
+.share-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.share-btn{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:14px;border-radius:var(--r-sm);border:none;cursor:pointer;
+  font-family:var(--sans);font-size:14px;font-weight:600;
+  transition:all .2s var(--ease);
+}
+.share-wa{background:#25d366;color:#fff}
+.share-wa:hover{background:#1eb957;transform:translateY(-1px)}
+.share-ig{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:#fff}
+.share-ig:hover{transform:translateY(-1px);filter:brightness(1.05)}
+
+/* OTHERS */
+.others-grid{display:grid;gap:14px}
+.ocard{
+  display:flex;gap:14px;align-items:flex-start;
+  padding:18px;background:rgba(255,255,255,.7);
+  border:1px solid var(--line);border-radius:var(--r-sm);
+  transition:all .25s var(--ease);
+}
+.ocard:hover{background:#fff;transform:translateY(-2px);box-shadow:0 12px 24px -16px rgba(10,14,39,.2)}
+.ocard-img{flex-shrink:0;width:60px;height:60px;border-radius:14px;overflow:hidden}
+.ocard-img svg{width:100%;height:100%;display:block}
+.ocard-body{flex:1;min-width:0}
+.ocard-name{font-family:var(--serif);font-size:22px;font-weight:400;letter-spacing:-0.015em;line-height:1.1;margin-bottom:4px}
+.ocard-tag{font-family:var(--serif);font-style:italic;font-size:13px;color:var(--ink-3);margin-bottom:8px}
+.ocard-desc{font-size:13px;color:var(--ink-2);line-height:1.55}
+
+/* DIVIDER */
+.divider{
+  height:1px;background:var(--line);margin:32px 0;
+}
 
 /* FOOTER */
 .ftr{
-  margin-top:48px;padding-top:20px;border-top:1px solid var(--border);
-  text-align:center;font-size:12px;color:var(--ink-3);
+  text-align:center;font-family:var(--mono);font-size:11px;
+  color:var(--ink-4);letter-spacing:0.06em;
+  padding-top:40px;border-top:1px solid var(--line);margin-top:40px;
 }
-.ftr a{color:var(--blue);text-decoration:none}
+.ftr a{color:var(--ink-3);text-decoration:none;border-bottom:1px solid var(--line)}
+.ftr a:hover{color:var(--ink)}
+
+@media(max-width:380px){
+  .hero{padding-top:48px}
+  .step-title,.reveal-cycling{font-size:30px}
+}
 </style>
 </head>
 <body>
-<div class="wrap">
+<div class="ambient"></div>
+<div class="grain"></div>
+<div class="shell">
   <header class="hdr">
-    <a href="https://stanleyacademic.com" class="hdr-brand">Stanley Academy</a>
+    <a href="https://stanleyacademic.com" class="hdr-brand">
+      <span class="hdr-brand-mark">S</span>Stanley Academy
+    </a>
     <span class="hdr-badge">TalkDNA™</span>
   </header>
   <div id="app"></div>
-  <footer class="ftr">© Stanley Academy &middot; <a href="https://stanleyacademic.com">stanleyacademic.com</a></footer>
+  <footer class="ftr">© Stanley Academy · <a href="https://stanleyacademic.com">stanleyacademic.com</a></footer>
 </div>
 
 <script>
@@ -354,12 +611,27 @@ async function saveToSheet(data) {
   } catch (e) { console.error("Sheet error:", e); }
 }
 
-// ─── ARCHETYPE DATA ───────────────────────────────────────────────────────────
+const TYPE_SHORT = {
+  overthinker: "Otaknya jalan terus, tapi mulutnya jarang ikut. Lo cerdas dan analitis, tapi sering kehilangan momen karena terlalu lama mikir sebelum ngomong.",
+  ghost: "Observer tajam yang nyaris invisible. Lo paham dinamika sosial lebih dari siapapun, tapi hampir tidak ada yang tau karena lo jarang bicara.",
+  talker: "Energik, karismatik, dan bikin suasana hidup. Tapi pesan lo sering tenggelam dalam banyaknya kata — entertaining belum tentu influential.",
+  dominator: "Tegas, direct, dan natural leader. Orang mendengarkan lo — tapi kadang karena segan, bukan karena genuinely setuju.",
+  connector: "Adaptif, empatik, dan bikin orang merasa didengar. Lo sudah melewati stage yang banyak orang stuck — sekarang saatnya scale influence lo lebih jauh.",
+};
+
+const TYPE_SVG = {
+  overthinker: `<svg viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg"><rect width="72" height="72" fill="#ede9fe" rx="12"/><circle cx="36" cy="30" r="14" fill="#7c3aed" opacity=".15"/><circle cx="36" cy="30" r="9" fill="#7c3aed" opacity=".25"/><circle cx="36" cy="30" r="5" fill="#6941c6"/><line x1="36" y1="16" x2="36" y2="10" stroke="#7c3aed" stroke-width="1.5" stroke-linecap="round" opacity=".5"/><line x1="46" y1="20" x2="50" y2="15" stroke="#7c3aed" stroke-width="1.5" stroke-linecap="round" opacity=".4"/><line x1="26" y1="20" x2="22" y2="15" stroke="#7c3aed" stroke-width="1.5" stroke-linecap="round" opacity=".4"/><line x1="50" y1="30" x2="56" y2="30" stroke="#7c3aed" stroke-width="1.5" stroke-linecap="round" opacity=".3"/><line x1="22" y1="30" x2="16" y2="30" stroke="#7c3aed" stroke-width="1.5" stroke-linecap="round" opacity=".3"/><rect x="22" y="47" width="28" height="5" rx="2.5" fill="#7c3aed" opacity=".18"/><rect x="26" y="55" width="20" height="4" rx="2" fill="#7c3aed" opacity=".1"/></svg>`,
+  ghost: `<svg viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg"><rect width="72" height="72" fill="#e8f0fe" rx="12"/><ellipse cx="36" cy="34" rx="14" ry="16" fill="#1a56db" opacity=".12"/><ellipse cx="36" cy="34" rx="9" ry="11" fill="#1a56db" opacity=".2"/><path d="M27 42 Q27 50 20 52 L52 52 Q45 50 45 42" fill="#1a56db" opacity=".15"/><circle cx="31" cy="30" r="2" fill="#1241b0" opacity=".5"/><circle cx="41" cy="30" r="2" fill="#1241b0" opacity=".5"/><rect x="24" y="58" width="24" height="4" rx="2" fill="#1a56db" opacity=".1"/></svg>`,
+  talker: `<svg viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg"><rect width="72" height="72" fill="#fef3c7" rx="12"/><circle cx="36" cy="32" r="11" fill="#b45309" opacity=".2"/><circle cx="36" cy="32" r="6" fill="#b45309" opacity=".5"/><path d="M42 26 Q50 18 55 22" stroke="#b45309" stroke-width="1.8" fill="none" stroke-linecap="round" opacity=".5"/><path d="M44 29 Q54 24 57 29" stroke="#b45309" stroke-width="1.8" fill="none" stroke-linecap="round" opacity=".35"/><path d="M30 26 Q22 18 17 22" stroke="#b45309" stroke-width="1.8" fill="none" stroke-linecap="round" opacity=".5"/><path d="M28 29 Q18 24 15 29" stroke="#b45309" stroke-width="1.8" fill="none" stroke-linecap="round" opacity=".35"/><rect x="22" y="48" width="28" height="5" rx="2.5" fill="#b45309" opacity=".2"/><rect x="28" y="56" width="16" height="4" rx="2" fill="#b45309" opacity=".12"/></svg>`,
+  dominator: `<svg viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg"><rect width="72" height="72" fill="#ffe4e6" rx="12"/><polygon points="36,14 46,34 26,34" fill="#be123c" opacity=".25"/><polygon points="36,20 43,32 29,32" fill="#be123c" opacity=".4"/><rect x="31" y="34" width="10" height="16" rx="2" fill="#be123c" opacity=".35"/><rect x="20" y="52" width="32" height="5" rx="2.5" fill="#be123c" opacity=".2"/></svg>`,
+  connector: `<svg viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg"><rect width="72" height="72" fill="#e6f7f0" rx="12"/><circle cx="36" cy="30" r="10" fill="#0d7a4e" opacity=".15"/><circle cx="21" cy="42" r="6" fill="#0d7a4e" opacity=".2"/><circle cx="51" cy="42" r="6" fill="#0d7a4e" opacity=".2"/><line x1="27" y1="38" x2="30" y2="35" stroke="#0d7a4e" stroke-width="1.5" stroke-linecap="round" opacity=".4"/><line x1="45" y1="38" x2="42" y2="35" stroke="#0d7a4e" stroke-width="1.5" stroke-linecap="round" opacity=".4"/><circle cx="36" cy="30" r="5" fill="#0d7a4e" opacity=".6"/><circle cx="21" cy="42" r="3" fill="#0d7a4e" opacity=".5"/><circle cx="51" cy="42" r="3" fill="#0d7a4e" opacity=".5"/><rect x="22" y="56" width="28" height="4" rx="2" fill="#0d7a4e" opacity=".12"/></svg>`,
+};
+
 const TYPES = {
   overthinker: {
     name: "The Overthinker",
     tagline: "Otaknya jalan, mulutnya ngerem.",
-    color: "#6941c6",
+    color: "#7c4dff",
     desc: `<p>Lo adalah orang yang paling banyak mikir di ruangan — tapi ironisnya, justru itu yang bikin lo paling jarang didengar. Sebelum ngomong, lo udah simulate semua kemungkinan salah, semua reaksi negatif, semua cara orang bisa salah paham. Hasilnya? Lo kehilangan momen, atau akhirnya ngomong dengan cara yang terlalu hati-hati sampai kehilangan impact-nya.</p><p>Di balik ini semua ada kecerdasan yang luar biasa dan standar tinggi. Lo cuma butuh sistem yang ngasih lo izin untuk berbicara — bahkan sebelum lo "siap".</p>`,
     strengths: ["Analitis & mendalam", "Pendengar aktif", "Tidak asal ngomong", "Empatik terhadap orang lain"],
     weaknesses: ["Sering kehilangan momen", "Ragu-ragu sebelum bicara", "Overthinking melemahkan impact", "Sulit ekspresikan pendapat tegas"],
@@ -375,7 +647,7 @@ const TYPES = {
   ghost: {
     name: "The Silent Ghost",
     tagline: "Ada, tapi kayak tidak ada.",
-    color: "#1a56db",
+    color: "#3d5afe",
     desc: `<p>Lo bukan pemalu dalam arti yang orang bayangkan. Lo justru observer yang tajam — lo perhatiin detail yang orang lain lewatin, lo ngerti dinamika grup, dan lo sering punya insight terbaik di ruangan. Tapi hampir tidak ada yang tau, karena lo jarang bicara.</p><p>Akar masalahnya biasanya bukan kemampuan — tapi rasa aman. Entah dari pengalaman masa lalu yang bikin lo ngerasa suara lo tidak penting, atau lingkungan yang tidak pernah ngasih lo ruang. Hasilnya, lo jadi invisible — padahal lo seharusnya jadi salah satu yang paling didengar.</p>`,
     strengths: ["Observer yang tajam", "Pendengar terbaik", "Sangat empatik", "Tidak konfrontatif"],
     weaknesses: ["Hampir tidak pernah inisiasi percakapan", "Menghindari konflik bahkan yang sehat", "Kurang assertif", "Sering diabaikan dalam group setting"],
@@ -391,7 +663,7 @@ const TYPES = {
   talker: {
     name: "The Loud Talker",
     tagline: "Semua diisi, tapi yang nyangkut berapa?",
-    color: "#b45309",
+    color: "#f59e0b",
     desc: `<p>Energi lo tinggi, antusiasme lo menular, dan lo adalah orang yang bikin suasana hidup. Di permukaan, lo kelihatan seperti komunikator yang ideal. Tapi kalau lo jujur sama diri sendiri, lo sering bertanya-tanya — "kenapa orang tidak follow through setelah gw ngomong panjang lebar?"</p><p>Jawabannya: komunikasi bukan tentang seberapa banyak yang lo keluarkan, tapi seberapa banyak yang masuk ke kepala orang lain. Lo sudah punya energi dan presence — sekarang lo butuh struktur dan seni mendengarkan yang akan mengubah percakapan lo dari entertaining jadi benar-benar influential.</p>`,
     strengths: ["Percaya diri & ekspresif", "Energi tinggi yang menular", "Mudah memulai percakapan", "Karisma natural"],
     weaknesses: ["Lebih banyak bicara daripada mendengar", "Kurang struktur dalam penyampaian", "Sering mendominasi percakapan", "Pesan utama tenggelam dalam kata-kata"],
@@ -407,7 +679,7 @@ const TYPES = {
   dominator: {
     name: "The Dominator",
     tagline: "Didengar — tapi apakah benar-benar dipilih?",
-    color: "#be123c",
+    color: "#ef4444",
     desc: `<p>Lo tegas, efisien, dan tidak suka basa-basi. Ketika lo bicara, orang mendengarkan — setidaknya di permukaan. Lo punya presence yang kuat dan natural leadership yang banyak orang tidak punya.</p><p>Tapi ada harga yang lo bayar: orang sering comply bukan karena mereka genuinely setuju, tapi karena mereka tidak nyaman berargumen sama lo. Itu bukan influence — itu compliance karena tekanan. Lo sudah punya otoritas — sekarang lo butuh belajar cara mengajak, bukan sekadar mendorong.</p>`,
     strengths: ["Direct & tanpa basa-basi", "Confidence yang tinggi", "Natural leadership presence", "Sangat jelas dalam penyampaian"],
     weaknesses: ["Terkesan intimidatif atau agresif", "Kurang empati dalam penyampaian", "Orang comply karena tekanan", "Sulit membangun trust jangka panjang"],
@@ -423,7 +695,7 @@ const TYPES = {
   connector: {
     name: "The Connector",
     tagline: "Fondasi bagus — sekarang saatnya naik level.",
-    color: "#0d7a4e",
+    color: "#10b981",
     desc: `<p>Lo adalah tipe komunikator yang membuat orang merasa nyaman. Lo bisa baca situasi, tahu kapan harus bicara dan kapan harus dengerin, dan orang sering merasa genuinely didengar setelah ngobrol sama lo. Itu gift yang tidak semua orang punya.</p><p>Lo sudah melewati stage yang paling banyak orang stuck — rasa takut dan canggung. Tapi ada ceiling yang mungkin lo rasakan: lo sudah disukai, tapi apakah lo juga dipercaya sebagai orang yang punya vision? Apakah lo bisa influence keputusan besar? Apakah pesan lo di digital media sekuat di tatap muka? Inilah frontier berikutnya.</p>`,
     strengths: ["Adaptif di berbagai situasi", "Membuat orang merasa didengar", "Empati yang tinggi", "Komunikasi dua arah yang sehat"],
     weaknesses: ["Belum maksimal di komunikasi digital", "Influence bisa diperkuat lebih jauh", "Kadang terlalu akomodatif", "Storytelling bisa lebih tajam"],
@@ -438,9 +710,30 @@ const TYPES = {
   }
 };
 
-// ─── 32 QUESTIONS ─────────────────────────────────────────────────────────────
+const DIM_DETAIL = {
+  assertiveness: {
+    low:  { range:[0,40],  label:"Rendah",  insight:"Lo cenderung menahan diri dan membiarkan orang lain yang mengambil keputusan. Ini bukan berarti lo lemah — tapi lo mungkin sering kehilangan momen karena ragu untuk speak up. Area utama untuk dikembangkan: keberanian menyuarakan pendapat dan menetapkan batasan." },
+    mid:  { range:[41,69], label:"Sedang",  insight:"Lo sudah bisa menyampaikan pendapat di situasi yang lo rasa aman, tapi masih selective. Di situasi tekanan tinggi atau konflik, lo cenderung mengalah. Ini sudah bagus — foundation-nya ada, tinggal diperkuat di situasi yang lebih challenging." },
+    high: { range:[70,100],label:"Tinggi",  insight:"Lo tidak takut menyuarakan pendapat dan berani mengambil posisi. Ini aset besar — orang tahu di mana lo berdiri. Tantangan lo bukan lagi keberanian, tapi cara menyampaikan ketegasan itu tanpa terkesan memaksakan kehendak." },
+  },
+  expressiveness: {
+    low:  { range:[0,40],  label:"Rendah",  insight:"Lo lebih nyaman jadi pengamat. Memulai percakapan atau bicara di depan orang terasa menguras energi. Bukan berarti lo tidak punya hal menarik untuk dikatakan — tapi lo butuh sistem dan rasa aman yang cukup sebelum lo membuka diri." },
+    mid:  { range:[41,69], label:"Sedang",  insight:"Lo bisa ekspresif di lingkungan yang familiar, tapi di konteks baru atau formal lo cenderung menarik diri. Ada gap antara apa yang lo pikirkan dan apa yang lo ucapkan — dan gap itu yang perlu dipersempit." },
+    high: { range:[70,100],label:"Tinggi",  insight:"Lo mudah connect dengan orang baru dan nyaman jadi pusat percakapan. Energi komunikasi lo tinggi dan menular. Perhatikan: ekspresivitas yang tinggi perlu diimbangi dengan kemampuan mendengar aktif supaya percakapan jadi dua arah." },
+  },
+  empathy: {
+    low:  { range:[0,40],  label:"Rendah",  insight:"Lo lebih fokus pada logika dan isi pesan daripada perasaan lawan bicara. Ini membuat lo efisien, tapi orang mungkin merasa kurang didengar. Membangun empati bukan soal jadi lebih emotional — tapi soal membaca sinyal orang lain dengan lebih akurat." },
+    mid:  { range:[41,69], label:"Sedang",  insight:"Lo sudah punya kepekaan sosial yang cukup baik di situasi yang sudah lo kenal. Tapi di situasi baru atau saat lo sedang fokus pada tujuan sendiri, empati lo bisa turun drastis. Konsistensi ini yang perlu dilatih." },
+    high: { range:[70,100],label:"Tinggi",  insight:"Lo adalah orang yang bikin orang lain merasa genuinely didengar. Ini gift yang langka. Tantangan lo: empati tinggi kadang bikin lo terlalu akomodatif sampai pesan lo sendiri jadi kurang tegas. Belajarlah berempati tanpa kehilangan posisi lo." },
+  },
+  reflection: {
+    low:  { range:[0,40],  label:"Rendah",  insight:"Lo bicara spontan dan langsung — yang bisa jadi kekuatan di situasi yang butuh kecepatan. Tapi lo mungkin sering menyesal dengan hal yang terlanjur lo ucapkan. Melatih jeda sesaat sebelum merespons bisa mengubah kualitas komunikasi lo secara drastis." },
+    mid:  { range:[41,69], label:"Sedang",  insight:"Lo sudah mulai mempertimbangkan dampak kata-kata lo, tapi belum konsisten. Di situasi yang lo kuasai lo reflektif, tapi saat tekanan tinggi lo jadi reaktif. Latih 'pause habit' — jeda 2-3 detik sebelum merespons hal penting." },
+    high: { range:[70,100],label:"Tinggi",  insight:"Lo berpikir sebelum bicara dan mempertimbangkan dampaknya. Ini membuat ucapan lo berbobot dan dipercaya. Tantangan: refleksi yang terlalu tinggi bisa membuat lo tampak ragu-ragu atau lambat merespons. Percayai intuisi lo lebih sering." },
+  },
+};
+
 const QUESTIONS = [
-  // ASSERTIVENESS (8)
   { text: "Saya nyaman menyampaikan pendapat meskipun berbeda dengan mayoritas.", dimension: "assertiveness", reverse: false },
   { text: "Saya sering menahan opini agar tidak menimbulkan konflik.", dimension: "assertiveness", reverse: true },
   { text: "Saya berani meminta apa yang saya butuhkan.", dimension: "assertiveness", reverse: false },
@@ -449,7 +742,6 @@ const QUESTIONS = [
   { text: "Saya sering membiarkan orang lain memutuskan untuk saya.", dimension: "assertiveness", reverse: true },
   { text: "Saya nyaman mengajukan pertanyaan di forum.", dimension: "assertiveness", reverse: false },
   { text: "Saya lebih sering diam meski punya masukan.", dimension: "assertiveness", reverse: true },
-  // EXPRESSIVENESS (8)
   { text: "Saya mudah memulai percakapan dengan orang baru.", dimension: "expressiveness", reverse: false },
   { text: "Saya sering kesulitan menemukan topik pembicaraan.", dimension: "expressiveness", reverse: true },
   { text: "Saya menikmati berbicara di depan kelompok.", dimension: "expressiveness", reverse: false },
@@ -458,7 +750,6 @@ const QUESTIONS = [
   { text: "Saya sering bingung bagaimana mengekspresikan ide.", dimension: "expressiveness", reverse: true },
   { text: "Saya merasa energik saat berinteraksi dengan banyak orang.", dimension: "expressiveness", reverse: false },
   { text: "Saya lebih nyaman hanya menjadi pengamat.", dimension: "expressiveness", reverse: true },
-  // EMPATHY (8)
   { text: "Saya berusaha memahami sudut pandang orang lain.", dimension: "empathy", reverse: false },
   { text: "Saya sering memotong pembicaraan orang.", dimension: "empathy", reverse: true },
   { text: "Orang sering merasa didengar saat berbicara dengan saya.", dimension: "empathy", reverse: false },
@@ -467,7 +758,6 @@ const QUESTIONS = [
   { text: "Saya sering melewatkan sinyal emosi orang lain.", dimension: "empathy", reverse: true },
   { text: "Saya penasaran dengan alasan di balik perilaku seseorang.", dimension: "empathy", reverse: false },
   { text: "Saya mudah memahami perasaan orang lain.", dimension: "empathy", reverse: false },
-  // REFLECTION (8)
   { text: "Saya memikirkan kata-kata saya sebelum berbicara.", dimension: "reflection", reverse: false },
   { text: "Saya sering berbicara spontan tanpa banyak berpikir.", dimension: "reflection", reverse: true },
   { text: "Saya mempertimbangkan dampak ucapan saya.", dimension: "reflection", reverse: false },
@@ -479,11 +769,11 @@ const QUESTIONS = [
 ];
 
 const SCALE = [
-  { val: 1, label: "Sangat\nTidak\nSetuju" },
-  { val: 2, label: "Tidak\nSetuju" },
+  { val: 1, label: "Sangat Tidak Setuju" },
+  { val: 2, label: "Tidak Setuju" },
   { val: 3, label: "Netral" },
   { val: 4, label: "Setuju" },
-  { val: 5, label: "Sangat\nSetuju" },
+  { val: 5, label: "Sangat Setuju" },
 ];
 
 const DIM_LABELS = {
@@ -493,7 +783,6 @@ const DIM_LABELS = {
   reflection: "Refleksi",
 };
 
-// ─── SCORING ──────────────────────────────────────────────────────────────────
 function calcDimensions(answers) {
   const raw = { assertiveness: 0, expressiveness: 0, empathy: 0, reflection: 0 };
   answers.forEach((val, i) => {
@@ -502,25 +791,25 @@ function calcDimensions(answers) {
     raw[q.dimension] += scored;
   });
   const pct = {};
-  Object.keys(raw).forEach(d => {
-    pct[d] = Math.round(((raw[d] - 8) / 32) * 100);
-  });
+  Object.keys(raw).forEach(d => { pct[d] = Math.round(((raw[d] - 8) / 32) * 100); });
   return pct;
 }
 
 function calcArchetype(dims) {
   const { assertiveness: A, expressiveness: E, empathy: EMP, reflection: R } = dims;
   const scores = {
-    overthinker: (R * 0.65) + ((100 - A) * 0.35),
+    overthinker: ((100 - A) * 0.55) + (R * 0.45),
     ghost:       ((100 - A) * 0.50) + ((100 - E) * 0.50),
-    talker:      (E * 0.60) + ((100 - R) * 0.40),
-    dominator:   (A * 0.60) + ((100 - EMP) * 0.40),
-    connector:   Math.min(100, Math.max(0, 100 - (Math.abs(A - 70) + Math.abs(E - 70) + Math.abs(EMP - 80) + Math.abs(R - 70)) / 4)),
+    talker:      (E * 0.55) + ((100 - R) * 0.45),
+    dominator:   (A * 0.55) + ((100 - EMP) * 0.45),
+    connector: (()=>{
+      const geoMean = Math.pow(Math.max(0.01,A/100)*Math.max(0.01,E/100)*Math.max(0.01,EMP/100)*Math.max(0.01,R/100),0.25)*100;
+      return geoMean >= 62 ? geoMean : geoMean * 0.72;
+    })(),
   };
   return Object.keys(scores).reduce((a, b) => scores[a] >= scores[b] ? a : b);
 }
 
-// ─── STATE ────────────────────────────────────────────────────────────────────
 let S = {
   screen: "hero",
   form: { name: "", phone: "", email: "", source: "" },
@@ -534,6 +823,7 @@ let S = {
 const app = document.getElementById("app");
 function render() {
   app.innerHTML = "";
+  window.scrollTo({top:0,behavior:'smooth'});
   if (S.screen === "hero")    rHero();
   else if (S.screen === "form")    rForm();
   else if (S.screen === "quiz")    rQuiz();
@@ -541,27 +831,39 @@ function render() {
   else if (S.screen === "result")  rResult();
 }
 
-// ─── SCREENS ──────────────────────────────────────────────────────────────────
 function rHero() {
   app.innerHTML = `
-  <div class="hero fin">
-    <div class="hero-pill"><span class="hero-pill-dot"></span>Assessment Gratis · ~5 Menit</div>
-    <h1>Cari tahu <span>tipe</span><br>komunikator lo.</h1>
+  <div class="hero">
+    <div class="hero-eyebrow"><span class="hero-eyebrow-line"></span>Assessment · ~5 Menit · Gratis</div>
+    <h1>Cari tahu <em>tipe</em><br>komunikator lo.</h1>
     <p class="hero-desc">32 pertanyaan psikometri yang dirancang oleh Communication Coach bersertifikat BNSP untuk mengidentifikasi pola komunikasi lo secara mendalam — dan apa yang perlu diperbaiki.</p>
-    <div class="hero-stats">
-      <div class="hero-stat"><span class="hero-stat-icon">👥</span>1.300+ peserta</div>
-      <div class="hero-stat"><span class="hero-stat-icon">⏱</span>~5 menit</div>
-      <div class="hero-stat"><span class="hero-stat-icon">✓</span>Gratis 100%</div>
+    <div class="archetypes-preview">
+      <div class="archetypes-preview-row">
+        <div class="ap-chip">O</div>
+        <div class="ap-chip">G</div>
+        <div class="ap-chip">T</div>
+        <div class="ap-chip">D</div>
+        <div class="ap-chip">C</div>
+      </div>
+      <div class="ap-txt"><strong>5 archetype</strong>komunikasi</div>
     </div>
-    <button class="btn btn-blue" onclick="S.screen='form';render()">Mulai Tes Sekarang →</button>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="hero-stat-dot"></span>1.300+ peserta</div>
+      <div class="hero-stat"><span class="hero-stat-dot"></span>~5 menit</div>
+      <div class="hero-stat"><span class="hero-stat-dot"></span>Gratis 100%</div>
+    </div>
+    <button class="btn btn-primary" onclick="S.screen='form';render()">
+      <span>Mulai Tes Sekarang</span>
+      <span class="arrow">→</span>
+    </button>
   </div>`;
 }
 
 function rForm() {
   app.innerHTML = `
-  <div class="fin" style="padding-top:36px">
+  <div class="card fadein" style="margin-top:48px">
     <div class="eyebrow">Langkah 1 dari 2</div>
-    <div class="step-title">Isi data lo dulu</div>
+    <div class="step-title">Isi data lo dulu.</div>
     <div class="field-row">
       <div class="field"><label>Nama Lengkap</label>
         <input type="text" id="fn" placeholder="Nama lo" value="${S.form.name}" oninput="upF('name',this.value)"/></div>
@@ -579,7 +881,9 @@ function rForm() {
         <option value="Rekomendasi teman" ${S.form.source==="Rekomendasi teman"?"selected":""}>Rekomendasi teman</option>
         <option value="Lainnya" ${S.form.source==="Lainnya"?"selected":""}>Lainnya</option>
       </select></div>
-    <button class="btn btn-blue" id="bstart" onclick="startQ()" ${fValid()?"":"disabled"}>Lanjut ke Assessment →</button>
+    <button class="btn btn-primary" id="bstart" onclick="startQ()" ${fValid()?"":"disabled"} style="margin-top:8px">
+      <span>Lanjut ke Assessment</span><span class="arrow">→</span>
+    </button>
   </div>`;
 }
 
@@ -600,10 +904,10 @@ function rQuiz() {
   const pct = Math.round((S.qIndex / QUESTIONS.length)*100);
   const dim = q.dimension;
   app.innerHTML = `
-  <div class="fin" style="padding-top:28px">
+  <div class="card fadein" style="margin-top:36px">
     <div class="qhdr">
       <div class="qmeta">
-        <span class="qcount">TalkDNA™ · ${S.qIndex+1} / ${QUESTIONS.length}</span>
+        <span>TalkDNA™ · ${String(S.qIndex+1).padStart(2,'0')} / ${QUESTIONS.length}</span>
         <span class="qpct">${pct}%</span>
       </div>
       <div class="ptrack"><div class="pfill" style="width:${pct}%"></div></div>
@@ -614,13 +918,24 @@ function rQuiz() {
       ${SCALE.map(s=>`
       <button class="lopt${S.selVal===s.val?' sel':''}" onclick="selOpt(${s.val})">
         <span class="lopt-num">${s.val}</span>
-        <span class="lopt-txt">${s.label.replace(/\n/g,'<br>')}</span>
+        <span class="lopt-txt">${s.label}</span>
       </button>`).join("")}
     </div>
-    <button class="btn btn-blue" id="bnxt" onclick="nextQ()" ${S.selVal!==null?"":"disabled"}>
-      ${S.qIndex<QUESTIONS.length-1?"Pertanyaan Berikutnya →":"Lihat Hasil Gw →"}
-    </button>
+    <div class="btn-row">
+      ${S.qIndex>0?`<button class="btn btn-ghost" onclick="prevQ()">← Kembali</button>`:''}
+      <button class="btn btn-primary" id="bnxt" onclick="nextQ()" ${S.selVal!==null?"":"disabled"}>
+        <span>${S.qIndex<QUESTIONS.length-1?"Pertanyaan Berikutnya":"Lihat Hasil Gw"}</span><span class="arrow">→</span>
+      </button>
+    </div>
   </div>`;
+}
+
+function prevQ() {
+  if(S.qIndex<=0) return;
+  S.qIndex--;
+  S.selVal = S.answers[S.qIndex] ?? null;
+  S.answers.pop();
+  render();
 }
 
 function selOpt(v) { S.selVal=v; rQuiz(); }
@@ -637,25 +952,41 @@ function nextQ() {
   }
 }
 
+const REVEAL_NAMES = ["The Overthinker","The Silent Ghost","The Loud Talker","The Dominator","The Connector"];
 function rLoading() {
-  app.innerHTML=`<div class="loading fin"><div class="spinner"></div><p>Menganalisis pola komunikasi lo...</p></div>`;
-  setTimeout(()=>{ S.screen="result"; render(); }, 2200);
+  app.innerHTML=`<div class="loading">
+    <div class="spinner-wrap"></div>
+    <p class="loading-sub">Menganalisis pola komunikasi lo</p>
+    <div class="reveal-cycling" id="rcycle">&nbsp;</div>
+  </div>`;
+  const final = TYPES[S.resultType].name;
+  const pool = REVEAL_NAMES.filter(n=>n!==final);
+  let i=0;
+  const el = document.getElementById("rcycle");
+  const iv = setInterval(()=>{
+    el.style.opacity="0";
+    setTimeout(()=>{ el.textContent=pool[i%pool.length]; el.style.opacity="1"; i++; },120);
+  },320);
+  setTimeout(()=>{
+    clearInterval(iv);
+    el.style.opacity="0";
+    setTimeout(()=>{
+      el.textContent=final;
+      el.classList.add("reveal-final");
+      el.style.opacity="1";
+    },150);
+    setTimeout(()=>{ S.screen="result"; render(); }, 1300);
+  }, 2200);
 }
 
 async function submitD() {
   const t = TYPES[S.resultType];
   await saveToSheet({
     timestamp: new Date().toISOString(),
-    name: S.form.name,
-    phone: S.form.phone,
-    email: S.form.email,
-    source: S.form.source,
-    assertiveness: S.dims.assertiveness,
-    expressiveness: S.dims.expressiveness,
-    empathy: S.dims.empathy,
-    reflection: S.dims.reflection,
-    result_type: t.name,
-    answers: S.answers.join(", "),
+    name: S.form.name, phone: S.form.phone, email: S.form.email, source: S.form.source,
+    assertiveness: S.dims.assertiveness, expressiveness: S.dims.expressiveness,
+    empathy: S.dims.empathy, reflection: S.dims.reflection,
+    result_type: t.name, answers: S.answers.join(", "),
   });
 }
 
@@ -669,32 +1000,46 @@ function rResult() {
     { l: "Refleksi",      k: "reflection" },
   ];
   app.innerHTML = `
-  <div class="fin">
-    <div class="result-top">
+  <div style="padding-top:32px">
+    <div class="result-hero" style="--type-color:${t.color}">
       <div class="result-label">Tipe komunikator lo adalah</div>
-      <div class="result-name" style="color:${t.color}">${t.name}</div>
+      <div class="result-name">${t.name}</div>
       <div class="result-tagline">"${t.tagline}"</div>
       <div class="result-desc">${t.desc}</div>
     </div>
-    <div class="divider"></div>
-    <div class="scores">
-      <div class="eyebrow" style="margin-bottom:16px">Profil dimensi komunikasi lo</div>
+
+    <div class="card section" style="animation-delay:.1s">
+      <div class="section-eyebrow">Profil Dimensi</div>
+      <div class="section-title">Pola komunikasi lo.</div>
+      <p class="section-sub">Tap setiap dimensi untuk baca penjelasan lengkap.</p>
       ${bars.map(b=>`
-      <div class="score-item">
-        <div class="score-row"><span class="score-lbl">${b.l}</span><span class="score-val">${dims[b.k]}%</span></div>
-        <div class="strack"><div class="sbar" style="width:0%;background:${t.color}" data-w="${dims[b.k]}"></div></div>
+      <div class="score-item" onclick="toggleDim('${b.k}')" id="sdim-${b.k}">
+        <div class="score-row">
+          <span class="score-lbl">${b.l}</span>
+          <span style="display:flex;align-items:center;gap:10px">
+            <span class="score-val">${dims[b.k]}%</span>
+            <span class="score-chevron" id="chev-${b.k}">▸</span>
+          </span>
+        </div>
+        <div class="strack"><div class="sbar" style="width:0%;background:linear-gradient(90deg,${t.color},${t.color}aa)" data-w="${dims[b.k]}"></div></div>
+        <div class="dim-expand" id="dexp-${b.k}"></div>
       </div>`).join("")}
     </div>
-    <div class="divider"></div>
-    <div class="tags-blk">
-      <div class="tags-lbl">Kekuatan lo</div>
-      <div class="tags-row">${t.strengths.map(s=>`<span class="tag tag-g">✓ ${s}</span>`).join("")}</div>
+
+    <div class="card section" style="animation-delay:.15s">
+      <div class="section-eyebrow">Karakteristik Lo</div>
+      <div class="section-title" style="margin-bottom:24px">Kekuatan & area pengembangan.</div>
+      <div class="tags-blk">
+        <div class="tags-lbl">Kekuatan lo</div>
+        <div class="tags-row">${t.strengths.map(s=>`<span class="tag tag-g">✓ ${s}</span>`).join("")}</div>
+      </div>
+      <div class="tags-blk" style="margin-bottom:0">
+        <div class="tags-lbl">Area pengembangan</div>
+        <div class="tags-row">${t.weaknesses.map(w=>`<span class="tag tag-r">↗ ${w}</span>`).join("")}</div>
+      </div>
     </div>
-    <div class="tags-blk">
-      <div class="tags-lbl">Area pengembangan</div>
-      <div class="tags-row">${t.weaknesses.map(w=>`<span class="tag tag-r">↗ ${w}</span>`).join("")}</div>
-    </div>
-    <div class="insight-pair">
+
+    <div class="insight-pair section" style="animation-delay:.2s">
       <div class="icard">
         <div class="icard-hd"><span class="icard-ico ${t.blindspot.cls}">${t.blindspot.icon}</span>${t.blindspot.title}</div>
         <p>${t.blindspot.text}</p>
@@ -704,32 +1049,118 @@ function rResult() {
         <p>${t.tip.text}</p>
       </div>
     </div>
-    <div class="recom">
+
+    <div class="recom section" style="animation-delay:.25s">
       <div class="recom-ey">Rekomendasi untuk lo</div>
-      <h3>Ini yang perlu lo pelajari di Communication Mastery</h3>
+      <h3>Ini yang perlu lo pelajari di Communication Mastery.</h3>
       <p>Semua kelemahan yang teridentifikasi di atas punya solusinya di dalam kelas Communication Mastery — dipercaya <strong>1.300+ murid</strong> dari seluruh Indonesia, dipandu langsung oleh Jason Stanley, Communication Coach bersertifikat BNSP.</p>
       <div class="recom-mods">
         ${t.modules.map((m,i)=>`
         <div class="rmod">
-          <span class="rmod-n">0${i+1}</span>
+          <span class="rmod-n">${String(i+1).padStart(2,'0')}</span>
           <div class="rmod-t"><strong>${m.name}</strong>${m.desc}</div>
         </div>`).join("")}
       </div>
     </div>
-    <div class="promo">
-      <div class="promo-lbl">Kode diskon eksklusif untukmu</div>
-      <span class="promo-code">SEMANGATKOMUNIKASI</span>
+
+    <div class="promo section" style="animation-delay:.3s">
+      <div class="promo-lbl">★ Kode diskon eksklusif untukmu</div>
+      <div class="promo-code">SEMANGATKOMUNIKASI</div>
       <div class="promo-price"><s>Rp 749.000</s> &nbsp;→&nbsp; <strong>Rp 674.000</strong> / tahun</div>
     </div>
     <a href="https://stanleyacademic.com/courses/communication-mastery/" class="btn-cta" target="_blank">Upgrade Komunikasi Gw Sekarang →</a>
     <p class="note">Masukkan kode saat checkout · Hemat Rp 75.000</p>
+
+    <div class="share-blk section" style="animation-delay:.35s">
+      <div class="section-eyebrow" style="margin-bottom:6px">Bagiin Hasil Lo</div>
+      <div class="section-title" style="font-size:22px;margin-bottom:6px">Tantang temen lo.</div>
+      <p class="section-sub">Penasaran tipe komunikator temen lo? Tag mereka dan tantang ikut tes.</p>
+      <div class="share-row">
+        <button class="share-btn share-wa" onclick="shareWA()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp
+        </button>
+        <button class="share-btn share-ig" onclick="shareIG()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          Instagram
+        </button>
+      </div>
+    </div>
+
+    <div class="section" style="animation-delay:.4s">
+      <div class="section-eyebrow">Galeri Archetype</div>
+      <div class="section-title">Tipe komunikator lainnya.</div>
+      <p class="section-sub">Kenali 4 tipe lain — mana yang paling mirip orang di sekitar lo?</p>
+      <div class="others-grid">
+        ${Object.entries(TYPES).filter(([k])=>k!==S.resultType).map(([k,tp])=>`
+        <div class="ocard">
+          <div class="ocard-img">${TYPE_SVG[k]}</div>
+          <div class="ocard-body">
+            <div class="ocard-name" style="color:${tp.color}">${tp.name}</div>
+            <div class="ocard-tag">"${tp.tagline}"</div>
+            <p class="ocard-desc">${TYPE_SHORT[k]}</p>
+          </div>
+        </div>`).join("")}
+      </div>
+    </div>
   </div>`;
 
   setTimeout(()=>{
     document.querySelectorAll(".sbar").forEach(el=>{
       el.style.width = el.dataset.w+"%";
     });
-  }, 120);
+  }, 200);
+}
+
+function getDimLevel(key, val) {
+  const d = DIM_DETAIL[key];
+  if(val <= 40) return d.low;
+  if(val <= 69) return d.mid;
+  return d.high;
+}
+
+function toggleDim(key) {
+  const el = document.getElementById("dexp-"+key);
+  const chev = document.getElementById("chev-"+key);
+  const card = document.getElementById("sdim-"+key);
+  if(el.classList.contains("open")) {
+    el.classList.remove("open");
+    el.style.maxHeight="0";
+    chev.style.transform="rotate(0deg)";
+    card.classList.remove("active");
+  } else {
+    const val = S.dims[key];
+    const lvl = getDimLevel(key, val);
+    el.innerHTML=`<div class="dim-expand-inner"><span class="dim-level-badge">${lvl.label}</span><p>${lvl.insight}</p></div>`;
+    el.classList.add("open");
+    el.style.maxHeight="400px";
+    chev.style.transform="rotate(90deg)";
+    card.classList.add("active");
+  }
+}
+
+function shareWA() {
+  const t = TYPES[S.resultType];
+  const name = S.form.name ? S.form.name.split(" ")[0] : "Gw";
+  const txt = encodeURIComponent(
+    `${name} baru aja ikut TalkDNA™ Assessment dari Stanley Academy dan hasilnya: *${t.name}*\n\n"${t.tagline}"\n\nCoba tes lo juga — gratis, ~5 menit:\nhttps://stanleyacademic.com`
+  );
+  window.open("https://wa.me/?text="+txt, "_blank");
+}
+
+function shareIG() {
+  const t = TYPES[S.resultType];
+  const name = S.form.name ? S.form.name.split(" ")[0] : "Gw";
+  const txt = `Hasil TalkDNA™ ${name}: ${t.name} — "${t.tagline}"\n\nCoba di stanleyacademic.com`;
+  if(navigator.share) {
+    navigator.share({ title:"TalkDNA™ Result", text: txt, url:"https://stanleyacademic.com" }).catch(()=>{});
+  } else {
+    navigator.clipboard.writeText(txt).then(()=>{
+      alert("Caption udah di-copy! Paste ke Instagram Story lo ya 🙌");
+    }).catch(()=>{
+      alert("Buka Instagram Story dan tulis:\n\n"+txt);
+    });
+  }
 }
 
 render();
