@@ -578,9 +578,136 @@ body{
 .ftr a{color:var(--ink-3);text-decoration:none;border-bottom:1px solid var(--line)}
 .ftr a:hover{color:var(--ink)}
 
+/* SOCIAL PROOF STRIP */
+.sp-strip{
+  display:flex;flex-wrap:wrap;gap:10px;align-items:center;
+  padding:16px 20px;margin-bottom:28px;
+  background:rgba(255,255,255,.8);backdrop-filter:blur(12px);
+  border:1px solid var(--line);border-radius:var(--r);
+}
+.sp-item{
+  display:flex;align-items:center;gap:7px;
+  font-size:13px;font-weight:600;color:var(--ink-2);
+}
+.sp-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.sp-stars{color:#f59e0b;font-size:12px;letter-spacing:2px}
+
+/* URGENCY BANNER */
+.urgency-bar{
+  background:linear-gradient(135deg,#12002e,#260055);
+  border:1px solid rgba(124,77,255,.5);
+  border-radius:var(--r);padding:16px 20px;
+  margin-bottom:14px;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:12px;
+}
+.urgency-left{display:flex;align-items:center;gap:10px;flex:1;min-width:0}
+.urgency-fire{font-size:22px;flex-shrink:0}
+.urgency-text{font-size:13px;font-weight:600;color:rgba(255,255,255,.95);line-height:1.35}
+.urgency-text span{color:#fbbf24;font-size:11px;font-weight:500;display:block;margin-top:2px}
+.urgency-timer{display:flex;gap:5px;align-items:center;flex-shrink:0}
+.t-block{
+  text-align:center;background:rgba(255,255,255,.12);
+  border-radius:8px;padding:6px 10px;min-width:42px;
+}
+.t-num{font-family:var(--mono);font-size:20px;font-weight:700;color:#fff;line-height:1;display:block}
+.t-lbl{font-family:var(--mono);font-size:9px;color:rgba(255,255,255,.45);letter-spacing:.08em;text-transform:uppercase;display:block;margin-top:2px}
+.t-sep{font-family:var(--mono);font-size:16px;color:rgba(255,255,255,.3);font-weight:700;align-self:flex-start;padding-top:6px}
+
+/* INLINE CTA (mid-result) */
+.cta-mid{
+  background:linear-gradient(135deg,var(--accent),var(--accent-2));
+  border-radius:var(--r);padding:24px;margin-bottom:28px;
+  text-align:center;position:relative;overflow:hidden;
+}
+.cta-mid::before{
+  content:"";position:absolute;top:-60px;right:-60px;
+  width:200px;height:200px;border-radius:50%;
+  background:rgba(255,255,255,.08);
+}
+.cta-mid-eyebrow{
+  font-family:var(--mono);font-size:10px;font-weight:600;
+  color:rgba(255,255,255,.7);letter-spacing:.12em;text-transform:uppercase;
+  margin-bottom:10px;
+}
+.cta-mid-title{
+  font-family:var(--serif);font-size:24px;font-weight:400;
+  color:#fff;line-height:1.15;letter-spacing:-.015em;margin-bottom:8px;
+}
+.cta-mid-sub{font-size:13px;color:rgba(255,255,255,.8);margin-bottom:18px;line-height:1.5}
+.cta-mid a{
+  display:inline-flex;align-items:center;gap:8px;
+  background:#fff;color:var(--accent);
+  font-size:14px;font-weight:700;
+  padding:13px 24px;border-radius:100px;
+  text-decoration:none;transition:all .3s var(--ease);
+  box-shadow:0 8px 20px -6px rgba(0,0,0,.2);
+}
+.cta-mid a:hover{transform:translateY(-2px);box-shadow:0 12px 28px -8px rgba(0,0,0,.3)}
+
+/* TESTIMONIAL SECTION */
+.testi-section{margin-bottom:32px}
+.testi-grid{display:flex;flex-direction:column;gap:16px}
+.testi-card{
+  background:rgba(255,255,255,.8);backdrop-filter:blur(12px);
+  border:1px solid var(--line);border-radius:var(--r);
+  overflow:hidden;transition:all .3s var(--ease);
+}
+.testi-card:hover{box-shadow:0 12px 32px -16px rgba(10,14,39,.2);transform:translateY(-2px)}
+.testi-video{
+  width:100%;aspect-ratio:16/9;background:var(--ink);
+  position:relative;overflow:hidden;cursor:pointer;display:block;
+  border:none;padding:0;text-decoration:none;
+}
+.testi-thumb-img{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;display:block;
+  transition:transform .4s var(--ease);
+}
+.testi-card:hover .testi-thumb-img{transform:scale(1.05)}
+.testi-thumb-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(10,14,39,.05) 0%,rgba(10,14,39,.45) 100%);
+}
+.testi-play-btn{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:62px;height:62px;border-radius:50%;
+  background:rgba(192,57,43,.92);
+  box-shadow:0 8px 24px -6px rgba(192,57,43,.7);
+  display:grid;place-items:center;
+  transition:all .3s var(--ease);
+}
+.testi-play-btn::after{
+  content:"";
+  border-left:22px solid #fff;
+  border-top:13px solid transparent;
+  border-bottom:13px solid transparent;
+  margin-left:5px;
+}
+.testi-card:hover .testi-play-btn{transform:translate(-50%,-50%) scale(1.1)}
+.testi-yt-badge{
+  position:absolute;bottom:10px;right:10px;
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:11px;font-weight:700;color:#fff;
+  background:rgba(10,14,39,.65);backdrop-filter:blur(6px);
+  padding:5px 9px;border-radius:999px;
+}
+.testi-yt-badge svg{display:block}
+.testi-body{padding:18px 20px}
+.testi-text{
+  font-family:var(--serif);font-style:italic;
+  font-size:16px;line-height:1.6;color:var(--ink-2);
+  margin-bottom:14px;
+}
+.testi-name{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:2px}
+.testi-role{font-size:12px;color:var(--ink-3);font-weight:500}
+
+
 @media(max-width:380px){
   .hero{padding-top:48px}
   .step-title,.reveal-cycling{font-size:30px}
+  .t-num{font-size:16px}
+  .t-block{min-width:36px;padding:5px 8px}
 }
 </style>
 </head>
@@ -835,8 +962,13 @@ function rHero() {
   app.innerHTML = `
   <div class="hero">
     <div class="hero-eyebrow"><span class="hero-eyebrow-line"></span>Assessment · ~5 Menit · Gratis</div>
-    <h1>Cari tahu <em>tipe</em><br>komunikator lo.</h1>
-    <p class="hero-desc">32 pertanyaan psikometri yang dirancang oleh Communication Coach bersertifikat BNSP untuk mengidentifikasi pola komunikasi lo secara mendalam — dan apa yang perlu diperbaiki.</p>
+    <h1>Ketahui Karakter<br>Komunikasi Lo<br><em>Dalam 5 Menit!</em></h1>
+    <p class="hero-desc">32 pertanyaan psikometri untuk mengidentifikasi tipe komunikator lo — dan apa yang selama ini menghambat lo. Dirancang oleh Communication Coach bersertifikat BNSP.</p>
+    <div class="sp-strip">
+      <div class="sp-item"><span class="sp-dot" style="background:var(--green)"></span>1.300+ murid Communication Mastery</div>
+      <div class="sp-item"><span class="sp-dot" style="background:var(--gold)"></span><span class="sp-stars">★★★★★</span>&nbsp;4.9/5</div>
+      <div class="sp-item"><span class="sp-dot" style="background:var(--accent)"></span>Coach bersertifikat BNSP</div>
+    </div>
     <div class="archetypes-preview">
       <div class="archetypes-preview-row">
         <div class="ap-chip">O</div>
@@ -847,23 +979,20 @@ function rHero() {
       </div>
       <div class="ap-txt"><strong>5 archetype</strong>komunikasi</div>
     </div>
-    <div class="hero-stats">
-      <div class="hero-stat"><span class="hero-stat-dot"></span>1.300+ peserta</div>
-      <div class="hero-stat"><span class="hero-stat-dot"></span>~5 menit</div>
-      <div class="hero-stat"><span class="hero-stat-dot"></span>Gratis 100%</div>
-    </div>
-    <button class="btn btn-primary" onclick="S.screen='form';render()">
+    <button class="btn btn-primary" onclick="S.screen='quiz';render()">
       <span>Mulai Tes Sekarang</span>
       <span class="arrow">→</span>
     </button>
+    <p style="text-align:center;font-size:12px;color:var(--ink-4);margin-top:12px;font-family:var(--mono)">Gratis · ~5 menit · Hasil langsung</p>
   </div>`;
 }
 
 function rForm() {
   app.innerHTML = `
   <div class="card fadein" style="margin-top:48px">
-    <div class="eyebrow">Langkah 1 dari 2</div>
-    <div class="step-title">Isi data lo dulu.</div>
+    <div class="eyebrow">Hampir selesai!</div>
+    <div class="step-title">Hasil lo sudah siap.</div>
+    <p style="font-size:15px;color:var(--ink-3);margin-bottom:28px;line-height:1.6">Masukkan data lo untuk lihat tipe komunikator lo — dan apa yang perlu diperbaiki.</p>
     <div class="field-row">
       <div class="field"><label>Nama Lengkap</label>
         <input type="text" id="fn" placeholder="Nama lo" value="${S.form.name}" oninput="upF('name',this.value)"/></div>
@@ -881,10 +1010,16 @@ function rForm() {
         <option value="Rekomendasi teman" ${S.form.source==="Rekomendasi teman"?"selected":""}>Rekomendasi teman</option>
         <option value="Lainnya" ${S.form.source==="Lainnya"?"selected":""}>Lainnya</option>
       </select></div>
-    <button class="btn btn-primary" id="bstart" onclick="startQ()" ${fValid()?"":"disabled"} style="margin-top:8px">
-      <span>Lanjut ke Assessment</span><span class="arrow">→</span>
+    <button class="btn btn-primary" id="bstart" onclick="submitForm()" ${fValid()?"":"disabled"} style="margin-top:8px">
+      <span>Lihat Hasil Gw Sekarang</span><span class="arrow">→</span>
     </button>
+    <p style="text-align:center;font-size:11px;color:var(--ink-4);margin-top:10px;font-family:var(--mono)">Data lo aman · Tidak akan di-spam</p>
   </div>`;
+}
+
+function submitForm() {
+  if(!fValid()) return;
+  S.screen="loading"; render(); submitD();
 }
 
 function upF(k,v) {
@@ -895,7 +1030,6 @@ function upF(k,v) {
 function fValid() { return S.form.name.trim()&&S.form.phone.trim()&&S.form.email.trim()&&S.form.source; }
 
 function startQ() {
-  if(!fValid()) return;
   S.screen="quiz"; S.qIndex=0; S.answers=[]; S.selVal=null; render();
 }
 
@@ -948,7 +1082,7 @@ function nextQ() {
   } else {
     S.dims = calcDimensions(S.answers);
     S.resultType = calcArchetype(S.dims);
-    S.screen="loading"; render(); submitD();
+    S.screen="form"; render();
   }
 }
 
@@ -999,6 +1133,9 @@ function rResult() {
     { l: "Empati",        k: "empathy" },
     { l: "Refleksi",      k: "reflection" },
   ];
+  const tl = getTimeLeft();
+  const firstName = S.form.name ? S.form.name.split(" ")[0] : "Lo";
+
   app.innerHTML = `
   <div style="padding-top:32px">
     <div class="result-hero" style="--type-color:${t.color}">
@@ -1063,15 +1200,42 @@ function rResult() {
       </div>
     </div>
 
-    <div class="promo section" style="animation-delay:.3s">
-      <div class="promo-lbl">★ Kode diskon eksklusif untukmu</div>
-      <div class="promo-code">SEMANGATKOMUNIKASI</div>
-      <div class="promo-price"><s>Rp 749.000</s> &nbsp;→&nbsp; <strong>Rp 674.000</strong> / tahun</div>
+    <!-- MID CTA -->
+    <div class="cta-mid section" style="animation-delay:.28s">
+      <div class="cta-mid-eyebrow">Solusi untuk ${firstName}</div>
+      <div class="cta-mid-title">Ubah kelemahan lo jadi kekuatan komunikasi.</div>
+      <div class="cta-mid-sub">1.300+ orang udah buktiin — banyak yang ngerasain perubahan dalam 2 minggu pertama.</div>
+      <a href="https://stanleyacademic.com/courses/communication-mastery/" target="_blank">Lihat Program Communication Mastery →</a>
     </div>
-    <a href="https://stanleyacademic.com/courses/communication-mastery/" class="btn-cta" target="_blank">Upgrade Komunikasi Gw Sekarang →</a>
-    <p class="note">Masukkan kode saat checkout · Hemat Rp 75.000</p>
 
-    <div class="share-blk section" style="animation-delay:.35s">
+    <!-- URGENCY + PROMO -->
+    <div class="urgency-bar section" style="animation-delay:.3s">
+      <div class="urgency-left">
+        <span class="urgency-fire">🔥</span>
+        <div class="urgency-text">
+          Diskon eksklusif kode <strong style="color:#fbbf24">DNA26</strong> — aktif sekarang!
+          <span>Berlaku selama stok & waktu masih ada. Jangan sampai kehabisan.</span>
+        </div>
+      </div>
+      <div class="urgency-timer">
+        <div class="t-block"><span class="t-num" id="t-h">${tl.h}</span><span class="t-lbl">JAM</span></div>
+        <span class="t-sep">:</span>
+        <div class="t-block"><span class="t-num" id="t-m">${tl.m}</span><span class="t-lbl">MNT</span></div>
+        <span class="t-sep">:</span>
+        <div class="t-block"><span class="t-num" id="t-s">${tl.s}</span><span class="t-lbl">DTK</span></div>
+      </div>
+    </div>
+
+    <div class="promo section" style="animation-delay:.32s;margin-bottom:14px">
+      <div class="promo-lbl">★ Kode diskon eksklusif untukmu</div>
+      <div class="promo-code">DNA26</div>
+      <div class="promo-price"><s>Rp 749.000</s> &nbsp;→&nbsp; <strong>Rp 674.000</strong> · akses selamanya</div>
+    </div>
+    <a href="https://stanleyacademic.com/courses/communication-mastery/" class="btn-cta section" style="animation-delay:.34s" target="_blank">Upgrade Komunikasi Gw Sekarang →</a>
+    <p class="note">Masukkan kode <strong>DNA26</strong> saat checkout · Hemat Rp 75.000</p>
+
+    <!-- SHARE -->
+    <div class="share-blk section" style="animation-delay:.36s">
       <div class="section-eyebrow" style="margin-bottom:6px">Bagiin Hasil Lo</div>
       <div class="section-title" style="font-size:22px;margin-bottom:6px">Tantang temen lo.</div>
       <p class="section-sub">Penasaran tipe komunikator temen lo? Tag mereka dan tantang ikut tes.</p>
@@ -1087,7 +1251,40 @@ function rResult() {
       </div>
     </div>
 
-    <div class="section" style="animation-delay:.4s">
+    <!-- TESTIMONIALS -->
+    <div class="section" style="animation-delay:.38s">
+      <div class="section-eyebrow">Kata Mereka</div>
+      <div class="section-title">1.300+ orang udah buktiin.</div>
+      <p class="section-sub">Dari berbagai latar belakang — semua merasakan perubahan nyata.</p>
+      <div class="testi-grid">
+        ${TESTIMONIALS.map((t,i) => testiCard(t,i)).join("")}
+      </div>
+    </div>
+
+    <!-- FINAL CTA -->
+    <div style="margin-top:32px" class="section" style="animation-delay:.42s">
+      <div class="urgency-bar" style="margin-bottom:14px">
+        <div class="urgency-left">
+          <span class="urgency-fire">⏰</span>
+          <div class="urgency-text">
+            Penawaran ini berakhir dalam
+            <span>Gunakan kode <strong style="color:#fbbf24">DNA26</strong> sebelum timer habis</span>
+          </div>
+        </div>
+        <div class="urgency-timer">
+          <div class="t-block"><span class="t-num" id="t-h2">${tl.h}</span><span class="t-lbl">JAM</span></div>
+          <span class="t-sep">:</span>
+          <div class="t-block"><span class="t-num" id="t-m2">${tl.m}</span><span class="t-lbl">MNT</span></div>
+          <span class="t-sep">:</span>
+          <div class="t-block"><span class="t-num" id="t-s2">${tl.s}</span><span class="t-lbl">DTK</span></div>
+        </div>
+      </div>
+      <a href="https://stanleyacademic.com/courses/communication-mastery/" class="btn-cta" target="_blank">Upgrade Komunikasi Gw Sekarang →</a>
+      <p class="note">Kode <strong>DNA26</strong> · Hemat Rp 75.000 · Masukkan saat checkout</p>
+    </div>
+
+    <!-- ARCHETYPE GALLERY -->
+    <div class="section" style="animation-delay:.44s">
       <div class="section-eyebrow">Galeri Archetype</div>
       <div class="section-title">Tipe komunikator lainnya.</div>
       <p class="section-sub">Kenali 4 tipe lain — mana yang paling mirip orang di sekitar lo?</p>
@@ -1110,6 +1307,19 @@ function rResult() {
       el.style.width = el.dataset.w+"%";
     });
   }, 200);
+
+  // start both timers ticking
+  if (window._timerInterval) clearInterval(window._timerInterval);
+  window._timerInterval = setInterval(() => {
+    const tl = getTimeLeft();
+    ["t-h","t-m","t-s","t-h2","t-m2","t-s2"].forEach((id, idx) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const val = [tl.h,tl.m,tl.s,tl.h,tl.m,tl.s][idx];
+      if (el.textContent !== val) el.textContent = val;
+    });
+    if (tl.expired) clearInterval(window._timerInterval);
+  }, 1000);
 }
 
 function getDimLevel(key, val) {
@@ -1161,6 +1371,106 @@ function shareIG() {
       alert("Buka Instagram Story dan tulis:\n\n"+txt);
     });
   }
+}
+
+// ── COUNTDOWN TIMER (24 jam dari pertama buka) ──
+const TIMER_KEY = "talkdna_deadline";
+const TIMER_DURATION = 24 * 60 * 60 * 1000;
+
+function getDeadline() {
+  let dl = localStorage.getItem(TIMER_KEY);
+  if (!dl) {
+    dl = Date.now() + TIMER_DURATION;
+    localStorage.setItem(TIMER_KEY, dl);
+  }
+  return parseInt(dl);
+}
+
+function getTimeLeft() {
+  const diff = getDeadline() - Date.now();
+  if (diff <= 0) return { h:"00", m:"00", s:"00", expired: true };
+  const h = Math.floor(diff / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  const s = Math.floor((diff % 60000) / 1000);
+  const pad = n => String(n).padStart(2,"0");
+  return { h: pad(h), m: pad(m), s: pad(s), expired: false };
+}
+
+function startTimerTick() {
+  if (window._timerInterval) clearInterval(window._timerInterval);
+  window._timerInterval = setInterval(() => {
+    const t = getTimeLeft();
+    const hn = document.getElementById("t-h");
+    const mn = document.getElementById("t-m");
+    const sn = document.getElementById("t-s");
+    if (hn) hn.textContent = t.h;
+    if (mn) mn.textContent = t.m;
+    if (sn) sn.textContent = t.s;
+    if (t.expired) clearInterval(window._timerInterval);
+  }, 1000);
+}
+
+// ── TESTIMONIALS DATA ──
+const TESTIMONIALS = [
+  {
+    name:"Mery",
+    role:"HR Manager & With Prior Experience as Legal Manager",
+    text:"Saya sudah ikut beberapa pelatihan, tapi baru kali ini rasanya benar-benar berkesan sampai sedih ketika programnya selesai. Bootcamp ini memberi pelajaran, pengalaman, dan kehangatan, dan akan selalu punya tempat spesial di hati saya. Bukan sekadar belajar komunikasi, tapi juga membuka perspektif hidup yang baru.",
+    yt:"4wr4lPyJjzI"
+  },
+  {
+    name:"Luluk",
+    role:"Banker & Promotor Stifin",
+    text:"Ternyata, memberi jeda saat berbicara adalah bagian penting dari komunikasi yang efektif. Sebelumnya, setiap kali aku berbicara, aku sering lupa apa yang ingin aku sampaikan — jadinya belibet dan gugup. Setelah bergabung dengan bootcamp di Stanley Academy, aku mulai bisa menyampaikan pesan dengan lebih tenang dan terstruktur. Sekarang aku jadi lebih percaya diri dan tahu cara mengatur jeda saat berkomunikasi. Yuk, upgrade cara komunikasimu!",
+    yt:"yn6hY4o-LNM"
+  },
+  {
+    name:"Fandy Herlambang",
+    role:"Design Engineer",
+    text:"Kalau kamu masih sering belibet saat ngomong atau nervous di depan banyak orang, Stanley Academy benar-benar bisa membantu. Aku peserta Bootcamp Patch 2, dan selama sebulan belajar bukan cuma diajarin cara komunikasi dan gestur, tapi juga psikologi di balik komunikasi langsung dari Jason Stanley. Bahkan belum sampai dua minggu, perubahannya sudah terasa banget. Mentornya peduli dan teman-temannya sangat suportif.",
+    yt:"ZZBaYMPtbaE"
+  },
+  {
+    name:"Ahmad Widia Santika",
+    role:"Trainer & Tenaga Ahli K3",
+    text:"Selama bootcamp 30 hari di Stanley Academy, saya belajar bahwa komunikasi efektif harus punya struktur jelas — konsep \u201cRumah Pak Uktur\u201d: pancingan, penjelasan inti, dan cerita agar pesan mudah diingat. Setelah mempelajari ini, saya mampu berbicara lebih terstruktur dan jelas. Sebagai trainer dan tenaga ahli, ilmu ini sangat membantu saya menyampaikan materi yang tepat sasaran. Sangat saya rekomendasikan!",
+    yt:"DwvHn5Tr1Qo"
+  },
+  {
+    name:"Ulya",
+    role:"Guru Sekolah Dasar",
+    text:"Dulu saya menganggap kata pengisi seperti \u201ceee\u201d, \u201cemm\u201d, atau \u201caaa\u201d adalah hal yang wajar. Setelah belajar di Stanley Academy, saya tahu itu sebaiknya dihilangkan agar pesan lebih jelas dan percaya diri. Salah satu caranya: diam sejenak sebelum melanjutkan kalimat. Harga kaki lima, kualitas bintang lima — sangat saya rekomendasikan!",
+    yt:"4wr4lPyJjzI"
+  },
+  {
+    name:"Desta",
+    role:"Karyawan Swasta",
+    text:"Dulu setiap kali saya berbicara sering sulit dipahami sehingga terjadi miskomunikasi, dan saya jadi kurang percaya diri. Setelah bootcamp di Stanley Academy, saya menyadari kelemahan saya dan belajar berbicara lebih efektif — tempo lebih pelan, mengatur volume, serta memberi penekanan pada kata penting. Sejak saat itu, saya jauh lebih percaya diri berbicara dan berinteraksi. Terima kasih Stanley Academy.",
+    yt:"M-x16YVKZHI"
+  },
+];
+
+function testiCard(t, i) {
+  const ytUrl = `https://youtu.be/${t.yt}`;
+  const thumb = `https://i.ytimg.com/vi/${t.yt}/hqdefault.jpg`;
+  return `
+  <div class="testi-card">
+    <a class="testi-video" href="${ytUrl}" target="_blank" rel="noopener" aria-label="Tonton testimoni ${t.name} di YouTube">
+      <img class="testi-thumb-img" src="${thumb}" alt="Testimoni ${t.name}" loading="lazy"
+        onerror="this.src='https://i.ytimg.com/vi/${t.yt}/0.jpg'"/>
+      <span class="testi-thumb-overlay"></span>
+      <span class="testi-play-btn"></span>
+      <span class="testi-yt-badge">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>
+        YouTube
+      </span>
+    </a>
+    <div class="testi-body">
+      <p class="testi-text">"${t.text}"</p>
+      <div class="testi-name">${t.name}</div>
+      <div class="testi-role">${t.role}</div>
+    </div>
+  </div>`;
 }
 
 render();
