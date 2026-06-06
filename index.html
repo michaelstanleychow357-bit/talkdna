@@ -1215,12 +1215,13 @@ const app = document.getElementById("app");
 function render() {
   app.innerHTML = "";
   window.scrollTo({top:0,behavior:'smooth'});
-  if (S.screen === "hero")    rHero();
-  else if (S.screen === "form")    rForm();
-  else if (S.screen === "quiz")    rQuiz();
-  else if (S.screen === "loading") rLoading();
-  else if (S.screen === "offer")   rOffer();
-  else if (S.screen === "result")  rResult();
+  if (S.screen === "hero")       rHero();
+  else if (S.screen === "form")       rForm();
+  else if (S.screen === "quiz")       rQuiz();
+  else if (S.screen === "loading")    rLoading();
+  else if (S.screen === "commitment") rCommitment();
+  else if (S.screen === "offer")      rOffer();
+  else if (S.screen === "result")     rResult();
 }
 
 function rHero() {
@@ -1383,7 +1384,7 @@ function rLoading() {
       el.classList.add("reveal-final");
       el.style.opacity="1";
     },150);
-    setTimeout(()=>{ S.screen="offer"; render(); }, 1300);
+    setTimeout(()=>{ S.screen="commitment"; render(); }, 1300);
   }, 2200);
 }
 
@@ -1396,6 +1397,87 @@ async function submitD() {
     empathy: S.dims.empathy, reflection: S.dims.reflection,
     result_type: t.name, answers: S.answers.join(", "),
   });
+}
+
+function rCommitment() {
+  const firstName = S.form.name ? S.form.name.split(" ")[0] : "Kak";
+  if (!S.commitStep) S.commitStep = 1;
+
+  const steps = [
+    {
+      q: `${firstName}, apakah masalah belibet, gugup, atau minder ini mengganggu hidup lo sehari-hari?`,
+      hint: "Misal: pas ngomong di depan orang, interview kerja, kenalan baru, atau presentasi."
+    },
+    {
+      q: `Lo udah capek belum sama masalah ini — dan pengen banget berubah?`,
+      hint: "Bukan sekadar pengen, tapi beneran siap lakuin sesuatu buat berubah."
+    },
+    {
+      q: `Kalau ada metode yang terbukti bisa bantu lo sembuh dari masalah ini dalam 30 hari — lo siap jalanin?`,
+      hint: "Ada jaminan uang kembali kalau dalam 30 hari tidak ada perubahan."
+    },
+  ];
+
+  const current = steps[S.commitStep - 1];
+  const pct = Math.round(((S.commitStep - 1) / steps.length) * 100);
+
+  app.innerHTML = `
+  <div class="card fadein" style="margin-top:48px">
+    <div class="qmeta" style="margin-bottom:12px">
+      <span style="font-family:var(--mono);font-size:11px;color:var(--ink-3);letter-spacing:0.06em;text-transform:uppercase">Pertanyaan ${S.commitStep} dari ${steps.length}</span>
+      <span style="font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink)">${pct}%</span>
+    </div>
+    <div class="ptrack" style="margin-bottom:32px"><div class="pfill" style="width:${pct}%"></div></div>
+
+    <div class="quiz-q" style="margin-bottom:12px">${current.q}</div>
+    <p style="font-size:13px;color:var(--ink-4);margin-bottom:32px;line-height:1.6;font-style:italic">${current.hint}</p>
+
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <button onclick="commitYes()" style="
+        display:flex;align-items:center;gap:14px;
+        width:100%;padding:18px 20px;
+        background:var(--ink);color:var(--cream);
+        border:none;border-radius:var(--r);
+        font-family:var(--sans);font-size:16px;font-weight:600;
+        cursor:pointer;transition:all .2s;
+        box-shadow:0 8px 24px -8px rgba(10,14,39,.4);
+      ">
+        <span style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.12);display:grid;place-items:center;font-size:18px;flex-shrink:0">✓</span>
+        <span>Ya, betul banget</span>
+      </button>
+
+      <button onclick="commitNo()" style="
+        display:flex;align-items:center;gap:14px;
+        width:100%;padding:18px 20px;
+        background:var(--cream);color:var(--ink-2);
+        border:1.5px solid var(--line-2);border-radius:var(--r);
+        font-family:var(--sans);font-size:16px;font-weight:500;
+        cursor:pointer;transition:all .2s;
+      ">
+        <span style="width:36px;height:36px;border-radius:50%;background:rgba(10,14,39,.06);display:grid;place-items:center;font-size:18px;flex-shrink:0">✗</span>
+        <span>Tidak / Belum yakin</span>
+      </button>
+    </div>
+  </div>`;
+}
+
+function commitYes() {
+  if (S.commitStep < 3) {
+    S.commitStep++;
+    render();
+  } else {
+    // semua 3 jawaban yes → ke offer
+    S.commitStep = 1;
+    S.screen = "offer";
+    render();
+  }
+}
+
+function commitNo() {
+  // jawab tidak → skip langsung ke hasil
+  S.commitStep = 1;
+  S.screen = "result";
+  render();
 }
 
 function rOffer() {
