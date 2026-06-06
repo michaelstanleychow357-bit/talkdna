@@ -709,6 +709,115 @@ body{
   .t-num{font-size:16px}
   .t-block{min-width:36px;padding:5px 8px}
 }
+
+/* GROWTH PITCH */
+.growth-pitch{
+  background:rgba(255,255,255,.88);backdrop-filter:blur(20px);
+  border:1.5px solid var(--line-2);border-radius:var(--r-lg);
+  padding:32px 26px;margin-bottom:20px;
+}
+.growth-pitch-headline{
+  font-family:var(--serif);font-size:22px;line-height:1.2;
+  letter-spacing:-0.015em;color:var(--ink);margin-bottom:18px;
+}
+.growth-pitch-body p{
+  font-size:15px;color:var(--ink-2);line-height:1.78;margin-bottom:14px;
+}
+.growth-pitch-body p:last-child{margin-bottom:0}
+.growth-pitch-body strong{color:var(--ink);font-weight:700}
+.growth-pitch-body em{font-style:italic;color:var(--ink-3)}
+
+/* PRICE BLOCK */
+.price-block{
+  background:var(--ink);border-radius:var(--r-lg);
+  padding:28px 26px;margin-bottom:14px;
+  position:relative;overflow:hidden;
+}
+.price-block::before{
+  content:"";position:absolute;top:-80px;right:-80px;
+  width:240px;height:240px;
+  background:radial-gradient(circle,var(--accent) 0%,transparent 65%);
+  opacity:.22;filter:blur(40px);
+}
+.price-block>*{position:relative;z-index:1}
+.price-block-label{
+  font-family:var(--mono);font-size:10px;font-weight:600;
+  letter-spacing:0.14em;text-transform:uppercase;
+  color:rgba(255,255,255,.5);margin-bottom:10px;
+}
+.price-block-name{
+  font-family:var(--serif);font-size:26px;line-height:1.1;
+  letter-spacing:-0.015em;color:var(--cream);margin-bottom:6px;
+}
+.price-block-sub{font-size:13px;color:rgba(255,255,255,.58);margin-bottom:20px;line-height:1.5}
+.price-row{display:flex;align-items:baseline;gap:12px;margin-bottom:8px;flex-wrap:wrap}
+.price-original{
+  font-size:16px;color:rgba(255,255,255,.38);
+  text-decoration:line-through;font-family:var(--mono);
+}
+.price-final{
+  font-family:var(--mono);font-size:38px;font-weight:600;
+  color:#4ade80;letter-spacing:-0.02em;
+}
+.price-badge{
+  display:inline-flex;align-items:center;
+  background:#4ade80;color:#052e16;
+  font-size:11px;font-weight:800;
+  letter-spacing:0.06em;text-transform:uppercase;
+  padding:4px 10px;border-radius:100px;
+}
+.price-note{font-size:12px;color:rgba(255,255,255,.4);margin-top:6px;font-family:var(--mono)}
+.price-includes{margin-top:20px;display:flex;flex-direction:column;gap:8px}
+.price-include-item{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:13px;color:rgba(255,255,255,.75);line-height:1.45;
+}
+.price-include-item::before{
+  content:"✓";flex-shrink:0;
+  color:#4ade80;font-weight:700;font-size:13px;margin-top:1px;
+}
+
+/* BIG WA BUTTON */
+.btn-wa{
+  display:flex;align-items:center;justify-content:center;gap:12px;
+  width:100%;padding:22px 26px;
+  background:#16a34a;color:#fff;
+  font-family:var(--sans);font-size:17px;font-weight:700;
+  letter-spacing:-0.01em;
+  border:none;border-radius:var(--r);
+  cursor:pointer;text-decoration:none;
+  transition:all .3s var(--ease);
+  box-shadow:0 14px 40px -10px rgba(22,163,74,.55);
+  margin-bottom:10px;
+}
+.btn-wa:hover{
+  background:#15803d;transform:translateY(-3px);
+  box-shadow:0 20px 50px -12px rgba(22,163,74,.65);
+}
+.btn-wa:active{transform:translateY(0)}
+.btn-wa svg{flex-shrink:0}
+.btn-wa-sub{
+  text-align:center;font-size:12px;color:var(--ink-4);
+  font-family:var(--mono);margin-bottom:28px;
+}
+
+/* GUARANTEE */
+.guarantee-block{
+  display:flex;align-items:flex-start;gap:16px;
+  background:linear-gradient(135deg,rgba(74,222,128,.08),rgba(22,163,74,.05));
+  border:1.5px solid rgba(74,222,128,.35);
+  border-radius:var(--r);padding:22px 20px;
+  margin-bottom:16px;
+}
+.guarantee-icon{font-size:28px;flex-shrink:0;line-height:1}
+.guarantee-title{
+  font-size:15px;font-weight:700;color:var(--ink);
+  margin-bottom:6px;letter-spacing:-0.01em;
+}
+.guarantee-body p{
+  font-size:13px;color:var(--ink-2);line-height:1.65;
+}
+.guarantee-body strong{color:#15803d;font-weight:700}
 </style>
 </head>
 <body>
@@ -769,7 +878,14 @@ const TYPES = {
       { name: "Bulletproof Error-Stopper", desc: "5 kesalahan fatal yang bikin lo overthink — dan cara eliminasinya" },
       { name: "Formula 3-Step Structure", desc: "Template ngomong yang bikin lo tidak perlu mikir panjang lagi sebelum bicara" },
       { name: "Pembicara yang Efektif", desc: "Cara mengubah pikiran yang kompleks jadi ucapan yang simpel dan kuat" },
-    ]
+    ],
+    growthPitch: {
+      headline: "Kenapa Three Hour Communication adalah jawaban untuk Overthinker seperti lo?",
+      body: `<p>Masalah lo bukan kurangnya ide — lo justru punya terlalu banyak. Yang kurang adalah <strong>sistem yang ngasih lo izin untuk mulai ngomong sebelum lo merasa "siap"</strong>.</p>
+      <p>Di Modul 2, lo akan diajarin teknik konkret untuk memutus siklus overthinking saat momen bicara tiba — bukan teori, tapi drill yang bisa langsung dipraktekkan. Lo akan belajar bahwa <strong>kata pertama yang lo ucapkan tidak perlu sempurna</strong> — yang penting lo mulai.</p>
+      <p>Di Modul 3, lo akan dapat Formula 3-Step Structure — template bicara yang mengubah proses "mikir dulu panjang" jadi struktur otomatis di kepala lo. Artinya lo bisa respons natural, tanpa freeze, tanpa blank.</p>
+      <p>Dalam ~3 jam materi, lo akan punya framework baru yang bisa lo terapkan di percakapan berikutnya — harfiah besok.</p>`
+    }
   },
   ghost: {
     name: "The Silent Ghost",
@@ -785,7 +901,14 @@ const TYPES = {
       { name: "First Impression", desc: "Cara hadir dan diingat orang bahkan tanpa banyak bicara" },
       { name: "Power & Influence Mastery", desc: "Teknik membangun otoritas diam-diam yang membuat suara lo didengar saat bicara" },
       { name: "Pembicara yang Efektif", desc: "Cara menyampaikan kebutuhan dan pendapat tanpa merasa bersalah" },
-    ]
+    ],
+    growthPitch: {
+      headline: "Kenapa Three Hour Communication adalah titik balik untuk Silent Ghost seperti lo?",
+      body: `<p>Lo bukan tidak bisa bicara. Lo hanya belum punya bukti bahwa suara lo aman untuk dikeluarkan. Dan itu bukan sesuatu yang bisa diatasi dengan 'coba lebih berani' — itu butuh <strong>framework yang mengubah cara otak lo memproses situasi sosial</strong>.</p>
+      <p>Modul 2 membahas akar psikologis kenapa seseorang jadi invisible — dan ada teknik spesifik untuk me-reset pola itu. Bukan motivasi, tapi mekanisme konkret. Lo akan mulai paham kenapa diam terasa 'lebih aman' dan bagaimana secara bertahap lo bisa mengubahnya.</p>
+      <p>Modul 3 ngajarin lo trik ngobrol anti kehabisan topik dan active listening — dua hal yang paling dibutuhin Silent Ghost untuk mulai hadir secara nyata di percakapan. <strong>Lo tidak perlu jadi extrovert. Lo hanya perlu punya sistem.</strong></p>
+      <p>Dalam ~3 jam, lo akan keluar dengan pemahaman baru tentang diri lo — dan langkah pertama yang konkret untuk mulai didengar.</p>`
+    }
   },
   talker: {
     name: "The Loud Talker",
@@ -801,7 +924,14 @@ const TYPES = {
       { name: "Formula 3-Step Structure", desc: "Cara mengemas ide lo agar orang ingat, setuju, dan bertindak" },
       { name: "Penggunaan Ethos, Pathos, Logos", desc: "Cara menyeimbangkan energi emosional lo dengan logika yang meyakinkan" },
       { name: "Mempertajam Argumen", desc: "Teknik memfilter kata-kata agar yang tersisa adalah yang paling powerful" },
-    ]
+    ],
+    growthPitch: {
+      headline: "Kenapa Three Hour Communication adalah upgrade yang lo butuhin sebagai Loud Talker?",
+      body: `<p>Lo sudah punya yang susah didapet orang lain: energi, karisma, dan keberanian ngomong. Tapi ada gap antara <em>didengar</em> dan <em>diikuti</em> — dan gap itu bukan soal jumlah kata, tapi soal <strong>struktur dan presisi</strong>.</p>
+      <p>Di Modul 3, lo akan belajar Ethos/Pathos/Logos — framework klasik yang dipake para komunikator paling influential di dunia untuk menyeimbangkan energi emosional dengan argumen yang meyakinkan. Ini yang akan mengubah percakapan lo dari entertaining jadi benar-benar menggerakkan orang.</p>
+      <p>Lo juga akan dapat Formula 3-Step Structure — cara mengemas pesan lo dalam pola yang bikin orang ingat apa yang lo minta, bahkan setelah obrolan selesai. <strong>Bayangkan kalau energi lo yang sudah besar itu sekarang punya arah yang tajam.</strong></p>
+      <p>~3 jam yang akan mengubah cara lo melihat setiap percakapan — dari sekadar mengisi ruang, jadi benar-benar menciptakan impact.</p>`
+    }
   },
   dominator: {
     name: "The Dominator",
@@ -817,7 +947,14 @@ const TYPES = {
       { name: "Persuasive Communication", desc: "Perbedaan antara menekan dan meyakinkan — dan teknik mengubah resistensi jadi dukungan" },
       { name: "Pendengar yang Baik", desc: "Kenapa leaders terbaik dunia mendengarkan lebih banyak dari yang mereka bicara" },
       { name: "The Secret of Influence Communication", desc: "Cara membangun pengaruh yang bertahan lama — bukan sekadar kepatuhan sementara" },
-    ]
+    ],
+    growthPitch: {
+      headline: "Kenapa Three Hour Communication adalah level berikutnya untuk Dominator seperti lo?",
+      body: `<p>Lo sudah punya presence. Orang mendengarkan saat lo bicara. Tapi ada pertanyaan yang lebih penting: <strong>apakah mereka setuju karena mereka genuinely yakin, atau karena mereka tidak berani menolak?</strong></p>
+      <p>Di Modul 5, lo akan belajar French & Raven Power Concept — framework yang memisahkan Coercive Power (kepatuhan karena takut) dengan Referent Power dan Expert Power (pengaruh karena respect yang tulus). Lo akan paham kenapa leaders terbaik justru jarang memaksakan kehendak.</p>
+      <p>Modul 4 membahas etika komunikasi — bukan aturan, tapi prinsip yang membuat otoritas lo jadi sustainable jangka panjang. <strong>Influence sejati bukan lo yang harus selalu ada — tapi keputusan yang lo tanamkan tetap dijalankan bahkan saat lo tidak ada.</strong></p>
+      <p>~3 jam untuk upgrade dari pemimpin yang ditakuti jadi pemimpin yang benar-benar diikuti.</p>`
+    }
   },
   connector: {
     name: "The Connector",
@@ -833,7 +970,14 @@ const TYPES = {
       { name: "The Secret of Influence Communication", desc: "Cara naik dari 'orang yang disukai' ke 'orang yang diikuti'" },
       { name: "Introduction to French & Raven Power Concept", desc: "Framework untuk memahami dan membangun berbagai jenis influence" },
       { name: "Storytelling untuk Impact", desc: "Cara mengemas pesan lo agar diingat, di-share, dan menginspirasi tindakan" },
-    ]
+    ],
+    growthPitch: {
+      headline: "Kenapa Three Hour Communication adalah batu loncatan sempurna untuk Connector seperti lo?",
+      body: `<p>Lo sudah punya fondasi yang orang lain susah payah membangunnya — empati, kemampuan membaca situasi, dan komunikasi dua arah yang sehat. Tapi ada ceiling yang perlu lo tembus: <strong>dari 'orang yang disukai' ke 'orang yang benar-benar diikuti'.</strong></p>
+      <p>Di Modul 5, lo akan belajar persuasive communication dan French & Raven Power Concept — framework yang mengajarkan cara membangun Referent Power dan Expert Power. Ini yang akan mengubah relasi lo dari sekadar hangat jadi genuinely influential.</p>
+      <p>Kekuatan komunikasi tatap muka lo juga perlu di-transfer ke medium digital. Modul 5 membahas digital communication — cara lo tetap punya presence yang sama kuatnya di Zoom, email, maupun media sosial. <strong>Skill lo terlalu sayang untuk cuma efektif di satu setting.</strong></p>
+      <p>~3 jam untuk membuka potensi penuh dari fondasi yang sudah lo bangun.</p>`
+    }
   }
 };
 
@@ -997,7 +1141,8 @@ function rForm() {
       <div class="field"><label>Nama Lengkap</label>
         <input type="text" id="fn" placeholder="Nama lo" value="${S.form.name}" oninput="upF('name',this.value)"/></div>
       <div class="field"><label>Nomor WhatsApp</label>
-        <input type="tel" id="fp" placeholder="08xxxxxxxxxx" value="${S.form.phone}" oninput="upF('phone',this.value)"/></div>
+        <input type="tel" id="fp" placeholder="08xxxxxxxxxx" value="${S.form.phone}" oninput="upF('phone',this.value)"/>
+        <span id="phone-err" style="display:none;font-size:12px;color:#c0392b;margin-top:5px;display:none;font-family:var(--mono)">⚠ Format salah. Gunakan 08xx atau +62xx (min. 10 digit)</span></div>
     </div>
     <div class="field"><label>Email Aktif</label>
       <input type="email" id="fe" placeholder="email@kamu.com" value="${S.form.email}" oninput="upF('email',this.value)"/></div>
@@ -1022,12 +1167,20 @@ function submitForm() {
   S.screen="loading"; render(); submitD();
 }
 
+function validPhone(p) {
+  const clean=p.replace(/[\s\-().]/g,"");
+  return /^(\+62|08)\d{8,11}$/.test(clean);
+}
 function upF(k,v) {
   S.form[k]=v;
   const b=document.getElementById("bstart");
   if(b) b.disabled=!fValid();
+  if(k==="phone") {
+    const err=document.getElementById("phone-err");
+    if(err) err.style.display=(v.trim()&&!validPhone(v.trim()))?"block":"none";
+  }
 }
-function fValid() { return S.form.name.trim()&&S.form.phone.trim()&&S.form.email.trim()&&S.form.source; }
+function fValid() { return S.form.name.trim()&&validPhone(S.form.phone.trim())&&S.form.email.trim()&&S.form.source; }
 
 function startQ() {
   S.screen="quiz"; S.qIndex=0; S.answers=[]; S.selVal=null; render();
@@ -1187,10 +1340,18 @@ function rResult() {
       </div>
     </div>
 
-    <div class="recom section" style="animation-delay:.25s">
-      <div class="recom-ey">Rekomendasi untuk lo</div>
-      <h3>Ini yang perlu lo pelajari di Communication Mastery.</h3>
-      <p>Semua kelemahan yang teridentifikasi di atas punya solusinya di dalam kelas Communication Mastery — dipercaya <strong>1.300+ murid</strong> dari seluruh Indonesia, dipandu langsung oleh Jason Stanley, Communication Coach bersertifikat BNSP.</p>
+    <!-- GROWTH PITCH -->
+    <div class="growth-pitch section" style="animation-delay:.25s">
+      <div class="section-eyebrow" style="margin-bottom:12px">Solusi spesifik untuk ${t.name}</div>
+      <div class="growth-pitch-headline">${t.growthPitch.headline}</div>
+      <div class="growth-pitch-body">${t.growthPitch.body}</div>
+    </div>
+
+    <!-- MODUL LIST -->
+    <div class="recom section" style="animation-delay:.28s">
+      <div class="recom-ey">Materi yang langsung relevan untuk lo</div>
+      <h3>Apa yang akan lo pelajari di Three Hour Communication.</h3>
+      <p>5 modul yang bisa diselesaikan dalam ~3 jam — dirancang untuk menghasilkan perubahan nyata dalam <strong>30 hari pertama</strong>. Dipandu langsung oleh Jason Stanley, Communication Coach bersertifikat BNSP.</p>
       <div class="recom-mods">
         ${t.modules.map((m,i)=>`
         <div class="rmod">
@@ -1200,21 +1361,13 @@ function rResult() {
       </div>
     </div>
 
-    <!-- MID CTA -->
-    <div class="cta-mid section" style="animation-delay:.28s">
-      <div class="cta-mid-eyebrow">Solusi untuk ${firstName}</div>
-      <div class="cta-mid-title">Ubah kelemahan lo jadi kekuatan komunikasi.</div>
-      <div class="cta-mid-sub">1.300+ orang udah buktiin — banyak yang ngerasain perubahan dalam 2 minggu pertama.</div>
-      <a href="https://stanleyacademic.com/courses/communication-mastery/" target="_blank">Lihat Program Communication Mastery →</a>
-    </div>
-
-    <!-- URGENCY + PROMO -->
-    <div class="urgency-bar section" style="animation-delay:.3s">
+    <!-- URGENCY BAR -->
+    <div class="urgency-bar section" style="animation-delay:.30s">
       <div class="urgency-left">
         <span class="urgency-fire">🔥</span>
         <div class="urgency-text">
-          Diskon eksklusif kode <strong style="color:#fbbf24">DNA26</strong> — aktif sekarang!
-          <span>Berlaku selama stok & waktu masih ada. Jangan sampai kehabisan.</span>
+          Promo eksklusif TalkDNA™ — aktif sekarang!
+          <span>Harga spesial Rp 249.000 berlaku selama timer masih berjalan.</span>
         </div>
       </div>
       <div class="urgency-timer">
@@ -1226,13 +1379,40 @@ function rResult() {
       </div>
     </div>
 
-    <div class="promo section" style="animation-delay:.32s;margin-bottom:14px">
-      <div class="promo-lbl">★ Kode diskon eksklusif untukmu</div>
-      <div class="promo-code">DNA26</div>
-      <div class="promo-price"><s>Rp 749.000</s> &nbsp;→&nbsp; <strong>Rp 674.000</strong> · akses selamanya</div>
+    <!-- PRICE BLOCK -->
+    <div class="price-block section" style="animation-delay:.32s">
+      <div class="price-block-label">Three Hour Communication · Stanley Academy</div>
+      <div class="price-block-name">Basic to Advance Level<br>Communication in 30 Days</div>
+      <div class="price-block-sub">Akses lifetime · 5 modul · ~3 jam materi · Langsung bisa dipraktekkan</div>
+      <div class="price-row">
+        <span class="price-original">Rp 299.000</span>
+        <span class="price-final">Rp 249.000</span>
+        <span class="price-badge">Hemat 50K</span>
+      </div>
+      <div class="price-note">Harga promo eksklusif untuk peserta TalkDNA™ · Akses selamanya</div>
+      <div class="price-includes">
+        <div class="price-include-item">5 modul dari dasar komunikasi sampai persuasion & influence</div>
+        <div class="price-include-item">Teknik konkret untuk masalah spesifik lo sebagai ${t.name}</div>
+        <div class="price-include-item">Akses lifetime — belajar di waktu dan pace lo sendiri</div>
+        <div class="price-include-item">Dipercaya 1.345+ murid dari seluruh Indonesia · Rating 5.0/5.0</div>
+      </div>
     </div>
-    <a href="https://stanleyacademic.com/courses/communication-mastery/" class="btn-cta section" style="animation-delay:.34s" target="_blank">Upgrade Komunikasi Gw Sekarang →</a>
-    <p class="note">Masukkan kode <strong>DNA26</strong> saat checkout · Hemat Rp 75.000</p>
+
+    <!-- BIG WA BUTTON -->
+    <!-- GUARANTEE -->
+    <div class="guarantee-block section" style="animation-delay:.33s">
+      <div class="guarantee-icon">🛡️</div>
+      <div class="guarantee-body">
+        <div class="guarantee-title">Garansi 100% Uang Kembali</div>
+        <p>Ikuti programnya. Kalau dalam 30 hari tidak ada perubahan sama sekali dalam cara lo berkomunikasi — <strong>uang lo kembali penuh, tanpa pertanyaan</strong>. Nol risiko dari pihak lo.</p>
+      </div>
+    </div>
+
+    <a href="https://wa.me/6281299989762?text=Halo%20Kak%20Vivi%2C%20saya%20baru%20selesai%20TalkDNA%20dan%20hasilnya%20${encodeURIComponent(t.name)}%20%F0%9F%99%8F%20Mau%20tanya%20soal%20promo%20Three%20Hour%20Communication%20dong%21" target="_blank" class="btn-wa section" style="animation-delay:.35s">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Tanya Kak Vivi & Klaim Promo Sekarang
+    </a>
+    <p class="btn-wa-sub">Langsung dibalas · Tanya apapun soal program, promo & garansi</p>
 
     <!-- SHARE -->
     <div class="share-blk section" style="animation-delay:.36s">
@@ -1267,8 +1447,8 @@ function rResult() {
         <div class="urgency-left">
           <span class="urgency-fire">⏰</span>
           <div class="urgency-text">
-            Penawaran ini berakhir dalam
-            <span>Gunakan kode <strong style="color:#fbbf24">DNA26</strong> sebelum timer habis</span>
+            Promo Rp 249.000 berakhir dalam
+            <span>Harga normal Rp 299.000 · Hemat Rp 50.000 hari ini</span>
           </div>
         </div>
         <div class="urgency-timer">
@@ -1279,8 +1459,11 @@ function rResult() {
           <div class="t-block"><span class="t-num" id="t-s2">${tl.s}</span><span class="t-lbl">DTK</span></div>
         </div>
       </div>
-      <a href="https://stanleyacademic.com/courses/communication-mastery/" class="btn-cta" target="_blank">Upgrade Komunikasi Gw Sekarang →</a>
-      <p class="note">Kode <strong>DNA26</strong> · Hemat Rp 75.000 · Masukkan saat checkout</p>
+      <a href="https://wa.me/6281299989762?text=Halo%20Kak%20Vivi%2C%20saya%20baru%20selesai%20TalkDNA%20dan%20hasilnya%20${encodeURIComponent(t.name)}%20%F0%9F%99%8F%20Mau%20tanya%20soal%20promo%20Three%20Hour%20Communication%20dong%21" target="_blank" class="btn-wa">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Tanya Admin & Klaim Promo Sekarang
+      </a>
+      <p class="btn-wa-sub">Langsung dibalas · Tanya apapun soal program & promo</p>
     </div>
 
     <!-- ARCHETYPE GALLERY -->
