@@ -956,6 +956,45 @@ body{
 
 <script>
 const SHEET_URL = "https://script.google.com/macros/s/AKfycbzDEEkUkHbEfG6CeTBxi-P1z9jIcwwQ3j7GWRQDS-x_Lkjy4dYrapEdjHiOBd9-LimMTg/exec";
+const BASE_URL = "https://michaelstanleychow357-bit.github.io/talkdna/";
+
+// Encode hasil tes jadi URL parameter yang bisa dibuka kapan aja
+function encodeResult(state) {
+  const payload = {
+    n: state.form.name,
+    p: state.form.phone,
+    t: state.resultType,
+    a: state.dims.assertiveness,
+    e: state.dims.expressiveness,
+    em: state.dims.empathy,
+    r: state.dims.reflection,
+  };
+  try {
+    return BASE_URL + "?r=" + btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
+  } catch(e) { return BASE_URL; }
+}
+
+// Decode hasil dari URL saat halaman dibuka
+function decodeResultFromURL() {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const r = params.get("r");
+    if (!r) return null;
+    const payload = JSON.parse(decodeURIComponent(escape(atob(r))));
+    return {
+      form: { name: payload.n, phone: payload.p, email: "", source: "" },
+      resultType: payload.t,
+      dims: {
+        assertiveness: payload.a,
+        expressiveness: payload.e,
+        empathy: payload.em,
+        reflection: payload.r,
+      },
+      screen: "result",
+      answers: [],
+    };
+  } catch(e) { return null; }
+}
 
 async function saveToSheet(data) {
   try {
@@ -1209,6 +1248,7 @@ let S = {
   selVal: null,
   dims: null,
   resultType: null,
+  resultURL: null,
 };
 
 const app = document.getElementById("app");
@@ -1221,6 +1261,7 @@ function render() {
   else if (S.screen === "loading")    rLoading();
   else if (S.screen === "commitment") rCommitment();
   else if (S.screen === "offer")      rOffer();
+  else if (S.screen === "wa-gate")    rWaGate();
   else if (S.screen === "result")     rResult();
 }
 
@@ -1390,12 +1431,15 @@ function rLoading() {
 
 async function submitD() {
   const t = TYPES[S.resultType];
+  const resultURL = encodeResult(S);
+  S.resultURL = resultURL; // simpan di state buat ditampilin di result page
   await saveToSheet({
     timestamp: new Date().toISOString(),
     name: S.form.name, phone: S.form.phone, email: S.form.email, source: S.form.source,
     assertiveness: S.dims.assertiveness, expressiveness: S.dims.expressiveness,
     empathy: S.dims.empathy, reflection: S.dims.reflection,
     result_type: t.name, answers: S.answers.join(", "),
+    result_url: resultURL,
   });
 }
 
@@ -1466,7 +1510,6 @@ function commitYes() {
     S.commitStep++;
     render();
   } else {
-    // semua 3 jawaban yes → ke offer
     S.commitStep = 1;
     S.screen = "offer";
     render();
@@ -1474,9 +1517,8 @@ function commitYes() {
 }
 
 function commitNo() {
-  // jawab tidak → skip langsung ke hasil
   S.commitStep = 1;
-  S.screen = "result";
+  S.screen = "wa-gate";
   render();
 }
 
@@ -1570,7 +1612,7 @@ function rOffer() {
       </div>
     </div>
 
-    <button onclick="S.screen='result';render()" style="
+    <button onclick="S.screen='wa-gate';render()" style="
       display:block;width:100%;
       padding:16px;margin-top:8px;margin-bottom:32px;
       background:rgba(255,255,255,.7);backdrop-filter:blur(10px);
@@ -1597,6 +1639,75 @@ function rOffer() {
   tickOffer();
   if(window._offerTimer) clearInterval(window._offerTimer);
   window._offerTimer = setInterval(tickOffer, 1000);
+}
+
+function rWaGate() {
+  const firstName = S.form.name ? S.form.name.split(" ")[0] : "Kak";
+  const t = TYPES[S.resultType];
+  const waText = encodeURIComponent(
+`Halo Kak Kimmy, saya mau minta hasil TalkDNA™ saya 🙏
+
+Nama: ${S.form.name}
+Email: ${S.form.email}
+No. HP: ${S.form.phone}`
+  );
+  const waLink = `https://wa.me/628568759658?text=${waText}`;
+
+  app.innerHTML = `
+  <div class="card fadein" style="margin-top:60px;text-align:center;padding:48px 32px">
+    <div style="
+      width:72px;height:72px;border-radius:50%;
+      background:linear-gradient(135deg,#25d366,#128c7e);
+      display:grid;place-items:center;margin:0 auto 28px;
+      box-shadow:0 12px 32px -8px rgba(37,211,102,.4);
+    ">
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </div>
+
+    <div style="font-family:var(--mono);font-size:11px;color:var(--ink-4);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:12px">Hasil Tes Lo Udah Siap 🎉</div>
+
+    <h2 style="font-family:var(--serif);font-weight:400;font-size:clamp(28px,6vw,40px);line-height:1.1;letter-spacing:-0.02em;color:var(--ink);margin-bottom:16px">
+      ${firstName}, hasil lo<br>sudah bisa diakses!
+    </h2>
+
+    <p style="font-size:15px;color:var(--ink-3);line-height:1.7;max-width:380px;margin:0 auto 32px">
+      Chat admin kami di WhatsApp — bilang minta hasil TalkDNA. Admin langsung kirim <strong style="color:var(--ink)">link hasil tes lo</strong> yang bisa dibuka kapan aja.
+    </p>
+
+    <div style="background:var(--green-bg);border:1.5px solid rgba(13,122,78,.2);border-radius:var(--r-sm);padding:18px 20px;margin-bottom:28px;text-align:left">
+      <div style="font-size:12px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px">Cara dapetin hasil lo:</div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:flex-start;gap:12px;font-size:14px;color:var(--ink-2)">
+          <span style="flex-shrink:0;width:22px;height:22px;border-radius:50%;background:var(--green);color:#fff;display:grid;place-items:center;font-size:11px;font-weight:700;margin-top:1px">1</span>
+          <span>Tap tombol WhatsApp di bawah</span>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:12px;font-size:14px;color:var(--ink-2)">
+          <span style="flex-shrink:0;width:22px;height:22px;border-radius:50%;background:var(--green);color:#fff;display:grid;place-items:center;font-size:11px;font-weight:700;margin-top:1px">2</span>
+          <span>Kirim pesan ke admin (udah otomatis terisi)</span>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:12px;font-size:14px;color:var(--ink-2)">
+          <span style="flex-shrink:0;width:22px;height:22px;border-radius:50%;background:var(--green);color:#fff;display:grid;place-items:center;font-size:11px;font-weight:700;margin-top:1px">3</span>
+          <span>Admin kirim link hasil lo — bisa dibuka kapan aja!</span>
+        </div>
+      </div>
+    </div>
+
+    <a href="${waLink}" target="_blank" rel="noopener" style="
+      display:flex;align-items:center;justify-content:center;gap:12px;
+      width:100%;padding:20px 24px;
+      background:linear-gradient(135deg,#25d366,#128c7e);
+      color:#fff;border:none;border-radius:var(--r);
+      font-family:var(--sans);font-size:16px;font-weight:700;
+      text-decoration:none;
+      box-shadow:0 12px 32px -8px rgba(37,211,102,.5);
+      transition:all .3s var(--ease);
+      margin-bottom:12px;
+    ">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Chat Admin Sekarang →
+    </a>
+    <p style="font-size:12px;color:var(--ink-4);margin-bottom:0">Langsung dibalas · Gratis · Tanpa syarat</p>
+  </div>`;
 }
 
 function rResult() {
@@ -1737,6 +1848,16 @@ function rResult() {
     <p class="btn-wa-sub">Langsung dibalas · Tanya apapun soal program, promo & garansi</p>
 
     <!-- SHARE -->
+    <div class="share-blk section" style="animation-delay:.34s">
+      <div class="section-eyebrow" style="margin-bottom:6px">Simpan Hasil Lo</div>
+      <div class="section-title" style="font-size:22px;margin-bottom:6px">Akses hasil lo kapan aja.</div>
+      <p class="section-sub">Copy link ini — bisa dibuka lagi nanti tanpa perlu tes ulang.</p>
+      <div style="display:flex;gap:10px;align-items:center;background:var(--cream);border:1.5px solid var(--line);border-radius:var(--r-sm);padding:14px 16px;margin-bottom:12px;overflow:hidden">
+        <span id="result-url-txt" style="font-family:var(--mono);font-size:11px;color:var(--ink-3);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${S.resultURL || encodeResult(S)}</span>
+        <button onclick="copyResultURL()" id="copy-btn" style="flex-shrink:0;background:var(--ink);color:var(--cream);border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;font-family:var(--sans)">Salin</button>
+      </div>
+    </div>
+
     <div class="share-blk section" style="animation-delay:.36s">
       <div class="section-eyebrow" style="margin-bottom:6px">Bagiin Hasil Lo</div>
       <div class="section-title" style="font-size:22px;margin-bottom:6px">Tantang temen lo.</div>
@@ -1852,6 +1973,19 @@ function toggleDim(key) {
     chev.style.transform="rotate(90deg)";
     card.classList.add("active");
   }
+}
+
+function copyResultURL() {
+  const url = S.resultURL || encodeResult(S);
+  navigator.clipboard.writeText(url).then(() => {
+    const btn = document.getElementById("copy-btn");
+    if (btn) { btn.textContent = "Tersalin ✓"; btn.style.background = "var(--green)"; }
+    setTimeout(() => {
+      if (btn) { btn.textContent = "Salin"; btn.style.background = "var(--ink)"; }
+    }, 2000);
+  }).catch(() => {
+    alert("Link hasil lo:\n\n" + url);
+  });
 }
 
 function shareWA() {
@@ -1976,6 +2110,12 @@ function testiCard(t, i) {
       <div class="testi-role">${t.role}</div>
     </div>
   </div>`;
+}
+
+// Cek apakah ada hasil yang di-encode di URL — kalau ada, langsung tampilkan result
+const urlState = decodeResultFromURL();
+if (urlState) {
+  Object.assign(S, urlState);
 }
 
 render();
