@@ -1263,6 +1263,296 @@ function render() {
   else if (S.screen === "offer")      rOffer();
   else if (S.screen === "wa-gate")    rWaGate();
   else if (S.screen === "result")     rResult();
+  else if (S.screen === "daftar")     rDaftar();
+  else if (S.screen === "daftar-success") rDaftarSuccess();
+}
+
+// ── DAFTAR SCREEN ──
+const DAFTAR_ADMIN_WA = "628568759658";
+const DAFTAR_PAYMENT = {
+  bca:  { bank:"BCA",  norek:"6043586934",   atas:"Jason Nick Stanley" },
+  dana: { bank:"DANA", norek:"085691437797",  atas:"Jason Nick Stanley" }
+};
+let _daftarPay = null;
+let _daftarLastMsg = "";
+
+function rDaftar() {
+  // Pre-fill from quiz form if available
+  const prefill = { name: S.form.name||"", phone: S.form.phone||"", email: S.form.email||"" };
+  app.innerHTML = `
+  <div style="padding-top:20px;animation:fadeUp .6s var(--ease-out) both">
+
+    <button onclick="S.screen='offer';render()" style="
+      display:inline-flex;align-items:center;gap:7px;
+      font-size:13px;font-weight:600;color:var(--ink-3);
+      background:rgba(255,255,255,.7);border:1px solid var(--line-2);
+      border-radius:100px;padding:8px 16px;cursor:pointer;
+      font-family:var(--sans);margin-bottom:28px;
+      transition:all .2s;
+    " onmouseover="this.style.color='var(--ink)'" onmouseout="this.style.color='var(--ink-3)'">
+      ← Kembali
+    </button>
+
+    <div style="font-family:var(--mono);font-size:11px;color:var(--ink-3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px">Khusus Peserta TalkDNA™</div>
+    <h2 style="font-family:var(--serif);font-weight:400;font-size:clamp(32px,7vw,50px);line-height:1.0;letter-spacing:-0.025em;color:var(--ink);margin-bottom:14px">
+      Daftar <em style="font-style:italic;background:linear-gradient(120deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent">Three Hour</em>
+    </h2>
+    <p style="font-size:15px;color:var(--ink-3);line-height:1.65;margin-bottom:20px">Isi data lo, pilih metode bayar, dan konfirmasi ke admin. Akses kelas aktif hari ini.</p>
+
+    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:28px">
+      <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.75);border:1px solid var(--line);border-radius:100px;padding:7px 14px;font-size:12px;font-weight:600;color:var(--ink-2)">
+        <span style="width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0"></span>1.346 sudah bergabung
+      </div>
+      <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.75);border:1px solid var(--line);border-radius:100px;padding:7px 14px;font-size:12px;font-weight:600;color:var(--ink-2)">
+        <span style="width:5px;height:5px;border-radius:50%;background:#f59e0b;flex-shrink:0"></span>Rating 5.0 ⭐
+      </div>
+      <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.75);border:1px solid var(--line);border-radius:100px;padding:7px 14px;font-size:12px;font-weight:600;color:var(--ink-2)">
+        <span style="width:5px;height:5px;border-radius:50%;background:var(--green);flex-shrink:0"></span>Lifetime access
+      </div>
+    </div>
+
+    <!-- PRICE STRIP -->
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:var(--ink);color:var(--cream);border-radius:16px;padding:16px 20px;margin-bottom:24px">
+      <div>
+        <div style="font-size:13px;color:rgba(255,255,255,.4);text-decoration:line-through;font-family:var(--mono)">Rp 600.000</div>
+        <div style="font-family:var(--serif);font-size:clamp(26px,5vw,34px);font-style:italic;line-height:1">Rp 249.000</div>
+      </div>
+      <div style="background:linear-gradient(135deg,#fbbf24,#f59e0b);color:var(--ink);font-size:11px;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;border-radius:100px;padding:4px 10px">HEMAT 58%</div>
+      <div style="font-size:12px;color:rgba(255,255,255,.5);margin-left:auto;font-family:var(--mono);white-space:nowrap">⏱ Promo TalkDNA™</div>
+    </div>
+
+    <!-- STEP 1 DATA -->
+    <div style="background:rgba(255,255,255,.8);backdrop-filter:blur(16px);border:1.5px solid var(--line-2);border-radius:20px;padding:24px 22px;margin-bottom:14px">
+      <div style="font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.12em;font-family:var(--mono);margin-bottom:18px">① Data Diri Lo</div>
+      <div class="field">
+        <label style="display:block;font-size:13px;font-weight:600;color:var(--ink-2);margin-bottom:7px;letter-spacing:-.003em">Nama Lengkap <span style="color:var(--accent)">*</span></label>
+        <input type="text" id="d-name" placeholder="Contoh: Budi Santoso" autocomplete="name" value="${prefill.name}"
+          style="width:100%;padding:14px 16px;background:var(--cream);border:1.5px solid var(--line-2);border-radius:10px;font-family:var(--sans);font-size:15px;color:var(--ink);transition:border-color .2s,box-shadow .2s;outline:none"/>
+        <div id="derr-name" style="font-size:12px;color:#ef4444;margin-top:5px;display:none">Nama wajib diisi</div>
+      </div>
+      <div class="field">
+        <label style="display:block;font-size:13px;font-weight:600;color:var(--ink-2);margin-bottom:7px">Nomor WhatsApp <span style="color:var(--accent)">*</span></label>
+        <input type="tel" id="d-phone" placeholder="08xxxxxxxxxx" autocomplete="tel" value="${prefill.phone}"
+          style="width:100%;padding:14px 16px;background:var(--cream);border:1.5px solid var(--line-2);border-radius:10px;font-family:var(--sans);font-size:15px;color:var(--ink);transition:border-color .2s,box-shadow .2s;outline:none"/>
+        <div id="derr-phone" style="font-size:12px;color:#ef4444;margin-top:5px;display:none">Nomor WA wajib diisi</div>
+      </div>
+      <div class="field" style="margin-bottom:0">
+        <label style="display:block;font-size:13px;font-weight:600;color:var(--ink-2);margin-bottom:7px">Email <span style="color:var(--accent)">*</span></label>
+        <input type="email" id="d-email" placeholder="email@kamu.com" autocomplete="email" value="${prefill.email}"
+          style="width:100%;padding:14px 16px;background:var(--cream);border:1.5px solid var(--line-2);border-radius:10px;font-family:var(--sans);font-size:15px;color:var(--ink);transition:border-color .2s,box-shadow .2s;outline:none"/>
+        <div id="derr-email" style="font-size:12px;color:#ef4444;margin-top:5px;display:none">Email wajib diisi & valid</div>
+      </div>
+    </div>
+
+    <!-- STEP 2 PAYMENT -->
+    <div style="background:rgba(255,255,255,.8);backdrop-filter:blur(16px);border:1.5px solid var(--line-2);border-radius:20px;padding:24px 22px;margin-bottom:14px">
+      <div style="font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.12em;font-family:var(--mono);margin-bottom:18px">② Pilih Metode Pembayaran</div>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:4px" id="dpay-opts">
+        ${['bca','dana'].map(key => {
+          const icons = {bca:'🏦',dana:'💙'};
+          const labels = {bca:'Transfer Bank BCA',dana:'DANA'};
+          const subs = {bca:'Rekening BCA a.n. Jason Nick Stanley',dana:'Transfer ke nomor DANA a.n. Jason Nick Stanley'};
+          return `<div class="dpay-opt" data-pay="${key}" onclick="dSelectPay('${key}')" style="
+            display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:10px;
+            border:1.5px solid var(--line-2);background:var(--cream);cursor:pointer;
+            transition:all .2s;font-size:14px;font-weight:500;color:var(--ink-2);">
+            <div style="width:20px;height:20px;border-radius:50%;border:2px solid var(--line-2);display:grid;place-items:center;flex-shrink:0;transition:all .2s" class="dpay-radio-${key}"></div>
+            <span style="font-size:22px;flex-shrink:0">${icons[key]}</span>
+            <div style="flex:1">
+              <strong style="display:block;font-weight:700;font-size:14px;color:var(--ink)">${labels[key]}</strong>
+              <span style="font-size:12px;color:var(--ink-4)">${subs[key]}</span>
+            </div>
+          </div>`;
+        }).join('')}
+      </div>
+      <div id="dpay-detail" style="margin-top:14px;border-radius:10px;overflow:hidden;max-height:0;transition:max-height .4s var(--ease-out)">
+        <div id="dpay-detail-inner" style="background:var(--ink);color:var(--cream);padding:20px;border-radius:10px"></div>
+      </div>
+      <div id="derr-pay" style="font-size:12px;color:#ef4444;margin-top:10px;display:none">Pilih metode pembayaran dulu</div>
+    </div>
+
+    <!-- STEP 3 CARA KONFIRMASI -->
+    <div style="background:rgba(255,255,255,.8);backdrop-filter:blur(16px);border:1.5px solid var(--line-2);border-radius:20px;padding:24px 22px;margin-bottom:16px">
+      <div style="font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.12em;font-family:var(--mono);margin-bottom:18px">③ Cara Konfirmasi ke Admin</div>
+      <div style="display:flex;flex-direction:column;gap:0">
+        ${[
+          ['1','Transfer sesuai nominal','Transfer Rp 249.000 ke rekening yang lo pilih di atas. Simpan bukti transfernya ya.',false],
+          ['2','Klik tombol WhatsApp di bawah','Pesan ke admin udah otomatis terisi lengkap — nama, email, nomor, dan metode bayar lo.',false],
+          ['✓','Akses kelas aktif hari ini','Admin kirim username & password ke email lo. Login dan langsung mulai belajar!',true]
+        ].map(([n,t,d,done])=>`
+          <div style="display:flex;align-items:flex-start;gap:14px;padding:14px 0;position:relative;${n!=='✓'?'border-bottom:1px solid var(--line)':''}">
+            <div style="flex-shrink:0;width:34px;height:34px;border-radius:50%;background:${done?'var(--green)':'var(--ink)'};color:${done?'#fff':'var(--cream)'};display:grid;place-items:center;font-weight:800;font-size:13px;position:relative;z-index:1">${n}</div>
+            <div>
+              <strong style="display:block;font-size:14px;font-weight:700;color:var(--ink);margin-bottom:3px">${t}</strong>
+              <p style="font-size:13px;color:var(--ink-3);line-height:1.5;margin:0">${d}</p>
+            </div>
+          </div>`).join('')}
+      </div>
+    </div>
+
+    <!-- GUARANTEE -->
+    <div style="display:flex;align-items:flex-start;gap:14px;background:var(--green-bg);border:1.5px solid rgba(13,122,78,.2);border-radius:16px;padding:18px 20px;margin-bottom:16px">
+      <span style="font-size:28px;flex-shrink:0;line-height:1">🛡️</span>
+      <p style="font-size:13px;color:var(--ink-2);line-height:1.6;margin:0"><strong style="color:var(--green);font-weight:700">Jaminan Uang Kembali 30 Hari.</strong> Kalau dalam 30 hari lo ngerasa tidak ada perubahan sama sekali, uang kembali penuh. Tanpa syarat ribet, tanpa pertanyaan panjang.</p>
+    </div>
+
+    <!-- CTA -->
+    <button onclick="dSubmitForm()" style="
+      width:100%;padding:20px 24px;
+      background:linear-gradient(135deg,#25d366,#128c7e);
+      color:#fff;border:none;border-radius:16px;
+      font-family:var(--sans);font-size:16px;font-weight:700;
+      cursor:pointer;transition:all .3s var(--ease);
+      box-shadow:0 12px 32px -8px rgba(37,211,102,.4);
+      display:flex;align-items:center;justify-content:center;gap:12px;
+      letter-spacing:-0.005em;margin-bottom:8px;
+    ">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+      Konfirmasi via WhatsApp →
+    </button>
+    <p style="text-align:center;font-size:12px;color:var(--ink-4);margin-top:0;margin-bottom:32px">Pesan otomatis terisi · Langsung dibalas admin · Akses aktif hari ini</p>
+  </div>`;
+
+  // Add focus styling to inputs
+  document.querySelectorAll('#app input').forEach(inp => {
+    inp.addEventListener('focus', () => { inp.style.borderColor='var(--accent)'; inp.style.boxShadow='0 0 0 4px rgba(61,90,254,.15)'; });
+    inp.addEventListener('blur',  () => { inp.style.borderColor=''; inp.style.boxShadow=''; });
+  });
+}
+
+function dSelectPay(val) {
+  _daftarPay = val;
+  document.querySelectorAll('.dpay-opt').forEach(el => {
+    const k = el.dataset.pay;
+    const isSelected = k === val;
+    el.style.borderColor = isSelected ? 'var(--accent)' : 'var(--line-2)';
+    el.style.background   = isSelected ? 'rgba(61,90,254,.05)' : 'var(--cream)';
+    const radio = el.querySelector(`.dpay-radio-${k}`);
+    if (radio) {
+      radio.style.borderColor  = isSelected ? 'var(--accent)' : 'var(--line-2)';
+      radio.style.background   = isSelected ? 'var(--accent)' : '';
+      radio.innerHTML = isSelected ? '<span style="width:6px;height:6px;border-radius:50%;background:#fff;display:block"></span>' : '';
+    }
+  });
+  document.getElementById('derr-pay').style.display = 'none';
+  dRenderPayDetail(val);
+}
+
+function dRenderPayDetail(val) {
+  const panel = document.getElementById('dpay-detail');
+  const inner = document.getElementById('dpay-detail-inner');
+  {
+    const p = DAFTAR_PAYMENT[val];
+    inner.innerHTML = `
+      <div style="font-size:11px;font-weight:600;color:rgba(255,255,255,.45);letter-spacing:0.1em;text-transform:uppercase;font-family:var(--mono);margin-bottom:6px">Nomor Rekening ${p.bank}</div>
+      <div style="font-family:var(--mono);font-size:20px;font-weight:700;letter-spacing:0.04em;color:#fff;margin-bottom:4px;display:flex;align-items:center;gap:10px">
+        <span>${p.norek}</span>
+        <button onclick="dCopyNorek('${p.norek}')" id="dcopy-btn" style="font-size:11px;font-weight:600;color:rgba(255,255,255,.6);background:rgba(255,255,255,.1);border:none;border-radius:6px;padding:4px 10px;cursor:pointer;font-family:var(--sans)">Salin</button>
+      </div>
+      <div style="font-size:12px;color:rgba(255,255,255,.45);margin-bottom:14px">a.n. ${p.atas}</div>
+      <div style="background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.3);border-radius:8px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between">
+        <span style="font-size:13px;color:rgba(255,255,255,.6);font-family:var(--mono)">Total transfer</span>
+        <strong style="font-family:var(--mono);font-size:16px;color:#fbbf24;font-weight:700">Rp 249.000</strong>
+      </div>`;
+  }
+  panel.style.maxHeight = '400px';
+}
+
+function dCopyNorek(val) {
+  navigator.clipboard.writeText(val).then(() => {
+    const btn = document.getElementById('dcopy-btn');
+    if (btn) { btn.textContent = 'Tersalin ✓'; setTimeout(() => btn.textContent = 'Salin', 2000); }
+  }).catch(() => {
+    const inp = document.createElement('input');
+    inp.value = val; document.body.appendChild(inp); inp.select(); document.execCommand('copy'); document.body.removeChild(inp);
+  });
+}
+
+function dValidate() {
+  let ok = true;
+  const name  = (document.getElementById('d-name')?.value || '').trim();
+  const phone = (document.getElementById('d-phone')?.value || '').trim();
+  const email = (document.getElementById('d-email')?.value || '').trim();
+  const showErr = (id, show) => { document.getElementById(id).style.display = show ? 'block' : 'none'; };
+  if (!name)  { showErr('derr-name', true);  ok = false; } else showErr('derr-name', false);
+  if (!phone) { showErr('derr-phone', true); ok = false; } else showErr('derr-phone', false);
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showErr('derr-email', true); ok = false; } else showErr('derr-email', false);
+  if (!_daftarPay) { document.getElementById('derr-pay').style.display = 'block'; ok = false; }
+  else { document.getElementById('derr-pay').style.display = 'none'; }
+  return { ok, name, phone, email };
+}
+
+function dSubmitForm() {
+  const { ok, name, phone, email } = dValidate();
+  if (!ok) {
+    const errEl = document.querySelector('#app [id^="derr-"][style*="block"]');
+    if (errEl) errEl.scrollIntoView({ behavior:'smooth', block:'center' });
+    return;
+  }
+  const payLabel = {
+    bca:  `Transfer Bank BCA (${DAFTAR_PAYMENT.bca.norek} a.n. ${DAFTAR_PAYMENT.bca.atas})`,
+    dana: `DANA (${DAFTAR_PAYMENT.dana.norek} a.n. ${DAFTAR_PAYMENT.dana.atas})`
+  }[_daftarPay];
+
+  const rawMsg =
+`Halo Kak, saya mau konfirmasi pendaftaran Three Hour Communication — Stanley Academy 🙏
+
+*Data Pendaftaran:*
+• Nama     : ${name}
+• Email    : ${email}
+• No. HP   : ${phone}
+• Metode Bayar : ${payLabel}
+• Nominal  : Rp 249.000
+
+Saya sudah transfer / siap bayar. Mohon diproses ya Kak, terima kasih! 🙏`;
+
+  _daftarLastMsg = encodeURIComponent(rawMsg);
+  window.open(`https://wa.me/${DAFTAR_ADMIN_WA}?text=${_daftarLastMsg}`, '_blank');
+  S.screen = 'daftar-success';
+  S._daftarData = { name, email };
+  render();
+}
+
+function rDaftarSuccess() {
+  const { name, email } = S._daftarData || {};
+  const firstName = name ? name.split(' ')[0] : 'Kak';
+  app.innerHTML = `
+  <div style="text-align:center;padding:48px 24px 32px;animation:fadeUp .6s var(--ease-out) both">
+    <div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#25d366,#128c7e);display:grid;place-items:center;margin:0 auto 24px;box-shadow:0 12px 32px -8px rgba(37,211,102,.4);font-size:32px">✅</div>
+    <h2 style="font-family:var(--serif);font-weight:400;font-size:clamp(28px,6vw,40px);letter-spacing:-0.02em;margin-bottom:12px;line-height:1.1;color:var(--ink)">${firstName}, tinggal satu langkah lagi!</h2>
+    <p style="font-size:15px;color:var(--ink-3);line-height:1.7;max-width:380px;margin:0 auto 28px">Pesan konfirmasi udah terbuka di WhatsApp. Kirim pesannya ke admin — akses kelas lo akan diaktifkan hari ini.</p>
+
+    <div style="background:rgba(255,255,255,.8);backdrop-filter:blur(16px);border:1.5px solid var(--line-2);border-radius:20px;padding:24px 22px;text-align:left;margin-bottom:16px">
+      <div style="font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.12em;font-family:var(--mono);margin-bottom:18px">Yang akan terjadi selanjutnya</div>
+      <div style="display:flex;flex-direction:column;gap:0">
+        ${[
+          ['✓','Pesan WA sudah siap dikirim','Data lo sudah otomatis terisi. Tinggal klik Kirim di WhatsApp!',true],
+          ['2','Admin konfirmasi pembayaran','Admin akan balas dan konfirmasi pembayaran lo. Biasanya dalam beberapa menit.',false],
+          ['3',`Username & password dikirim ke email`,`Cek inbox <strong>${email||'email lo'}</strong> — langsung bisa login dan mulai belajar!`,false]
+        ].map(([n,t,d,done])=>`
+          <div style="display:flex;align-items:flex-start;gap:14px;padding:14px 0;${n!=='3'?'border-bottom:1px solid var(--line)':''}">
+            <div style="flex-shrink:0;width:34px;height:34px;border-radius:50%;background:${done?'var(--green)':'var(--ink)'};color:${done?'#fff':'var(--cream)'};display:grid;place-items:center;font-weight:800;font-size:13px">${n}</div>
+            <div>
+              <strong style="display:block;font-size:14px;font-weight:700;color:var(--ink);margin-bottom:3px">${t}</strong>
+              <p style="font-size:13px;color:var(--ink-3);line-height:1.5;margin:0">${d}</p>
+            </div>
+          </div>`).join('')}
+      </div>
+    </div>
+
+    <button onclick="window.open('https://wa.me/${DAFTAR_ADMIN_WA}?text='+_daftarLastMsg,'_blank')" style="
+      width:100%;padding:20px 24px;margin-bottom:10px;
+      background:linear-gradient(135deg,#25d366,#128c7e);
+      color:#fff;border:none;border-radius:16px;
+      font-family:var(--sans);font-size:16px;font-weight:700;
+      cursor:pointer;transition:all .3s var(--ease);
+      box-shadow:0 12px 32px -8px rgba(37,211,102,.4);
+      display:flex;align-items:center;justify-content:center;gap:12px;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+      Buka WhatsApp Lagi →
+    </button>
+    <p style="text-align:center;font-size:12px;color:var(--ink-4)">Kalau WA belum terbuka tadi, klik di sini</p>
+  </div>`;
 }
 
 function rHero() {
@@ -1596,13 +1886,40 @@ function rOffer() {
       </div>
     </div>
 
-    <a href="https://wa.me/6281299989762?text=Halo%20Kak%20Vivi%2C%20saya%20baru%20selesai%20tes%20TalkDNA%20dan%20mau%20daftar%20Three%20Hour%20Communication%20%F0%9F%99%8F"
-       target="_blank" rel="noopener"
-       class="btn-wa" style="margin-top:4px">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-      <span>Ya, Gue Mau Mulai Sekarang →</span>
-    </a>
-    <p class="btn-wa-sub">Chat admin · Proses cepat · Langsung akses</p>
+    <!-- STEP BY STEP CARA DAFTAR -->
+    <div style="background:rgba(255,255,255,.85);backdrop-filter:blur(12px);border:1.5px solid var(--line-2);border-radius:var(--r);padding:24px 22px;margin-bottom:20px;margin-top:4px">
+      <div style="font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:16px;font-family:var(--mono)">3 Langkah Daftar — Selesai dalam 2 Menit</div>
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div style="display:flex;align-items:flex-start;gap:14px">
+          <div style="flex-shrink:0;width:36px;height:36px;border-radius:50%;background:var(--ink);color:var(--cream);display:grid;place-items:center;font-weight:800;font-size:15px">1</div>
+          <div>
+            <div style="font-weight:700;font-size:15px;color:var(--ink);margin-bottom:3px">Klik tombol checkout di bawah</div>
+            <div style="font-size:13px;color:var(--ink-3);line-height:1.5">Lo akan diarahkan langsung ke halaman kelas Stanley Academy.</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:14px">
+          <div style="flex-shrink:0;width:36px;height:36px;border-radius:50%;background:var(--ink);color:var(--cream);display:grid;place-items:center;font-weight:800;font-size:15px">2</div>
+          <div>
+            <div style="font-weight:700;font-size:15px;color:var(--ink);margin-bottom:3px">Buat akun & pilih metode bayar</div>
+            <div style="font-size:13px;color:var(--ink-3);line-height:1.5">Daftar pakai email, lalu bayar via transfer bank atau e-wallet — bebas pilih.</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:14px">
+          <div style="flex-shrink:0;width:36px;height:36px;border-radius:50%;background:var(--green);color:#fff;display:grid;place-items:center;font-weight:800;font-size:15px">✓</div>
+          <div>
+            <div style="font-weight:700;font-size:15px;color:var(--ink);margin-bottom:3px">Akses kelas langsung terbuka!</div>
+            <div style="font-size:13px;color:var(--ink-3);line-height:1.5">Setelah pembayaran dikonfirmasi, semua modul langsung bisa diakses. Lifetime access, belajar kapan aja.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button onclick="S.screen='daftar';render()" 
+       class="btn-wa" style="margin-top:4px;background:linear-gradient(135deg,var(--accent),var(--accent-2));box-shadow:0 12px 32px -8px var(--accent-glow);border:none;cursor:pointer;width:100%">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      <span>Daftar & Bayar Sekarang — Rp 249.000 →</span>
+    </button>
+    <p class="btn-wa-sub">Transfer bank / e-wallet · Akses aktif hari ini · Konfirmasi via WA</p>
 
     <div class="offer-guarantee-mini" style="padding:20px 20px;margin-bottom:20px">
       <span class="offer-guarantee-mini-icon" style="font-size:32px">🛡️</span>
@@ -1622,7 +1939,7 @@ function rOffer() {
       transition:all .2s;letter-spacing:-0.005em;
     " onmouseover="this.style.background='#fff';this.style.color='var(--ink)'"
        onmouseout="this.style.background='rgba(255,255,255,.7)';this.style.color='var(--ink-3)'">
-      Lewati — lihat hasil tes dulu →
+      Lewati dulu — lihat hasil tes lo →
     </button>
   </div>`;
 
