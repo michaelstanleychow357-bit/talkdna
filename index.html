@@ -867,6 +867,43 @@ body{
   color:#fff;font-size:11px;font-weight:800;
   display:grid;place-items:center;margin-top:1px;
 }
+
+/* CURRICULUM ACCORDION */
+.curr-wrap{margin-bottom:28px}
+.curr-eyebrow{
+  font-family:var(--mono);font-size:11px;font-weight:700;color:var(--accent);
+  text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px;
+}
+.curr-title{
+  font-family:var(--serif);font-weight:400;font-size:24px;line-height:1.15;
+  letter-spacing:-0.01em;color:var(--ink);margin-bottom:6px;
+}
+.curr-sub{font-size:13px;color:var(--ink-3);margin-bottom:18px;line-height:1.6}
+.curr-section{
+  background:rgba(255,255,255,.65);border:1px solid var(--line);border-radius:var(--r-sm);
+  margin-bottom:10px;overflow:hidden;transition:all .25s var(--ease);
+}
+.curr-section:hover{background:#fff;border-color:var(--line-2)}
+.curr-section.active{background:#fff;border-color:var(--ink-3)}
+.curr-head{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:16px 18px;cursor:pointer;
+}
+.curr-head-l{display:flex;align-items:center;gap:12px;min-width:0}
+.curr-num{
+  flex-shrink:0;width:30px;height:30px;border-radius:8px;
+  background:var(--ink);color:var(--cream);
+  display:grid;place-items:center;font-family:var(--mono);font-weight:700;font-size:12px;
+}
+.curr-head-text{min-width:0}
+.curr-head-title{font-size:14px;font-weight:700;color:var(--ink);line-height:1.3}
+.curr-head-count{font-size:11px;color:var(--ink-4);font-family:var(--mono);margin-top:2px}
+.curr-chevron{flex-shrink:0;font-size:11px;color:var(--ink-3);transition:transform .25s var(--ease)}
+.curr-body{max-height:0;overflow:hidden;transition:max-height .4s var(--ease)}
+.curr-body-inner{padding:0 18px 16px 18px;display:flex;flex-direction:column;gap:10px}
+.curr-topic{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--ink-2);line-height:1.5}
+.curr-topic-ico{flex-shrink:0;font-size:15px;line-height:1.3}
+
 .offer-price-box{
   background:var(--ink);border-radius:var(--r-lg);
   padding:28px 24px;margin-bottom:16px;
@@ -1562,7 +1599,7 @@ function rHero() {
     <h1>Ketahui Karakter<br>Komunikasi Lo<br><em>Dalam 5 Menit!</em></h1>
     <p class="hero-desc">32 pertanyaan psikometri untuk mengidentifikasi tipe komunikator lo — dan apa yang selama ini menghambat lo. Dirancang oleh Communication Coach bersertifikat BNSP.</p>
     <div class="sp-strip">
-      <div class="sp-item"><span class="sp-dot" style="background:var(--green)"></span>1.300+ murid Communication Mastery</div>
+      <div class="sp-item"><span class="sp-dot" style="background:var(--green)"></span>1.300+ murid Stanley Academy</div>
       <div class="sp-item"><span class="sp-dot" style="background:var(--gold)"></span><span class="sp-stars">★★★★★</span>&nbsp;4.9/5</div>
       <div class="sp-item"><span class="sp-dot" style="background:var(--accent)"></span>Coach bersertifikat BNSP</div>
     </div>
@@ -1808,7 +1845,7 @@ function commitYes() {
 
 function commitNo() {
   S.commitStep = 1;
-  S.screen = "wa-gate";
+  S.screen = "result";
   render();
 }
 
@@ -1827,6 +1864,12 @@ function rOffer() {
     <p class="offer-sub">
       Hasil tes lo udah siap — tapi sebelum lo lihat, tonton dulu video singkat ini. Jason Stanley ngejelasin kenapa masalah komunikasi lo <strong>bisa diselesaikan dalam 30 hari</strong>, dan gimana caranya.
     </p>
+
+    <div class="sp-strip">
+      <div class="sp-item"><span class="sp-dot" style="background:var(--green)"></span>1.300+ murid Stanley Academy</div>
+      <div class="sp-item"><span class="sp-dot" style="background:var(--gold)"></span><span class="sp-stars">★★★★★</span>&nbsp;4.9/5</div>
+      <div class="sp-item"><span class="sp-dot" style="background:var(--accent)"></span>Coach bersertifikat BNSP</div>
+    </div>
 
     <div class="offer-video-wrap">
       <iframe
@@ -1856,18 +1899,90 @@ function rOffer() {
       </div>
     </div>
 
+    ${curriculumHTML()}
+
     <div class="offer-price-box">
       <div class="offer-price-label">Penawaran Spesial · Khusus Peserta TalkDNA™</div>
-      <div class="offer-price-name">Three Hour Communication</div>
-      <p style="font-size:13px;color:rgba(255,255,255,.55);margin-bottom:4px">Basic to Advance Level Communication in 30 Days</p>
-      <div class="offer-price-row">
-        <span class="offer-price-orig">Rp 600.000</span>
-        <span style="font-size:14px;color:rgba(255,255,255,.4);text-decoration:line-through;font-family:var(--mono)">Rp 299.000</span>
-        <span class="offer-price-final">Rp 249.000</span>
-        <span class="offer-price-badge">HEMAT 58%</span>
+      <p style="font-size:13px;color:rgba(255,255,255,.6);margin-bottom:20px;line-height:1.6">Lo dapet <strong style="color:#fbbf24">semua ini</strong> hari ini — kalau beli sekarang:</p>
+
+      <!-- VALUE STACK ITEMS -->
+      <div style="display:flex;flex-direction:column;gap:0;margin-bottom:20px;border:1px solid rgba(255,255,255,.12);border-radius:14px;overflow:hidden">
+
+        <div style="display:flex;align-items:flex-start;gap:14px;padding:16px 18px;background:rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.08)">
+          <div style="flex-shrink:0;width:28px;height:28px;border-radius:8px;background:rgba(61,90,254,.3);display:grid;place-items:center;font-size:14px">🎓</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:700;color:var(--cream);margin-bottom:2px;line-height:1.3">Three Hour Communication Program</div>
+            <div style="font-size:12px;color:rgba(255,255,255,.5);margin-bottom:6px">Basic to Advance Level Communication in 30 Days</div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <span style="font-size:11px;color:rgba(255,255,255,.35);text-decoration:line-through;font-family:var(--mono)">Rp 299.000</span>
+              <span style="font-size:11px;font-weight:700;color:#4ade80;background:rgba(74,222,128,.12);padding:2px 8px;border-radius:100px">GRATIS</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:flex-start;gap:14px;padding:16px 18px;background:rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.08)">
+          <div style="flex-shrink:0;width:28px;height:28px;border-radius:8px;background:rgba(201,161,74,.2);display:grid;place-items:center;font-size:14px">📖</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:700;color:var(--cream);margin-bottom:2px;line-height:1.3">Minicourse Pembedahan Buku<br><em style="font-style:italic;color:rgba(255,255,255,.8)">"How to Win Friends and Influence People"</em></div>
+            <div style="display:flex;align-items:center;gap:8px;margin-top:6px">
+              <span style="font-size:11px;color:rgba(255,255,255,.35);text-decoration:line-through;font-family:var(--mono)">Rp 499.000</span>
+              <span style="font-size:11px;font-weight:700;color:#4ade80;background:rgba(74,222,128,.12);padding:2px 8px;border-radius:100px">BONUS</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:flex-start;gap:14px;padding:16px 18px;background:rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.08)">
+          <div style="flex-shrink:0;width:28px;height:28px;border-radius:8px;background:rgba(124,77,255,.25);display:grid;place-items:center;font-size:14px">🎥</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:700;color:var(--cream);margin-bottom:2px;line-height:1.3">Rekaman Webinar: Rahasia Komunikasi Bikin Orang Bilang "Iya" Ke Yang Lo Minta!</div>
+            <div style="display:flex;align-items:center;gap:8px;margin-top:6px">
+              <span style="font-size:11px;color:rgba(255,255,255,.35);text-decoration:line-through;font-family:var(--mono)">Rp 299.000</span>
+              <span style="font-size:11px;font-weight:700;color:#4ade80;background:rgba(74,222,128,.12);padding:2px 8px;border-radius:100px">BONUS</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:flex-start;gap:14px;padding:16px 18px;background:rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.08)">
+          <div style="flex-shrink:0;width:28px;height:28px;border-radius:8px;background:rgba(124,77,255,.25);display:grid;place-items:center;font-size:14px">🎥</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:700;color:var(--cream);margin-bottom:2px;line-height:1.3">Rekaman Webinar: Sembuhin Grogi, Minder, & Gak Percaya Diri Saat Berkomunikasi Dalam 30 Hari!</div>
+            <div style="display:flex;align-items:center;gap:8px;margin-top:6px">
+              <span style="font-size:11px;color:rgba(255,255,255,.35);text-decoration:line-through;font-family:var(--mono)">Rp 299.000</span>
+              <span style="font-size:11px;font-weight:700;color:#4ade80;background:rgba(74,222,128,.12);padding:2px 8px;border-radius:100px">BONUS</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:flex-start;gap:14px;padding:16px 18px;background:rgba(255,255,255,.06)">
+          <div style="flex-shrink:0;width:28px;height:28px;border-radius:8px;background:rgba(124,77,255,.25);display:grid;place-items:center;font-size:14px">🎥</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:700;color:var(--cream);margin-bottom:2px;line-height:1.3">Rekaman Webinar: Art of Clarity</div>
+            <div style="display:flex;align-items:center;gap:8px;margin-top:6px">
+              <span style="font-size:11px;color:rgba(255,255,255,.35);text-decoration:line-through;font-family:var(--mono)">Rp 299.000</span>
+              <span style="font-size:11px;font-weight:700;color:#4ade80;background:rgba(74,222,128,.12);padding:2px 8px;border-radius:100px">BONUS</span>
+            </div>
+          </div>
+        </div>
+
       </div>
-      <div class="offer-price-note">Harga ini hanya berlaku <strong style="color:#fbbf24">24 jam</strong> setelah lo selesai tes</div>
-      <div style="margin-top:14px;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);border-radius:10px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+
+      <!-- TOTAL VALUE SUMMARY -->
+      <div style="background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.25);border-radius:12px;padding:16px 18px;margin-bottom:16px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <span style="font-size:13px;color:rgba(255,255,255,.6);font-family:var(--mono);letter-spacing:0.03em">Total nilai sebenarnya</span>
+          <span style="font-size:16px;color:rgba(255,255,255,.4);text-decoration:line-through;font-family:var(--mono);font-weight:600">Rp 1.695.000</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <span style="font-size:15px;font-weight:800;color:#fbbf24">Lo bayar hari ini</span>
+          <span style="font-size:28px;font-weight:800;color:#fbbf24;font-family:var(--serif);font-style:italic">Rp 249.000</span>
+        </div>
+        <div style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(251,191,36,.2);font-size:12px;color:rgba(255,255,255,.5);text-align:center;font-family:var(--mono)">
+          Lo hemat <strong style="color:#fbbf24">Rp 1.446.000</strong> · 85% off
+        </div>
+      </div>
+
+      <div class="offer-price-note" style="margin-bottom:14px">Harga ini hanya berlaku <strong style="color:#fbbf24">24 jam</strong> setelah lo selesai tes</div>
+      <div style="background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);border-radius:10px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
         <span style="font-size:12px;color:rgba(255,255,255,.7);font-family:var(--mono);letter-spacing:0.04em">⏱ Penawaran berakhir dalam</span>
         <div style="display:flex;gap:5px;align-items:center">
           <div class="t-block"><span class="t-num" id="o-h">--</span><span class="t-lbl">JAM</span></div>
@@ -1876,13 +1991,6 @@ function rOffer() {
           <span class="t-sep">:</span>
           <div class="t-block"><span class="t-num" id="o-s">--</span><span class="t-lbl">DTK</span></div>
         </div>
-      </div>
-      <div class="offer-includes">
-        <div class="offer-include-item">5 Modul video — dari komunikasi dasar sampai advance influence</div>
-        <div class="offer-include-item">Teknik atasi gugup, belibet & minder secara sistematis</div>
-        <div class="offer-include-item">Materi persuasive communication & French-Raven Power Concept</div>
-        <div class="offer-include-item">Akses lifetime — belajar sesuai ritme lo sendiri</div>
-        <div class="offer-include-item">Dari Jason Stanley — Certified BNSP Trainer, 148.000+ komunikator</div>
       </div>
     </div>
 
@@ -1929,7 +2037,7 @@ function rOffer() {
       </div>
     </div>
 
-    <button onclick="S.screen='wa-gate';render()" style="
+    <button onclick="S.screen='result';render()" style="
       display:block;width:100%;
       padding:16px;margin-top:8px;margin-bottom:32px;
       background:rgba(255,255,255,.7);backdrop-filter:blur(10px);
@@ -2367,6 +2475,110 @@ function startTimerTick() {
 }
 
 // ── TESTIMONIALS DATA ──
+const CURRICULUM = [
+  {
+    title: "Introduction to Communication",
+    topics: [
+      { icon:"🎬", name:"Proses Komunikasi" },
+      { icon:"👥", name:"Pihak-pihak dalam Komunikasi" },
+      { icon:"📤", name:"Proses Encoding Komunikator" },
+      { icon:"📥", name:"Proses Decoding Komunikan" },
+    ]
+  },
+  {
+    title: "Hambatan Komunikasi & Solusinya",
+    topics: [
+      { icon:"😰", name:"Solusi Ampuh Gugup" },
+      { icon:"💬", name:"Rahasia Menyembuhkan Belibet" },
+      { icon:"🗣️", name:"Penjelasan Psikologi Gagap" },
+      { icon:"👁️", name:"Tidak Nyaman Eye Contact" },
+    ]
+  },
+  {
+    title: "Basic Level of Communication",
+    topics: [
+      { icon:"🤝", name:"First Impression" },
+      { icon:"💭", name:"Trik Ngobrol Berjam-jam (Anti Kehabisan Topik)" },
+      { icon:"👂", name:"Manusia & Mendengarkan (Dasar Filosofis)" },
+      { icon:"🔍", name:"Penalaran Induktif dan Deduktif" },
+      { icon:"🧩", name:"Pembentukan Persepsi" },
+      { icon:"🏆", name:"Penggunaan Ethos, Pathos, Logos" },
+    ]
+  },
+  {
+    title: "Etika dalam Komunikasi",
+    topics: [
+      { icon:"📵", name:"Handphone dan Proses Mendengarkan" },
+      { icon:"✂️", name:"Menggunting Pembicaraan" },
+      { icon:"🐟", name:"Fokus kayak \"Ikan Mas\"" },
+    ]
+  },
+  {
+    title: "Advanced Level: Power & Influence",
+    topics: [
+      { icon:"⚡", name:"Introduction to Influence" },
+      { icon:"👑", name:"French & Raven Power Concept" },
+      { icon:"🌟", name:"Expert Power & Referent Power" },
+      { icon:"🎙️", name:"Persuasive Communication" },
+      { icon:"🧠", name:"Practical Power Psychology" },
+      { icon:"🔐", name:"The Secret of Influence Communication" },
+    ]
+  },
+  {
+    title: "Digital Communication",
+    topics: [
+      { icon:"🖥️", name:"Effective Communication (Think Process)" },
+      { icon:"📲", name:"Digital Communication (Zoom, Email, DM)" },
+    ]
+  },
+];
+
+function curriculumHTML() {
+  const totalTopics = CURRICULUM.reduce((a,s)=>a+s.topics.length,0);
+  return `
+  <div class="curr-wrap">
+    <div class="curr-eyebrow">🎓 Kurikulum Lengkap</div>
+    <div class="curr-title">Apa aja yang lo pelajari.</div>
+    <p class="curr-sub">${totalTopics} materi dalam ${CURRICULUM.length} bagian — dari dasar komunikasi sampai power & influence. Tap tiap bagian untuk lihat detailnya.</p>
+    ${CURRICULUM.map((sec,i)=>`
+    <div class="curr-section" id="curr-sec-${i}">
+      <div class="curr-head" onclick="toggleCurr(${i})">
+        <div class="curr-head-l">
+          <div class="curr-num">${String(i+1).padStart(2,'0')}</div>
+          <div class="curr-head-text">
+            <div class="curr-head-title">${sec.title}</div>
+            <div class="curr-head-count">${sec.topics.length} materi</div>
+          </div>
+        </div>
+        <span class="curr-chevron" id="curr-chev-${i}">▸</span>
+      </div>
+      <div class="curr-body" id="curr-body-${i}">
+        <div class="curr-body-inner">
+          ${sec.topics.map(t=>`
+          <div class="curr-topic"><span class="curr-topic-ico">${t.icon}</span><span>${t.name}</span></div>`).join("")}
+        </div>
+      </div>
+    </div>`).join("")}
+  </div>`;
+}
+
+function toggleCurr(i) {
+  const body = document.getElementById("curr-body-"+i);
+  const chev = document.getElementById("curr-chev-"+i);
+  const sec = document.getElementById("curr-sec-"+i);
+  if(body.classList.contains("open")) {
+    body.classList.remove("open");
+    body.style.maxHeight="0";
+    chev.style.transform="rotate(0deg)";
+    sec.classList.remove("active");
+  } else {
+    body.classList.add("open");
+    body.style.maxHeight = body.scrollHeight+"px";
+    chev.style.transform="rotate(90deg)";
+    sec.classList.add("active");
+  }
+}
+
 const TESTIMONIALS = [
   {
     name:"Mery",
